@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.34] - 2026-08-15
+
+- opravena měsíční úspora: hodnota za měsíc se už nikdy nenahrazuje dnešní úsporou
+- přehled úspor respektuje příznak spolehlivosti měsíčního výpočtu; pokud přesný měsíční základ chybí, zobrazí se `—` místo zavádějící částky
+- stejná kontrola byla doplněna do energetické diagnostiky
+- opraveny zbývající drobné české názvy a překlepy (`Síť`, `silnější`, `znamenají`, `čerstvá`)
+- finální Home Assistant image validace i publikování amd64, aarch64 a multi-arch image proběhly úspěšně
+
 ## [0.6.33] - 2026-08-15
 
 - dokončen audit českého a anglického rozhraní v dashboardu, diagnostice, automatizacích, profilu, prvním spuštění a bezpečnostních stavech
