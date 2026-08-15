@@ -2,7 +2,7 @@
 
 Veřejný instalační repozitář pro **Solario Local**.
 
-Aktuální stabilní verze: **0.6.32**  
+Aktuální stabilní verze: **0.6.33**  
 Podporované architektury: **amd64** a **aarch64**
 
 ## Instalace
@@ -13,6 +13,12 @@ Podporované architektury: **amd64** a **aarch64**
 3. Obnovte seznam aplikací a otevřete **Solario Local**.
 4. Nainstalujte aplikaci, spusťte ji a otevřete Web UI přes Home Assistant Ingress.
 5. Při prvním spuštění si bezpečně uložte vygenerovaný přístupový i obnovovací kód.
+
+## Čeština / English
+
+Solario Local 0.6.33 má dotažené české i anglické rozhraní včetně dashboardu, diagnostiky, automatizací, profilu, prvního spuštění a chybových stavů. Produkční build obsahuje automatický překladový gate, který nepustí nový český uživatelský text bez anglického pokrytí.
+
+Názvy zařízení, entit a automatizací převzaté z Home Assistantu zůstávají beze změny, protože jsou pojmenované uživatelem.
 
 ## FREE
 
