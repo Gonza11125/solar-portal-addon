@@ -5,14 +5,27 @@ Veřejný instalační repozitář pro **Solario Local**.
 Aktuální stabilní verze: **0.6.36**  
 Podporované architektury: **amd64** a **aarch64**
 
+[![Add Solario Local repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
+
+Kliknutím na tlačítko výše otevřete svůj Home Assistant s předvyplněným veřejným repozitářem Solario Local.
+
 ## Instalace
 
-1. V Home Assistantu otevřete obchod s aplikacemi / add-ony a správu repozitářů.
-2. Přidejte tento repozitář:
-   `https://github.com/Gonza11125/solar-portal-addon`
-3. Obnovte seznam aplikací a otevřete **Solario Local**.
+### Jedním kliknutím
+
+1. Klikněte na tlačítko **Add Solario Local repository to Home Assistant** výše.
+2. Potvrďte přidání repozitáře ve svém Home Assistantu.
+3. V obchodě s aplikacemi / add-ony otevřete **Solario Local**.
 4. Nainstalujte aplikaci, spusťte ji a otevřete Web UI přes Home Assistant Ingress.
 5. Při prvním spuštění si bezpečně uložte vygenerovaný přístupový i obnovovací kód.
+
+### Ručně
+
+Pokud tlačítko nefunguje, přidejte do správy repozitářů tuto adresu:
+
+`https://github.com/Gonza11125/solar-portal-addon`
+
+Potom obnovte seznam aplikací, otevřete **Solario Local** a nainstalujte jej.
 
 ## Čeština / English
 
