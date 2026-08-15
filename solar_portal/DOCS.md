@@ -1,10 +1,10 @@
-# Konfigurace Solario Local 0.6.33
+# Konfigurace Solario Local 0.6.35
 
 Solario Local je navržen tak, aby nová instalace fungovala bez ručního vypisování energetických entit. Vestavěný agent načte stavy z Home Assistantu a bezpečně vybere použitelné zdroje podle ID, názvu, jednotky, `device_class` a `state_class`. Ruční pole v konfiguraci add-onu jsou volitelné přepisy automatického výběru.
 
 ## Jazyk rozhraní
 
-Solario Local podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, uživatelské chybové odpovědi i text předvyplněný do e-mailových odkazů. Produkční image se od verze 0.6.33 nesestaví, pokud automatický i18n audit najde uživatelský český text bez anglického pokrytí.
+Solario Local podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, dynamické hlášky, uživatelské chybové odpovědi, text předvyplněný do e-mailových odkazů i formátování data, času a měny. Od verze 0.6.35 produkční image používá zpřísněný i18n audit, který kontroluje každý nepokrytý český uživatelský text i v řádku obsahujícím jiné již přeložené fráze.
 
 Uživatelské názvy entit, automatizací a zařízení převzaté z Home Assistantu se nepřekládají, protože jde o data pojmenovaná uživatelem.
 
@@ -41,9 +41,9 @@ Prázdné pole znamená „nechat Solario zdroj bezpečně objevit“. Ručně v
 
 Aktuální verze obsahuje přesně kontrolované aliasy pro běžné Alpha ESS entity. Alias se použije pouze tehdy, když konkrétní entita existuje, je dostupná, má číselnou hodnotu a kompatibilní jednotku.
 
-Pokud Home Assistant poskytuje kumulativní čítač energie, agent z něj pomocí Home Assistant Recorderu odvozuje hodnotu za dnešek, aktuální měsíc a celoživotní hodnotu. Trackery jsou persistentní a chrání se proti resetu kumulativního čítače i krátkému falešnému nulovému stavu senzoru.
+Pokud Home Assistant poskytuje kumulativní čítač energie, agent z něj pomocí Home Assistant Recorderu odvozuje hodnotu za dnešek, aktuální měsíc a celoživotní hodnotu. Od verze 0.6.35 se při chybějící raw historii kolem začátku období může kalendářní základ obnovit z Recorder statistik. Upgrade 0.6.35 navíc jednorázově znovu vytvoří pouze odvozené periodické trackery, aby chybný měsíční základ z předchozí verze nezůstal zachovaný.
 
-Pokud pro přesný výpočet chybí historie, Solario neoznačí neověřený odhad za přesnou hodnotu; diagnostika ukáže použitý zdroj a stav výpočtu.
+Pokud pro přesný výpočet chybí historie nebo spolehlivý statistický podklad, Solario neoznačí neověřený odhad za přesnou hodnotu; diagnostika ukáže použitý zdroj a stav výpočtu.
 
 ## Tarif FREE
 
@@ -72,4 +72,4 @@ Při `sunElevation <= 0` je aktuální ozáření vždy 0 W/m². Toto pravidlo p
 - lokální Web UI: port 3000, ve výchozím stavu bez host mappingu
 - maximální JSON body: 1 MiB
 
-Přístupový i obnovovací kód se při první registraci zobrazí jednou. Stav účtu, lokální nastavení, identita agenta, automatizace a energetické trackery jsou uložené v persistentním `/data`, takže běžný restart nevyžaduje novou registraci.
+Přístupový i obnovovací kód se při první registraci zobrazí jednou. Stav účtu, lokální nastavení, identita agenta, automatizace a energetické trackery jsou uložené v persistentním `/data`, takže běžný restart nevyžaduje novou registraci. Jednorázový reseed 0.6.35 se týká pouze odvozeného periodického trackeru.
