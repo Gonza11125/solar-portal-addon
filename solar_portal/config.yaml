@@ -1,6 +1,6 @@
-# Solario Local 0.6.32 release manifest
+# Solario Local 0.6.33 release manifest
 name: Solario Local
-version: "0.6.32"
+version: "0.6.33"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
