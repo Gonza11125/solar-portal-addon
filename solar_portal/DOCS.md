@@ -1,10 +1,12 @@
-# Konfigurace Solario Local 0.6.35
+# Konfigurace Solario Local 0.6.36
 
 Solario Local je navržen tak, aby nová instalace fungovala bez ručního vypisování energetických entit. Vestavěný agent načte stavy z Home Assistantu a bezpečně vybere použitelné zdroje podle ID, názvu, jednotky, `device_class` a `state_class`. Ruční pole v konfiguraci add-onu jsou volitelné přepisy automatického výběru.
 
 ## Jazyk rozhraní
 
-Solario Local podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, dynamické hlášky, uživatelské chybové odpovědi, text předvyplněný do e-mailových odkazů i formátování data, času a měny. Od verze 0.6.35 produkční image používá zpřísněný i18n audit, který kontroluje každý nepokrytý český uživatelský text i v řádku obsahujícím jiné již přeložené fráze.
+Solario Local podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, dynamické hlášky, uživatelské chybové odpovědi, text předvyplněný do e-mailových odkazů i formátování data, času a měny.
+
+Od verze 0.6.35 produkční image používá přísný audit nepokrytých českých uživatelských textů. Verze 0.6.36 k tomu přidává runtime bezpečnostní kontrolu proti příliš obecným gramatickým fragmentům. Konkrétně se globální překlad `je` → `is` nesmí aplikovat na libovolné DOM věty; diagnostické texty se překládají jako celé významové celky.
 
 Uživatelské názvy entit, automatizací a zařízení převzaté z Home Assistantu se nepřekládají, protože jde o data pojmenovaná uživatelem.
 
@@ -41,7 +43,13 @@ Prázdné pole znamená „nechat Solario zdroj bezpečně objevit“. Ručně v
 
 Aktuální verze obsahuje přesně kontrolované aliasy pro běžné Alpha ESS entity. Alias se použije pouze tehdy, když konkrétní entita existuje, je dostupná, má číselnou hodnotu a kompatibilní jednotku.
 
-Pokud Home Assistant poskytuje kumulativní čítač energie, agent z něj pomocí Home Assistant Recorderu odvozuje hodnotu za dnešek, aktuální měsíc a celoživotní hodnotu. Od verze 0.6.35 se při chybějící raw historii kolem začátku období může kalendářní základ obnovit z Recorder statistik. Upgrade 0.6.35 navíc jednorázově znovu vytvoří pouze odvozené periodické trackery, aby chybný měsíční základ z předchozí verze nezůstal zachovaný.
+Pokud Home Assistant poskytuje kumulativní čítač energie, agent z něj pomocí Home Assistant Recorderu odvozuje hodnotu za dnešek, aktuální měsíc a celoživotní hodnotu. Pokud raw historie kolem začátku období chybí, může se kalendářní základ obnovit z Recorder statistik.
+
+Verze 0.6.36 mění chování při nedostupném Recorder podkladu: pokud se nepodaří získat důvěryhodný baseline, agent neuloží aktuální kumulativní hodnotu jako začátek období a nepublikuje z ní falešnou periodickou nulu. Perioda zůstane dočasně nedostupná a další sběr ji automaticky zkusí znovu.
+
+Denní a měsíční baseline se řeší nezávisle. Výpadek měsíčního podkladu tedy nesmí potlačit validní dnešní energii. Backend navíc označí měsíční úsporu jako spolehlivou pouze při explicitně dostupné měsíční výrobě v aktuálním payloadu.
+
+Při upgradu z 0.6.35 se jednorázově odstraní pouze odvozený soubor periodických trackerů a vytvoří se znovu z Home Assistant dat. Účet, lokální nastavení, mapování, automatizace, přístupové/obnovovací kódy ani data Home Assistantu se nemažou.
 
 Pokud pro přesný výpočet chybí historie nebo spolehlivý statistický podklad, Solario neoznačí neověřený odhad za přesnou hodnotu; diagnostika ukáže použitý zdroj a stav výpočtu.
 
@@ -72,4 +80,4 @@ Při `sunElevation <= 0` je aktuální ozáření vždy 0 W/m². Toto pravidlo p
 - lokální Web UI: port 3000, ve výchozím stavu bez host mappingu
 - maximální JSON body: 1 MiB
 
-Přístupový i obnovovací kód se při první registraci zobrazí jednou. Stav účtu, lokální nastavení, identita agenta, automatizace a energetické trackery jsou uložené v persistentním `/data`, takže běžný restart nevyžaduje novou registraci. Jednorázový reseed 0.6.35 se týká pouze odvozeného periodického trackeru.
+Přístupový i obnovovací kód se při první registraci zobrazí jednou. Stav účtu, lokální nastavení, identita agenta, automatizace a energetické trackery jsou uložené v persistentním `/data`, takže běžný restart nevyžaduje novou registraci. Jednorázový repair 0.6.36 se týká pouze odvozených periodických trackerů.
