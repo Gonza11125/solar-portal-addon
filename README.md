@@ -2,7 +2,7 @@
 
 Veřejný instalační repozitář pro **Solario Local**.
 
-Aktuální stabilní verze: **0.6.34**  
+Aktuální stabilní verze: **0.6.35**  
 Podporované architektury: **amd64** a **aarch64**
 
 ## Instalace
@@ -16,7 +16,9 @@ Podporované architektury: **amd64** a **aarch64**
 
 ## Čeština / English
 
-Solario Local 0.6.34 má dotažené české i anglické rozhraní včetně dashboardu, diagnostiky, automatizací, profilu, prvního spuštění a chybových stavů. Produkční build obsahuje automatický překladový gate, který nepustí nový český uživatelský text bez anglického pokrytí.
+Solario Local 0.6.35 má dotažené české i anglické rozhraní včetně dashboardu, diagnostiky, automatizací, profilu, prvního spuštění, chybových stavů, dynamických hlášek a formátování data/času a měny. Přepnutí jazyka probíhá bez reloadu stránky.
+
+Produkční build obsahuje přísnější i18n gate: kontrola už nepovažuje celý řádek za přeložený jen proto, že na něm našla jednu známou frázi. Každý nepokrytý český uživatelský text zastaví release build.
 
 Názvy zařízení, entit a automatizací převzaté z Home Assistantu zůstávají beze změny, protože jsou pojmenované uživatelem.
 
@@ -26,7 +28,7 @@ FREE obsahuje lokální přehled FVE, energetickou bilanci a diagnostiku, počas
 
 Energetické entity jsou standardně vyhledávány automaticky. Ruční pole v konfiguraci slouží pouze jako volitelné přepisy automatického výběru.
 
-Od verze 0.6.34 se měsíční úspora nikdy nenahrazuje dnešní hodnotou. Pokud pro přesný měsíční výpočet chybí spolehlivý podklad, Solario raději zobrazí nedostupnou hodnotu než zavádějící částku.
+Od verze 0.6.35 se kalendářní denní a měsíční energie při chybějící raw historii obnovuje z Home Assistant Recorder statistik. Upgrade zároveň jednorázově znovu vytvoří pouze odvozené periodické trackery, aby starý chybný měsíční základ z předchozí verze nemohl zůstat zachovaný. Účet, konfigurace, přístupové kódy ani data Home Assistantu se tím nemažou.
 
 ## Distribuce
 
