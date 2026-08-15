@@ -1,4 +1,4 @@
-# Solario Local 0.6.35
+# Solario Local 0.6.36
 
 Solario Local je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
@@ -14,9 +14,11 @@ Vestavěný lokální agent se s Home Assistantem propojuje automaticky přes `h
 
 ## Čeština a angličtina
 
-Rozhraní Solario Local je dostupné v češtině i angličtině. Verze 0.6.35 zpřesňuje jazykové pokrytí dashboardu, diagnostiky, automatizací, profilu, prvního spuštění, QR/passkey stavů, chybových odpovědí backendu, dynamických hlášek, e-mailových odkazů a formátování data, času a měny. Přepnutí jazyka probíhá bez reloadu stránky.
+Rozhraní Solario Local je dostupné v češtině i angličtině. Přepnutí jazyka se vztahuje na dashboard, diagnostiku, automatizace, profil, první spuštění, QR/passkey stavy, uživatelské chyby, dynamické hlášky, e-mailové odkazy i formátování data, času a měny.
 
-Názvy entit a zařízení převzaté přímo z Home Assistantu zůstávají uživatelskými názvy a Solario je svévolně nepřekládá.
+Verze 0.6.36 opravuje runtime mix CZ/EN v diagnostice panelů. Obecný fragment `je` → `is` už nesmí zasáhnout libovolnou českou větu a diagnostické texty s nízkým výkonem se překládají jako celé významové celky. Release audit navíc kontroluje, že tato runtime ochrana zůstane aktivní.
+
+Názvy entit, zařízení a automatizací převzaté přímo z Home Assistantu zůstávají uživatelskými názvy a Solario je svévolně nepřekládá.
 
 ## Tarif FREE
 
@@ -40,13 +42,21 @@ Ruční pole entit v konfiguraci add-onu jsou volitelné přepisy. Pokud je nech
 
 Pro běžné Alpha ESS entity jsou navíc podporované přesné aliasy pro aktuální výkon FVE, celkovou výrobu FVE, celkový odběr ze sítě, celkové přetoky do sítě, spotřebu domu, stav baterie a napětí baterie.
 
-Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Od verze 0.6.35 se při chybějící raw historii může kalendářní hranice obnovit z Recorder statistik a při upgradu se jednorázově znovu vytvoří odvozený periodický tracker, aby starý chybný měsíční základ nezůstal zachovaný.
+## Denní a měsíční energie
 
-Pokud přesný výpočet není možný, Solario hodnotu raději označí jako nedostupnou nebo nespolehlivou, než aby ji odhadovalo jako přesnou.
+Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Pokud raw historie kolem začátku období chybí, Solario může použít Recorder statistiky.
+
+Verze 0.6.36 opravuje stav z 0.6.35, kdy první neúspěšné načtení Recorderu mohlo uložit aktuální kumulativní hodnotu jako baseline období a vytvořit trvalou falešnou měsíční nulu. Nyní se bez důvěryhodného podkladu žádný baseline neuloží, periodická hodnota zůstane dočasně nedostupná a další sběr ji automaticky zkusí znovu.
+
+Denní a měsíční výpočet jsou nezávislé. Nedostupný měsíční základ proto neblokuje platnou dnešní energii. Backend označí měsíční úsporu jako spolehlivou pouze tehdy, když aktuální payload skutečně obsahuje měsíční výrobu.
+
+Při upgradu z 0.6.35 se jednorázově znovu vytvoří pouze odvozené periodické trackery. Účet, konfigurace, přístupové a obnovovací kódy, automatizace ani data Home Assistantu se nemažou.
 
 ## Úspora FVE
 
-Úspora vychází z ceny elektřiny a z energie FVE skutečně spotřebované doma. Pokud jsou k dispozici výroba a přetoky, vlastní spotřeba se počítá přesně jako výroba minus přetoky. Měsíční a celková úspora používá odpovídající měsíční/celkové energetické podklady.
+Úspora vychází z ceny elektřiny a z energie FVE skutečně spotřebované doma. Pokud jsou k dispozici výroba a přetoky, vlastní spotřeba se počítá jako výroba minus přetoky. Měsíční a celková úspora používá odpovídající měsíční/celkové energetické podklady.
+
+Pokud měsíční podklad ještě není důvěryhodný, Solario jej nesmí prezentovat jako spolehlivou hodnotu. Jakmile Recorder poskytne validní měsíční změnu, výpočet se automaticky obnoví.
 
 Aktuální ozáření je při záporné nebo nulové výšce Slunce vždy 0 W/m², i pokud Home Assistant senzor po západu krátce drží starou kladnou hodnotu.
 
