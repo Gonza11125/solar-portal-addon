@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.36] - 2026-08-15
+
+- opravena chyba 0.6.35, kdy při prvním nedostupném výpočtu z Home Assistant Recorderu mohl agent uložit aktuální kumulativní čítač jako začátek období a následně držet falešnou měsíční nulu
+- nedostupný denní nebo měsíční baseline se nyní neukládá; příslušná perioda zůstane dočasně nedostupná a další sběr ji automaticky zkusí znovu
+- denní a měsíční výpočet jsou nezávislé, takže chybějící měsíční podklad neblokuje platnou dnešní energii
+- backend označí měsíční úsporu jako spolehlivou pouze tehdy, když aktuální data skutečně obsahují měsíční výrobu
+- upgrade z 0.6.35 jednorázově obnoví pouze odvozené periodické trackery; účet, konfigurace, kódy, automatizace ani Home Assistant data se nemažou
+- opraven runtime mix CZ/EN v diagnostice panelů způsobený příliš obecným fragmentem `je` → `is`; diagnostické věty se překládají jako celé významové celky
+- i18n release gate nově kontroluje i runtime ochranu proti nebezpečným globálním gramatickým fragmentům
+- regresní test reprodukuje přesný stav: první měsíční Recorder lookup není dostupný → nevznikne month tracker ani falešná nula → další lookup uspěje → měsíční hodnota se vytvoří
+- finální validace: 20/20 agent testů, 115/115 backend testů, 832 sledovaných českých frází, 0 nepokrytých textů, produkční frontend build a kompletní Home Assistant restart/persistence smoke úspěšné
+- amd64, aarch64 i multi-arch image 0.6.36 byly úspěšně publikovány
+
 ## [0.6.35] - 2026-08-15
 
 - opraven zdroj měsíční úspory: kalendářní denní a měsíční energie se při chybějící raw historii umí obnovit z Home Assistant Recorder statistik
