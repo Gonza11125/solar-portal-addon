@@ -1,6 +1,12 @@
-# Konfigurace Solario Local 0.6.32
+# Konfigurace Solario Local 0.6.33
 
 Solario Local je navržen tak, aby nová instalace fungovala bez ručního vypisování energetických entit. Vestavěný agent načte stavy z Home Assistantu a bezpečně vybere použitelné zdroje podle ID, názvu, jednotky, `device_class` a `state_class`. Ruční pole v konfiguraci add-onu jsou volitelné přepisy automatického výběru.
+
+## Jazyk rozhraní
+
+Solario Local podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, uživatelské chybové odpovědi i text předvyplněný do e-mailových odkazů. Produkční image se od verze 0.6.33 nesestaví, pokud automatický i18n audit najde uživatelský český text bez anglického pokrytí.
+
+Uživatelské názvy entit, automatizací a zařízení převzaté z Home Assistantu se nepřekládají, protože jde o data pojmenovaná uživatelem.
 
 ## Základní konfigurace
 
