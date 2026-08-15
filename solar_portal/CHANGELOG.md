@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.35] - 2026-08-15
+
+- opraven zdroj měsíční úspory: kalendářní denní a měsíční energie se při chybějící raw historii umí obnovit z Home Assistant Recorder statistik
+- upgrade jednorázově znovu vytvoří pouze odvozené periodické trackery, takže chybný měsíční základ z 0.6.34 nemůže zůstat zachovaný; účet, konfigurace, přístupové kódy ani Home Assistant data se nemažou
+- doplněny regresní testy pro obnovu měsíčního základu z Recorderu, prioritu skutečné historie a bezpečné odmítnutí neplatné změny
+- dotažené obousměrné přepínání čeština ↔ angličtina na dashboardu, v diagnostice, automatizacích, profilu, dynamických hláškách, e-mailových odkazech a backendových chybách
+- anglická verze používá CZK a anglické formátování data/času; česká verze se při přepnutí vrací zpět na Kč a české formátování
+- opraveny zbývající legacy popisky jako `Solar self-use` a `Local import`, aby se korektně překládaly i zpět do češtiny
+- zpřísněn i18n release gate: jedna přeložená fráze už nemůže skrýt jiný nepřeložený text na stejném řádku
+- finální audit hlásí `I18N_UNCOVERED_TOTAL=0`; prošlo 19/19 agent testů, 113/113 backend testů, produkční frontend build i kompletní Home Assistant image smoke
+- amd64, aarch64 i multi-arch image 0.6.35 byly úspěšně publikovány
+
 ## [0.6.34] - 2026-08-15
 
 - opravena měsíční úspora: hodnota za měsíc se už nikdy nenahrazuje dnešní úsporou
