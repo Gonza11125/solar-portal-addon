@@ -1,4 +1,4 @@
-# Solario Local 0.6.33
+# Solario Local 0.6.35
 
 Solario Local je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
@@ -14,7 +14,7 @@ Vestavěný lokální agent se s Home Assistantem propojuje automaticky přes `h
 
 ## Čeština a angličtina
 
-Rozhraní Solario Local je dostupné v češtině i angličtině. Verze 0.6.33 rozšiřuje jazykové pokrytí i na diagnostiku, automatizace, profil, první spuštění, QR/passkey stavy, chybové odpovědi backendu a předvyplněné e-mailové odkazy. Produkční build obsahuje automatický i18n audit, který vydání zastaví, pokud se do uživatelského rozhraní dostane nový český text bez anglického pokrytí.
+Rozhraní Solario Local je dostupné v češtině i angličtině. Verze 0.6.35 zpřesňuje jazykové pokrytí dashboardu, diagnostiky, automatizací, profilu, prvního spuštění, QR/passkey stavů, chybových odpovědí backendu, dynamických hlášek, e-mailových odkazů a formátování data, času a měny. Přepnutí jazyka probíhá bez reloadu stránky.
 
 Názvy entit a zařízení převzaté přímo z Home Assistantu zůstávají uživatelskými názvy a Solario je svévolně nepřekládá.
 
@@ -40,7 +40,9 @@ Ruční pole entit v konfiguraci add-onu jsou volitelné přepisy. Pokud je nech
 
 Pro běžné Alpha ESS entity jsou navíc podporované přesné aliasy pro aktuální výkon FVE, celkovou výrobu FVE, celkový odběr ze sítě, celkové přetoky do sítě, spotřebu domu, stav baterie a napětí baterie.
 
-Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Pokud přesný výpočet není možný, Solario hodnotu raději označí jako nedostupnou nebo nespolehlivou, než aby ji odhadovalo jako přesnou.
+Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Od verze 0.6.35 se při chybějící raw historii může kalendářní hranice obnovit z Recorder statistik a při upgradu se jednorázově znovu vytvoří odvozený periodický tracker, aby starý chybný měsíční základ nezůstal zachovaný.
+
+Pokud přesný výpočet není možný, Solario hodnotu raději označí jako nedostupnou nebo nespolehlivou, než aby ji odhadovalo jako přesnou.
 
 ## Úspora FVE
 
