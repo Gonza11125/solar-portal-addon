@@ -1,0 +1,78 @@
+# Solario Local 0.6.32 release manifest
+name: Solario Local
+version: "0.6.32"
+slug: solar_portal
+description: Local solar monitoring portal with automatic exact energy metric discovery
+url: https://solario.cloud
+arch:
+  - aarch64
+  - amd64
+image: ghcr.io/gonza11125/solario-local
+webui: http://[HOST]:[PORT:3000]
+ports:
+  3000/tcp: null
+ports_description:
+  3000/tcp: Optional direct LAN access after first setup (disabled by default; enable a host port in Network settings)
+startup: application
+boot: auto
+stage: stable
+backup: cold
+ingress: true
+ingress_port: 8099
+ingress_entry: /
+panel_icon: mdi:home-energy-monitor
+panel_title: Solario Local
+panel_admin: true
+homeassistant_api: true
+options:
+  log_level: info
+  database_name: solar_portal
+  ha_automations: "[]"
+  polling_interval: 5000
+  entity_power_now: ""
+  entity_energy_today: ""
+  entity_battery_soc: ""
+  entity_battery_voltage: ""
+  entity_room_temperature: ""
+  entity_room_humidity: ""
+  entity_bojler_switch: ""
+  entity_hdo_switch: ""
+  entity_kotel_switch: ""
+  entity_grid_import: ""
+  entity_grid_export: ""
+  entity_home_consumption: ""
+  entity_solar_production: ""
+  entity_inverter_power: ""
+  entity_string_1_power: ""
+  entity_string_2_power: ""
+  entity_string_3_power: ""
+  entity_string_4_power: ""
+  entity_production_max_10min: ""
+  entity_production_avg_10min: ""
+schema:
+  log_level: list(trace|debug|info|notice|warning|error|fatal)
+  database_name: str
+  ha_automations: str
+  polling_interval: int(1000,60000)
+  entity_power_now: str?
+  entity_energy_today: str?
+  entity_battery_soc: str?
+  entity_battery_voltage: str?
+  entity_room_temperature: str?
+  entity_room_humidity: str?
+  entity_bojler_switch: str?
+  entity_hdo_switch: str?
+  entity_kotel_switch: str?
+  entity_grid_import: str?
+  entity_grid_export: str?
+  entity_home_consumption: str?
+  entity_solar_production: str?
+  entity_inverter_power: str?
+  entity_string_1_power: str?
+  entity_string_2_power: str?
+  entity_string_3_power: str?
+  entity_string_4_power: str?
+  entity_production_max_10min: str?
+  entity_production_avg_10min: str?
+environment:
+  NODE_ENV: production
