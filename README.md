@@ -2,10 +2,10 @@
 
 **Solario Local** is a local Home Assistant app for solar PV monitoring, energy overview, diagnostics and safe automations.
 
-Current stable version: **0.6.36**  
+Current stable version: **0.6.37**  
 Supported architectures: **amd64** and **aarch64**
 
-> **Compatibility note:** the current public beta has been verified primarily with Alpha ESS. Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. A Deye/Solarman compatibility hotfix is currently being validated after feedback from the first public tester. Other inverter integrations should still be treated as beta until verified on real installations.
+> **Compatibility note:** Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. Alpha ESS is the primary verified setup. Version 0.6.37 adds explicit support for the standard Deye/Sunsynk/Sol-Ark entity model exposed by the Home Assistant Solarman integration (PV power/production, grid import/export, load consumption, battery and PV strings). Other inverter integrations should still be treated as beta until verified on real installations.
 
 [![Add Solario Local repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
@@ -61,7 +61,7 @@ The default access path is secured Home Assistant Ingress. Direct LAN port `3000
 
 Manual entity fields in the add-on configuration are optional overrides. When they are empty, Solario attempts to discover suitable sources automatically.
 
-Discovery evaluates the entity ID, friendly name, unit, `device_class` and `state_class`. Exact aliases are included for verified integration entity models, but an alias is only accepted when the entity exists, is available, contains a numeric value and has a compatible unit.
+Discovery evaluates the entity ID, friendly name, unit, `device_class` and `state_class`. Exact/known aliases are included for verified integration entity models, but an alias is only accepted when the entity exists, is available, contains a numeric value and has a compatible unit. Deye/Solarman suffix mapping is activated only after a multi-sensor Solarman signature is detected for the same device prefix, so unrelated `*_total_power` sensors are not blindly treated as PV sources.
 
 Available manual energy overrides include current PV power, today's energy, battery SOC/voltage, grid import/export, home consumption, total solar production, inverter power, string 1–4 power and 10-minute production maximum/average.
 
