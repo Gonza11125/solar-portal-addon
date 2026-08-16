@@ -1,74 +1,80 @@
 # Solario Local 0.6.36
 
-Solario Local je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
+Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics, and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
-## Instalace
+## Installation
 
-1. V Home Assistantu přidejte repozitář `https://github.com/Gonza11125/solar-portal-addon`.
-2. Nainstalujte **Solario Local** a spusťte jej.
-3. Otevřete Web UI přímo z Home Assistantu přes Ingress.
-4. Při prvním otevření vygenerujte přístupový i obnovovací kód a oba bezpečně uložte.
-5. Po prvním přihlášení zvolte typ instalace: **vlastní Home Assistant** nebo **Solario Solar Box**. Volba se po prvním nastavení bezpečnostně uzamkne.
+1. Add `https://github.com/Gonza11125/solar-portal-addon` to Home Assistant repositories.
+2. Install **Solario Local** and start it.
+3. Open the Web UI directly from Home Assistant through Ingress.
+4. On first launch, generate both an access code and a recovery code and store them safely.
+5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
-Vestavěný lokální agent se s Home Assistantem propojuje automaticky přes `homeassistant_api`. Pro lokální instalaci se negeneruje žádný párovací kód agenta a není potřeba přidávat další integraci.
+The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional integration.
 
-## Čeština a angličtina
+## English and Czech
 
-Rozhraní Solario Local je dostupné v češtině i angličtině. Přepnutí jazyka se vztahuje na dashboard, diagnostiku, automatizace, profil, první spuštění, QR/passkey stavy, uživatelské chyby, dynamické hlášky, e-mailové odkazy i formátování data, času a měny.
+The Solario Local interface is available in English and Czech. Language switching applies to the dashboard, diagnostics, automations, profile, onboarding, QR/passkey states, user-facing errors, dynamic messages, email links, and date/time/currency formatting.
 
-Verze 0.6.36 opravuje runtime mix CZ/EN v diagnostice panelů. Obecný fragment `je` → `is` už nesmí zasáhnout libovolnou českou větu a diagnostické texty s nízkým výkonem se překládají jako celé významové celky. Release audit navíc kontroluje, že tato runtime ochrana zůstane aktivní.
+Version 0.6.36 fixes mixed Czech/English runtime text in panel diagnostics. The broad fragment `je` → `is` can no longer affect arbitrary Czech sentences, and low-power diagnostic messages are translated as complete semantic units. The release audit also checks that this runtime protection remains active.
 
-Názvy entit, zařízení a automatizací převzaté přímo z Home Assistantu zůstávají uživatelskými názvy a Solario je svévolně nepřekládá.
+Entity, device, and automation names received directly from Home Assistant remain user-defined and are not automatically translated.
 
-## Tarif FREE
+## FREE plan
 
-FREE je plnohodnotný lokální základ pro vlastní Home Assistant:
+FREE is the complete local foundation for a user's own Home Assistant installation:
 
-- přehled aktuální výroby, baterie a energetické bilance,
-- dnešní, měsíční a celkové energetické hodnoty, pokud pro ně Home Assistant poskytuje potřebná data,
-- lokální diagnostika zdrojových entit a jejich kvality,
-- počasí a aktuální solární podmínky,
-- grafy s historií maximálně 24 hodin,
-- 1 vlastní Solario automatizace,
-- existující `automation.*` z Home Assistantu lze zobrazit a přidat do Solaria bez čerpání limitu vlastní Solario automatizace,
-- AI doporučení nejsou ve FREE aktivní,
-- ruční editor/import zařízení a obecné ruční ovládání zařízení jsou funkce tarifu PRO.
+- current PV production, battery, and energy-balance overview,
+- daily, monthly, and lifetime energy values when Home Assistant provides the required data,
+- local diagnostics of source entities and their data quality,
+- weather and current solar conditions,
+- charts with up to 24 hours of history,
+- 1 custom Solario automation,
+- existing Home Assistant `automation.*` entities can be displayed/used without consuming the custom Solario automation slot,
+- AI recommendations are not active in FREE,
+- general manual device editor/import and general manual device control are PRO features.
 
-Tarifní limity jsou kontrolované i na backendu; nejde jen o skrytí tlačítek ve webovém rozhraní.
+Plan limits are enforced by the backend and are not only hidden in the web interface.
 
-## Senzory a automatické mapování
+## Sensors and automatic mapping
 
-Ruční pole entit v konfiguraci add-onu jsou volitelné přepisy. Pokud je necháte prázdná, Solario bezpečně hledá vhodné zdroje podle ID entity, názvu, jednotky, `device_class` a `state_class`.
+Manual entity fields in the add-on configuration are optional overrides. If left empty, Solario searches for suitable sources using entity ID, name, unit, `device_class`, and `state_class`.
 
-Pro běžné Alpha ESS entity jsou navíc podporované přesné aliasy pro aktuální výkon FVE, celkovou výrobu FVE, celkový odběr ze sítě, celkové přetoky do sítě, spotřebu domu, stav baterie a napětí baterie.
+Exact aliases are also supported for common Alpha ESS entities covering current PV power, total PV production, total grid import, total grid export, home consumption, battery state of charge, and battery voltage.
 
-## Denní a měsíční energie
+## Daily and monthly energy
 
-Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Pokud raw historie kolem začátku období chybí, Solario může použít Recorder statistiky.
+Cumulative energy counters are converted into today's and current month's values using Home Assistant Recorder data. Recorder statistics may be used when raw history around the beginning of the period is unavailable.
 
-Verze 0.6.36 opravuje stav z 0.6.35, kdy první neúspěšné načtení Recorderu mohlo uložit aktuální kumulativní hodnotu jako baseline období a vytvořit trvalou falešnou měsíční nulu. Nyní se bez důvěryhodného podkladu žádný baseline neuloží, periodická hodnota zůstane dočasně nedostupná a další sběr ji automaticky zkusí znovu.
+Version 0.6.36 fixes a 0.6.35 condition where the first unsuccessful Recorder lookup could save the current cumulative value as the period baseline and produce a persistent false monthly zero. Without a trustworthy baseline, Solario now stores no false baseline, leaves the period temporarily unavailable, and retries automatically during later collection.
 
-Denní a měsíční výpočet jsou nezávislé. Nedostupný měsíční základ proto neblokuje platnou dnešní energii. Backend označí měsíční úsporu jako spolehlivou pouze tehdy, když aktuální payload skutečně obsahuje měsíční výrobu.
+Daily and monthly calculations are independent. An unavailable monthly baseline therefore does not block valid daily energy. The backend treats monthly savings as reliable only when the current payload actually contains monthly production.
 
-Při upgradu z 0.6.35 se jednorázově znovu vytvoří pouze odvozené periodické trackery. Účet, konfigurace, přístupové a obnovovací kódy, automatizace ani data Home Assistantu se nemažou.
+When upgrading from 0.6.35, only derived periodic trackers are rebuilt once. Account data, configuration, access/recovery codes, automations, and Home Assistant data are not deleted.
 
-## Úspora FVE
+## Solar savings
 
-Úspora vychází z ceny elektřiny a z energie FVE skutečně spotřebované doma. Pokud jsou k dispozici výroba a přetoky, vlastní spotřeba se počítá jako výroba minus přetoky. Měsíční a celková úspora používá odpovídající měsíční/celkové energetické podklady.
+Savings are based on the configured electricity price and PV energy actually consumed on site. If production and export data are available, self-consumed PV energy is calculated as production minus export. Monthly and lifetime savings use the corresponding monthly/lifetime energy sources.
 
-Pokud měsíční podklad ještě není důvěryhodný, Solario jej nesmí prezentovat jako spolehlivou hodnotu. Jakmile Recorder poskytne validní měsíční změnu, výpočet se automaticky obnoví.
+If the monthly basis is not yet trustworthy, Solario must not present it as a reliable value. Once Recorder provides a valid monthly delta, the calculation recovers automatically.
 
-Aktuální ozáření je při záporné nebo nulové výšce Slunce vždy 0 W/m², i pokud Home Assistant senzor po západu krátce drží starou kladnou hodnotu.
+Current irradiance is always 0 W/m² when sun elevation is zero or below, even if a Home Assistant sensor briefly retains an old positive value after sunset.
 
-## Bezpečnost a restart
+## PV diagnostics
 
-Backend běží pouze lokálně uvnitř add-onu, PostgreSQL není publikovaný do sítě a Home Assistant Ingress je výchozí způsob přístupu. Supervisor token dostává pouze sběrný agent a není zapisován do persistentní konfigurace agenta.
+Solario can use individual string-power entities when available. It can compare string values together with recent production context. When production is too low for a reliable comparison, the interface reports that condition rather than treating a large percentage difference as a confirmed fault.
 
-Přístupové údaje, nastavení, mapování entit, identita vestavěného agenta a energetické trackery jsou persistentní v `/data`. Běžný restart add-onu proto nevyžaduje novou registraci.
+## Security and restart behavior
 
-## Podporované platformy
+The backend runs locally inside the add-on, PostgreSQL is not exposed to the network, and Home Assistant Ingress is the default access method. The Supervisor token is provided only to the collection agent and is not written to the agent's persistent configuration.
+
+Access credentials, settings, entity mappings, built-in agent identity, automations, and energy trackers are persisted in `/data`. A normal add-on restart therefore does not require a new registration.
+
+## Supported platforms
 
 - `amd64`
 - `aarch64`
 
-Další informace a placené tarify: `https://solario.cloud`
+For detailed configuration and technical behavior, see [`DOCS.md`](DOCS.md).
+
+More information and paid plans: `https://solario.cloud`
