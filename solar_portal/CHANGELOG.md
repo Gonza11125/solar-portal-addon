@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.6.37] - 2026-08-16
+
+- doplněna explicitní kompatibilita pro standardní entity Deye / Sunsynk / Sol-Ark vytvořené Home Assistant integrací Solarman
+- automaticky se mapuje aktuální výkon, výroba FVE, odběr ze sítě, přetoky, spotřeba domu, SOC a napětí baterie a výkon PV1–PV4
+- pokud jsou dostupné kumulativní čítače, mají přednost před denními senzory, aby Solario mohlo přes Home Assistant Recorder přesně odvodit dnešní i měsíční hodnoty
+- Solarman mapping se aktivuje až po rozpoznání více typických entit se stejným prefixem; náhodný senzor typu `*_total_power` se proto automaticky nepovažuje za FVE
+- pokud je v Home Assistantu více Solarman/Deye zařízení se stejnými suffixy, automatika raději mapping přeskočí než aby vybrala špatný měnič
+- doplněny regresní testy pro běžný Deye naming, vlastní prefix `solarman_`, fallback na denní čítače, ochranu proti falešné shodě a více zařízení
+- dokumentace nově výslovně vysvětluje, že Solario se nepřipojuje přímo k měniči/loggeru, ale čte entity, které už existují v Home Assistantu
+- finální backend validace, Home Assistant image/restart/persistence smoke test i publikace amd64, aarch64 a multi-arch image proběhly úspěšně
+
 ## [0.6.36] - 2026-08-15
 
 - opravena chyba 0.6.35, kdy při prvním nedostupném výpočtu z Home Assistant Recorderu mohl agent uložit aktuální kumulativní čítač jako začátek období a následně držet falešnou měsíční nulu
