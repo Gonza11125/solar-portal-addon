@@ -1,6 +1,6 @@
-# Solario Local 0.6.37 release manifest
+# Solario Local 0.6.40 release manifest
 name: Solario Local
-version: "0.6.37"
+version: "0.6.40"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -29,6 +29,7 @@ options:
   database_name: solar_portal
   ha_automations: "[]"
   polling_interval: 5000
+  anonymous_usage_stats: false
   entity_power_now: ""
   entity_energy_today: ""
   entity_battery_soc: ""
@@ -54,6 +55,7 @@ schema:
   database_name: str
   ha_automations: str
   polling_interval: int(1000,60000)
+  anonymous_usage_stats: bool
   entity_power_now: str?
   entity_energy_today: str?
   entity_battery_soc: str?
