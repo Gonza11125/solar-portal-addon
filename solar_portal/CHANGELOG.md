@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.6.40] - 2026-08-18
+
+- rozšířena kompatibilita Deye / Solarman o reálné názvy `sensor.inverter_*`, včetně variant `energy_import`, `energy_export`, `pv_power` a `battery_capacity`
+- přidán filtrovaný ruční výběr senzorů přímo v Solariu; lze hledat podle friendly name i `entity_id`, doporučené kompatibilní kandidáty řadí Solario nahoru
+- uživatel může opravit i technicky validní, ale významově špatně automaticky nalezený senzor; ruční volba přetrvá restart a lze ji vrátit zpět na automatiku
+- doplněny regresní testy pro skutečné Deye/Solarman názvy a ochranu proti záměně importu/exportu
+- do Úspor přidán vyhledávaný výběr měny podle názvu nebo ISO kódu; staré instalace zůstávají na CZK
+- odstraněn pevný rozsah 1–15 Kč/kWh a nahrazen volným číselným vstupem ceny za kWh, takže fungují EUR, USD, JPY, HUF a další měny s odlišným nominálním rozsahem
+- karty úspor, cena/kWh, osa grafu, tooltip i historické úspory používají zvolenou měnu přes standardní lokalizované formátování
+- historické úspory se při změně ceny/měny konzistentně přecení, aby graf nemíchal body vypočtené různými cenami
+- měna a cena se ukládají per lokalita a přenášejí se i při propojení Local → Cloud
+- přidána anonymní opt-in telemetrie verze; ve výchozím stavu je vypnutá a reportuje pouze náhodné ID instalace, verzi Solario Local a architekturu
+- Solario Cloud dostává stránku Adopce verzí s počtem hlásících instalací, aktivitou za 24 h / 7 dní a rozdělením podle verzí; čísla výslovně představují jen opt-in instalace, ne celkový počet instalací ani GHCR stažení
+- finální release kandidát prošel backend testy, Deye/entity-mapping regresními testy, savings-history testy, i18n auditem, cloud buildem a kompletním Home Assistant image/runtime smoke testem
+
 ## [0.6.37] - 2026-08-16
 
 - doplněna explicitní kompatibilita pro standardní entity Deye / Sunsynk / Sol-Ark vytvořené Home Assistant integrací Solarman
