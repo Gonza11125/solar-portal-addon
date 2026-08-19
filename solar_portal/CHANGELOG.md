@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.41] - 2026-08-19
+
+- sjednoceno nastavení ceny elektřiny a měny mezi Solario Local a Solario Cloud; starý pevný slider `1–15 Kč/kWh` už není součástí výsledného Local ani Cloud frontendu
+- cena za kWh se zadává jako volné kladné číslo a měnu lze vyhledat podle názvu nebo ISO kódu; podporován je libovolný platný třípísmenný kód měny
+- cena a měna se ukládají per lokalita; starší lokality bez uložené měny bezpečně používají CZK
+- karty Dnes / Měsíc / Celkem, cena za kWh, osa grafu, tooltipy a zobrazená historie používají stejnou zvolenou měnu
+- zobrazené historické úspory se přepočítávají podle aktuálně nastavené ceny, aby po změně ceny nebo měny nevznikaly smíšené hodnoty
+- doplněny build-artifact kontroly pro Local i Cloud; release se zastaví, pokud by se do výsledného bundle vrátil starý slider nebo v něm chyběl měnový picker
+- Cloud backend doplnil per-site endpoint pro bezpečné uložení a načtení ceny/měny; validace přijímá i měny s vysokými nominálními cenami a odmítá neplatné vstupy
+- finální release kandidát prošel Local backend validací, Cloud backendem (64/64 testů), TypeScript buildy, dependency audity, překladovým auditem, frontend buildy a kompletním Home Assistant image/runtime smoke testem
+- po publikaci byly samostatným ověřovacím jobem potvrzeny manifesty `0.6.41` i `latest` pro `linux/amd64` a `linux/arm64`
+
 ## [0.6.40] - 2026-08-18
 
 - rozšířena kompatibilita Deye / Solarman o reálné názvy `sensor.inverter_*`, včetně variant `energy_import`, `energy_export`, `pv_power` a `battery_capacity`
