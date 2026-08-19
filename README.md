@@ -2,22 +2,20 @@
 
 **Solario Local** is a local Home Assistant app for solar PV monitoring, energy overview, diagnostics and safe automations.
 
-Current stable version: **0.6.40**  
+Current stable version: **0.6.41**  
 Supported architectures: **amd64** and **aarch64**
 
-## What's new in 0.6.40
+## What's new in 0.6.41
 
-- expanded Deye / Solarman entity discovery for real-world `sensor.inverter_*` naming, including `energy_import`, `energy_export`, `pv_power` and `battery_capacity`,
-- searchable and filtered manual entity picker with recommended compatible sensors,
-- manual correction of a technically valid but semantically wrong auto-detected sensor,
-- persistent manual overrides with a reset back to automatic discovery,
-- searchable savings currency picker by ISO code or currency name,
-- free numeric electricity price per kWh instead of the former CZK-only 1–15 slider,
-- selected currency is used consistently in savings cards, price/kWh labels, chart axis, tooltips and historical savings,
-- historical savings are repriced consistently when the configured price or currency changes,
-- optional anonymous version telemetry so Solario Cloud can show version adoption without collecting Home Assistant entity data.
+- the savings price/currency UI is now consistent in both Solario Local and Solario Cloud,
+- the former fixed CZK-only `1–15` slider is replaced by a normal numeric electricity-price input,
+- searchable currency selection supports ISO codes and currency names, with any valid three-letter currency code accepted,
+- electricity price and currency are persisted per site and legacy sites default safely to CZK,
+- savings cards, price-per-kWh labels, chart axis, tooltips and displayed history use the selected currency consistently,
+- displayed savings/history are repriced against the currently configured electricity price,
+- Local and Cloud builds now contain release guards that fail if the old fixed slider returns or the currency picker is missing.
 
-> **Compatibility note:** Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. Alpha ESS is a verified setup. Deye / Sunsynk / Sol-Ark installations exposed through the Home Assistant Solarman integration are explicitly supported and 0.6.40 broadens that support with additional real-world naming variants and a manual fallback picker. Other integrations can still be used through automatic discovery or manual entity selection.
+> **Compatibility note:** Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. Alpha ESS is a verified setup. Deye / Sunsynk / Sol-Ark installations exposed through the Home Assistant Solarman integration are explicitly supported. Version 0.6.40 broadened that support with additional real-world naming variants and a searchable manual fallback picker, and those improvements remain included in 0.6.41.
 
 [![Add Solario Local repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
@@ -76,7 +74,7 @@ Manual entity fields in the add-on configuration remain optional overrides. When
 
 Discovery evaluates entity ID, friendly name, unit, `device_class` and `state_class`. Known aliases are accepted only when the entity exists, is available, contains a numeric value and has a compatible unit.
 
-Version 0.6.40 also adds an in-app entity picker. If automatic discovery misses a source or selects the wrong compatible sensor, the user can open **Change sensor**, search by friendly name or entity ID, choose from ranked compatible candidates and save the override. Manual choices persist across restarts and can later be reset back to automatic discovery.
+Version 0.6.40 introduced an in-app entity picker. If automatic discovery misses a source or selects the wrong compatible sensor, the user can open **Change sensor**, search by friendly name or entity ID, choose from ranked compatible candidates and save the override. Manual choices persist across restarts and can later be reset back to automatic discovery.
 
 Supported energy mappings include current PV power, today's energy, battery SOC/voltage, grid import/export, home consumption, total solar production, inverter power, string 1–4 power and 10-minute production maximum/average.
 
@@ -94,7 +92,7 @@ Savings are calculated as:
 
 The user selects the currency and enters the real electricity price in that currency. Solario does not perform foreign-exchange conversion. The same selected currency is used in the savings cards, price-per-kWh labels, graph axis and tooltips.
 
-The former fixed 1–15 CZK/kWh slider has been removed. Version 0.6.40 accepts a normal numeric price input, so values such as `0.25 EUR/kWh`, `6.20 CZK/kWh` or prices in currencies with much larger nominal units work correctly.
+Version 0.6.41 ensures both Local and Cloud use a normal numeric price input instead of the former fixed 1–15 CZK/kWh slider, so values such as `0.25 EUR/kWh`, `6.20 CZK/kWh` or prices in currencies with much larger nominal units work correctly.
 
 ## Anonymous version statistics
 

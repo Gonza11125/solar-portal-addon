@@ -1,6 +1,6 @@
-# Solario Local 0.6.36
+# Solario Local 0.6.41
 
-Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics, and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
+Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
 ## Installation
 
@@ -10,65 +10,67 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 4. On first launch, generate both an access code and a recovery code and store them safely.
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
-The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional integration.
+The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## English and Czech
+## What changed in 0.6.41
 
-The Solario Local interface is available in English and Czech. Language switching applies to the dashboard, diagnostics, automations, profile, onboarding, QR/passkey states, user-facing errors, dynamic messages, email links, and date/time/currency formatting.
+Version 0.6.41 makes the savings price/currency experience consistent across Solario Local and Solario Cloud:
 
-Version 0.6.36 fixes mixed Czech/English runtime text in panel diagnostics. The broad fragment `je` → `is` can no longer affect arbitrary Czech sentences, and low-power diagnostic messages are translated as complete semantic units. The release audit also checks that this runtime protection remains active.
+- the old fixed `1–15 Kč/kWh` slider is replaced by a normal numeric electricity-price input,
+- currency can be searched by name or ISO code,
+- any valid three-letter currency code can be used,
+- electricity price and currency persist per site,
+- older sites without a saved currency safely default to CZK,
+- savings cards, price/kWh labels, chart axis, tooltips and displayed history use the selected currency,
+- displayed savings/history are repriced using the currently configured electricity price,
+- build-time release guards prevent the old fixed slider from returning or the currency picker from disappearing unnoticed.
 
-Entity, device, and automation names received directly from Home Assistant remain user-defined and are not automatically translated.
+Solario does **not** perform foreign-exchange conversion. If you select EUR, enter your real electricity price in EUR/kWh; if you select CZK, enter it in CZK/kWh.
+
+## Sensors and automatic mapping
+
+Manual entity fields in the add-on configuration are optional overrides. If left empty, Solario searches for suitable sources using entity ID, friendly name, unit, `device_class` and `state_class`.
+
+Version 0.6.40 expanded Deye / Solarman support for real-world `sensor.inverter_*` naming and added the searchable manual entity picker. If automatic discovery misses a source or chooses a technically compatible but semantically wrong sensor, open **Change sensor**, search by friendly name or entity ID and save the correct compatible source. Manual choices persist across restarts and can be reset back to automatic discovery.
+
+Supported energy mappings include current PV power, today's energy, battery SOC/voltage, grid import/export, home consumption, total solar production, inverter power, string 1–4 power and 10-minute production maximum/average.
+
+## Energy calculations and savings
+
+Cumulative energy counters are converted into today's and current month's values using Home Assistant Recorder data. Recorder statistics may be used when raw history around the beginning of a period is unavailable.
+
+Savings are calculated as:
+
+**self-consumed PV energy in kWh × configured electricity price per kWh**
+
+If a trustworthy period baseline is not available, Solario leaves that period temporarily unavailable rather than presenting an unverified estimate as an exact value.
 
 ## FREE plan
 
-FREE is the complete local foundation for a user's own Home Assistant installation:
+FREE provides the local foundation for a user's own Home Assistant installation:
 
-- current PV production, battery, and energy-balance overview,
-- daily, monthly, and lifetime energy values when Home Assistant provides the required data,
-- local diagnostics of source entities and their data quality,
+- current PV production, battery and energy-balance overview,
+- daily, monthly and lifetime energy values when Home Assistant provides the required data,
+- local diagnostics of source entities and data quality,
 - weather and current solar conditions,
 - charts with up to 24 hours of history,
 - 1 custom Solario automation,
 - existing Home Assistant `automation.*` entities can be displayed/used without consuming the custom Solario automation slot,
-- AI recommendations are not active in FREE,
-- general manual device editor/import and general manual device control are PRO features.
+- automatic entity discovery with searchable manual overrides,
+- selectable savings currency,
+- Czech and English UI.
 
-Plan limits are enforced by the backend and are not only hidden in the web interface.
+AI recommendations, general device editor/import and general manual device control are not active in FREE and require PRO.
 
-## Sensors and automatic mapping
+## Anonymous version statistics
 
-Manual entity fields in the add-on configuration are optional overrides. If left empty, Solario searches for suitable sources using entity ID, name, unit, `device_class`, and `state_class`.
-
-Exact aliases are also supported for common Alpha ESS entities covering current PV power, total PV production, total grid import, total grid export, home consumption, battery state of charge, and battery voltage.
-
-## Daily and monthly energy
-
-Cumulative energy counters are converted into today's and current month's values using Home Assistant Recorder data. Recorder statistics may be used when raw history around the beginning of the period is unavailable.
-
-Version 0.6.36 fixes a 0.6.35 condition where the first unsuccessful Recorder lookup could save the current cumulative value as the period baseline and produce a persistent false monthly zero. Without a trustworthy baseline, Solario now stores no false baseline, leaves the period temporarily unavailable, and retries automatically during later collection.
-
-Daily and monthly calculations are independent. An unavailable monthly baseline therefore does not block valid daily energy. The backend treats monthly savings as reliable only when the current payload actually contains monthly production.
-
-When upgrading from 0.6.35, only derived periodic trackers are rebuilt once. Account data, configuration, access/recovery codes, automations, and Home Assistant data are not deleted.
-
-## Solar savings
-
-Savings are based on the configured electricity price and PV energy actually consumed on site. If production and export data are available, self-consumed PV energy is calculated as production minus export. Monthly and lifetime savings use the corresponding monthly/lifetime energy sources.
-
-If the monthly basis is not yet trustworthy, Solario must not present it as a reliable value. Once Recorder provides a valid monthly delta, the calculation recovers automatically.
-
-Current irradiance is always 0 W/m² when sun elevation is zero or below, even if a Home Assistant sensor briefly retains an old positive value after sunset.
-
-## PV diagnostics
-
-Solario can use individual string-power entities when available. It can compare string values together with recent production context. When production is too low for a reliable comparison, the interface reports that condition rather than treating a large percentage difference as a confirmed fault.
+Anonymous usage statistics are **disabled by default**. When explicitly enabled, Solario reports only a random installation identifier, the Solario Local version and architecture (`amd64` or `aarch64`). The cloud stores a one-way hash of the random installation identifier. Home Assistant entity names, energy values, access codes and credentials are not included.
 
 ## Security and restart behavior
 
 The backend runs locally inside the add-on, PostgreSQL is not exposed to the network, and Home Assistant Ingress is the default access method. The Supervisor token is provided only to the collection agent and is not written to the agent's persistent configuration.
 
-Access credentials, settings, entity mappings, built-in agent identity, automations, and energy trackers are persisted in `/data`. A normal add-on restart therefore does not require a new registration.
+Access credentials, settings, entity mappings, built-in agent identity, automations and energy trackers are persisted in `/data`. A normal add-on restart therefore does not require a new registration.
 
 ## Supported platforms
 
