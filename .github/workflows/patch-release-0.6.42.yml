@@ -36,3 +36,5 @@ jobs:
           git add README.md solar_portal/README.md solar_portal/CHANGELOG.md solar_portal/config.yaml
           git commit -m "Publish Solario Local 0.6.42 metadata"
           git push origin HEAD:release/0.6.42
+
+# Trigger after workflow creation.
