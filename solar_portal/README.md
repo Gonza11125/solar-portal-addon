@@ -1,4 +1,4 @@
-# Solario Local 0.6.41
+# Solario Local 0.6.42
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,20 +12,18 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.6.41
+## What changed in 0.6.42
 
-Version 0.6.41 makes the savings price/currency experience consistent across Solario Local and Solario Cloud:
+Version 0.6.42 improves battery SOC reliability in Solario Local:
 
-- the old fixed `1–15 Kč/kWh` slider is replaced by a normal numeric electricity-price input,
-- currency can be searched by name or ISO code,
-- any valid three-letter currency code can be used,
-- electricity price and currency persist per site,
-- older sites without a saved currency safely default to CZK,
-- savings cards, price/kWh labels, chart axis, tooltips and displayed history use the selected currency,
-- displayed savings/history are repriced using the currently configured electricity price,
-- build-time release guards prevent the old fixed slider from returning or the currency picker from disappearing unnoticed.
+- missing or unmapped SOC is shown as unavailable instead of a false `0 %`,
+- unavailable SOC no longer triggers false low-battery or high-battery messages,
+- a genuine measured `0 %` remains valid and is still displayed as zero,
+- missing SOC history samples are not plotted as artificial zero points,
+- Alpha ESS discovery also recognizes `sensor.alpha_ess_battery_soc` and `sensor.alpha_ess_battery_state_of_charge`, while `sensor.alpha_ess_soc_battery` remains the primary exact alias,
+- SOC aliases are accepted only for percentage-compatible sensors.
 
-Solario does **not** perform foreign-exchange conversion. If you select EUR, enter your real electricity price in EUR/kWh; if you select CZK, enter it in CZK/kWh.
+The savings currency and free-form price-per-kWh improvements introduced in 0.6.41 remain included. Solario does **not** perform foreign-exchange conversion: enter the electricity price in the selected currency per kWh.
 
 ## Sensors and automatic mapping
 

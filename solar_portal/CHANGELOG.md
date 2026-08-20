@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.42] - 2026-08-20
+
+- opraveno rozlišení mezi chybějícím SOC baterie a skutečně naměřenými 0 %; nedostupný nebo nenamapovaný SOC se už na hlavním dashboardu nezobrazuje jako falešných `0 %`
+- při nedostupném SOC se nezobrazují falešná upozornění na nízkou baterii ani doporučení založená na vysokém nebo nízkém nabití
+- skutečně naměřená hodnota `0 %` zůstává platnou hodnotou a není zaměněna za nedostupnost
+- historické body nově nesou informaci o dostupnosti SOC, takže chybějící měření nevytvářejí v bateriovém grafu umělé nulové propady
+- rozšířena bezpečná Alpha ESS autodetekce o `sensor.alpha_ess_battery_soc` a `sensor.alpha_ess_battery_state_of_charge`; původní `sensor.alpha_ess_soc_battery` zůstává první přesnou volbou
+- Alpha ESS SOC aliasy se přijmou pouze s kompatibilní procentní jednotkou, takže napětí nebo proud nelze omylem použít jako stav nabití
+- doplněny regresní testy pro scénář nedostupné SOC → 53 % → nedostupné SOC → skutečných 0 % a pro alternativní Alpha ESS názvy
+- finální release kandidát prošel Local backend validací, TypeScript buildem a kompletním Home Assistant image/runtime testem včetně restartu PostgreSQL, záloh, izolace procesů a Web UI
+- po publikaci byly samostatně ověřeny manifesty `0.6.42` i `latest` pro `linux/amd64` a `linux/arm64`
+
 ## [0.6.41] - 2026-08-19
 
 - sjednoceno nastavení ceny elektřiny a měny mezi Solario Local a Solario Cloud; starý pevný slider `1–15 Kč/kWh` už není součástí výsledného Local ani Cloud frontendu
