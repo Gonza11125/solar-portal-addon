@@ -2,20 +2,17 @@
 
 **Solario Local** is a local Home Assistant app for solar PV monitoring, energy overview, diagnostics and safe automations.
 
-Current stable version: **0.6.42**  
+Current stable version: **0.6.43**  
 Supported architectures: **amd64** and **aarch64**
 
-## What's new in 0.6.42
+## What's new in 0.6.43
 
-- missing or unmapped battery SOC is no longer shown as a false `0 %`,
-- unavailable SOC is displayed as unavailable and does not trigger false low/high battery warnings or recommendations,
-- a genuine measured `0 %` battery SOC remains a valid value,
-- battery history no longer draws missing SOC measurements as artificial zero points,
-- Alpha ESS automatic discovery now also recognizes `sensor.alpha_ess_battery_soc` and `sensor.alpha_ess_battery_state_of_charge` while keeping `sensor.alpha_ess_soc_battery` as the primary exact alias,
-- SOC aliases still require a percentage-compatible sensor, preventing voltage/current entities from being selected as battery charge,
-- the release candidate passed Local backend validation and the complete Home Assistant image/runtime smoke test; the published `0.6.42` and `latest` manifests were verified for amd64 and arm64.
+- internal maintenance focused on background reliability and Local ↔ Cloud communication,
+- improved consistency during restart, reconnect and temporary Cloud unavailability,
+- refined internal synchronization and state handling without intended changes to the UI, setup flow or normal day-to-day use,
+- the release candidate passed Solario Local backend validation and the complete Home Assistant image/runtime smoke test.
 
-> **Compatibility note:** Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. Alpha ESS is a verified setup. Deye / Sunsynk / Sol-Ark installations exposed through the Home Assistant Solarman integration are explicitly supported. Version 0.6.40 broadened that support with additional real-world naming variants and a searchable manual fallback picker, and those improvements remain included in 0.6.42.
+> **Compatibility note:** Solario reads existing Home Assistant entities; it does not connect directly to an inverter or data logger. Alpha ESS is a verified setup. Deye / Sunsynk / Sol-Ark installations exposed through the Home Assistant Solarman integration are explicitly supported. Version 0.6.40 broadened that support with additional real-world naming variants and a searchable manual fallback picker, and those improvements remain included in 0.6.43.
 
 [![Add Solario Local repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
