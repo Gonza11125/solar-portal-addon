@@ -1,4 +1,4 @@
-# Solario Local 0.6.42
+# Solario Local 0.6.43
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,18 +12,16 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.6.42
+## What changed in 0.6.43
 
-Version 0.6.42 improves battery SOC reliability in Solario Local:
+Version 0.6.43 is a maintenance update focused on internal technical reliability:
 
-- missing or unmapped SOC is shown as unavailable instead of a false `0 %`,
-- unavailable SOC no longer triggers false low-battery or high-battery messages,
-- a genuine measured `0 %` remains valid and is still displayed as zero,
-- missing SOC history samples are not plotted as artificial zero points,
-- Alpha ESS discovery also recognizes `sensor.alpha_ess_battery_soc` and `sensor.alpha_ess_battery_state_of_charge`, while `sensor.alpha_ess_soc_battery` remains the primary exact alias,
-- SOC aliases are accepted only for percentage-compatible sensors.
+- improved consistency of background Local ↔ Cloud communication,
+- refined behavior during restart, reconnect and temporary Cloud unavailability,
+- improved internal synchronization and state handling,
+- no intentional changes to the normal UI, installation flow or day-to-day operation.
 
-The savings currency and free-form price-per-kWh improvements introduced in 0.6.41 remain included. Solario does **not** perform foreign-exchange conversion: enter the electricity price in the selected currency per kWh.
+The battery SOC improvements from 0.6.42 and the savings currency/free-form price-per-kWh improvements introduced in 0.6.41 remain included. Solario does **not** perform foreign-exchange conversion: enter the electricity price in the selected currency per kWh.
 
 ## Sensors and automatic mapping
 

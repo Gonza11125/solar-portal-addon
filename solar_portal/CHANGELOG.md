@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.43] - 2026-08-21
+
+- interní technická údržba komunikace mezi Solario Local a Solario Cloud
+- zpřesněno chování interních stavů při restartu, opětovném připojení a krátkodobé nedostupnosti Cloudu
+- sjednoceno několik synchronizačních procesů na pozadí a zpracování stavů mezi Local a Cloud
+- změny nemění běžné ovládání, nastavení ani pracovní postup uživatele
+- finální release kandidát prošel Local backend validací, TypeScript buildem a kompletním Home Assistant image/runtime testem včetně restartu PostgreSQL, záloh, izolace procesů a Web UI
+- po publikaci byly samostatně ověřeny manifesty `0.6.43` i `latest` pro `linux/amd64` a `linux/arm64`
+
 ## [0.6.42] - 2026-08-20
 
 - opraveno rozlišení mezi chybějícím SOC baterie a skutečně naměřenými 0 %; nedostupný nebo nenamapovaný SOC se už na hlavním dashboardu nezobrazuje jako falešných `0 %`
