@@ -1,6 +1,6 @@
-# Solario Local 0.7.2 final approved light Home Local reference design
+# Solario Local 0.7.3 reference design fixes
 name: Solario Local
-version: "0.7.2"
+version: "0.7.3"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

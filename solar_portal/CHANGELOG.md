@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.3] - 2026-09-16
+
+- opravena duplicita "LOCAL LOCAL" v logu Home Local rozhraní
+- stavové odznaky "Online" / "Připojeno" na stránkách Zařízení a Nastavení nyní odrážejí skutečný stav spojení s Home Assistant/agentem
+- okamžitá hodnota "Spotřeba domu" na Dashboardu a v Grafech se nově počítá z aktuálního výkonu FVE, sítě a baterie (kW) místo z energetického (kWh) čítače, což odstraňuje nesmyslně vysoké hodnoty a zaseklé grafy
+- doplněny chybějící obrázky na pozadí stránek Upozornění a Zdraví FVE
+
+Pozn.: verze 0.6.44–0.7.2 zavedly redesign světlého rozhraní "Home Local", ale nebyly zde v CHANGELOGu průběžně zaznamenány.
+
 ## [0.6.43] - 2026-08-21
 
 - interní technická údržba komunikace mezi Solario Local a Solario Cloud
