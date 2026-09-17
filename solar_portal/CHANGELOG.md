@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.9] - 2026-09-17
+
+- doděláno posledních pět karet podle návrhů: Přehled, Nastavení a Profil mají nový vzhled, domeček v "Aktuálním toku energie" byl vyříznut ve vyšším rozlišení a bez oříznutých šipek, a šipky kolem něj nyní kreslí aplikace, takže ukazují skutečný směr toku (nabíjení baterie míří k baterii, přetok do sítě dolů) - v návrhu mířila šipka vždy stejně bez ohledu na hodnotu
+- seznam automatizací, "Namapování a dostupnost dat" a "Aktivní upozornění" nově vycházejí ze skutečných dat: dostupnost zdroje se pozná podle toho, zda add-on danou metriku opravdu dostává, a upozornění používají tytéž prahy (baterie ≤ 15 %, ≥ 98 %, přetok ≥ 500 W), na kterých se spouštějí webhooky - dřív si je stránka určovala sama
+- "Nabití baterie" v Dnešní bilanci se dopočítává integrací skutečného výkonu baterie z uložené historie; dosud se odkazovalo na pole `batteryChargedToday`, které nikde neexistuje, takže vždy hlásilo 0,0 kWh
+- Lokalita, Časové pásmo, Jednotky, Zobrazení hodnot, Výchozí stránka, Zobrazovat tipy a Zobrazovat animace se nyní skutečně ukládají a mají viditelný efekt (časové pásmo ovlivňuje všechna data a časy, jednotky teplotu, zobrazení hodnot počet desetinných míst, výchozí stránka to, kam add-on po otevření skočí)
+- změna předvolby se okamžitě projeví na celé stránce; formátovací funkce čtou předvolby z modulu, o kterém React neví, takže se stránka po jejich načtení nebo změně znovu vykreslí
+- tarify v Profilu ukazují skutečné ceny a limity z `/billing/me` pro všechny tři tarify a tlačítka opravdu otevřou platební bránu nebo Solario Cloud; dosud tam byly natvrdo napsané částky 99/249/499 Kč a tlačítka Smart a Pro nedělala nic
+- "Napsat podporu" odkazovalo na soukromý e-mail majitele add-onu; nahrazeno odkazem na Solario Cloud
+- v levém panelu se u tarifu zobrazovala pevná cena "499 Kč / měsíc"; nyní se bere z `/billing/me`
+- `/billing/me` hlásilo u tarifu Smart historii 7 dní, zatímco `localPlanPolicy` (která ji skutečně vynucuje) dává 30 dní; limity se teď počítají z jednoho místa a hlídá je test
+- "Členem od" a e-mail v Profilu nešlo naplnit - účet v Solario Local je přístupový kód, ne registrace e-mailem; nahrazeno domácností a datem propojení s cloudem, které add-on skutečně zná
+- odstraněny nepoužívané komponenty původního rozhraní (`Card`, `PageHeader`, `KpiCard`, `PlanPromo`, `EnergyFlow` a další)
+
 ## [0.7.8] - 2026-09-17
 
 - stránky Grafy, Zařízení, Automatizace, Upozornění a Zdraví FVE byly přestavěny přesně podle dodaných návrhů: nový vzhled karet s barevným podbarvením a barevnou hodnotou, větší písmo a ikony, fotografie na plnou plochu karty místo výřezu a širší odsazení od levého panelu
