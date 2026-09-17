@@ -1,6 +1,6 @@
-# Solario Local 0.7.5 fix fake "OK" status badges + energy/power sensor discovery mix-up
+# Solario Local 0.7.6 fix instantaneous power shown 1000x too high (W read as kW)
 name: Solario Local
-version: "0.7.5"
+version: "0.7.6"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

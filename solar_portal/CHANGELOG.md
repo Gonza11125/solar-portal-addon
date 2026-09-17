@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.6] - 2026-09-17
+
+- okamžitý výkon FVE, sítě a baterie (Přehled, Grafy, Zdraví FVE, Zařízení) se zobrazoval tisíckrát vyšší, než ve skutečnosti je - agent sbírá a ukládá tyto hodnoty ve wattech (viz `expectedUnit: 'W'` v metric-resolver.ts), ale rozhraní k nim jen připisovalo jednotku "kW" bez dělení 1000; běžná ranní hodnota 47 W výroby se tak zobrazovala jako 47,0 kW. Přidán převod na kW na všech místech, kde se okamžitý výkon zobrazuje; energetické (kWh/MWh) hodnoty tímto dotčeny nejsou
+
 ## [0.7.5] - 2026-09-17
 
 - odznak "Systém v pořádku" v hlavičce, pilulka "Živá data" na Přehledu, seznam "Namapování a dostupnost dat", stav "Všechny komponenty v pořádku" a "Rychlá diagnostika" na Zdraví FVE a panely "Stav zdrojů"/"Poslední kontrola" na Upozorněních byly natvrdo zelené/OK bez ohledu na skutečné připojení - nyní všechny vycházejí ze skutečného stavu spojení stejně jako stránka Nastavení, která je již zobrazovala správně
