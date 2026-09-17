@@ -1,6 +1,6 @@
-# Solario Local 0.7.6 fix instantaneous power shown 1000x too high (W read as kW)
+# Solario Local 0.7.7 real settings, backup/export, dark mode, MQTT, webhooks
 name: Solario Local
-version: "0.7.6"
+version: "0.7.7"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -24,6 +24,8 @@ panel_icon: mdi:home-energy-monitor
 panel_title: Solario Local
 panel_admin: true
 homeassistant_api: true
+services:
+  - mqtt:want
 options:
   log_level: info
   database_name: solar_portal

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.7] - 2026-09-17
+
+- Nastavení bylo z velké části jen maketa: název domácnosti/lokalita/časové pásmo byly natvrdo napsaný text, přepínače upozornění a "Automatické zálohování" nešly rozkliknout ani se nikam neukládaly, "Cena elektřiny" byla jen ke čtení, "Zálohovat nyní"/"Obnovit ze zálohy"/"Exportovat data"/"Diagnostické logy" nic nedělaly a "Jazyk"/"Motiv vzhledu" ukazovaly pevnou hodnotu. Teď je vše skutečně funkční: název domácnosti a cena elektřiny jdou upravit přímo v řádku, upozornění se ukládají, "Motiv vzhledu" opravdu přepíná do reálného tmavého režimu, "Zálohovat nyní"/"Obnovit ze zálohy" stahují a nahrávají skutečnou zálohu nastavení a mapování entit, "Exportovat data" stáhne CSV s historií a "Diagnostické logy" zobrazí, který senzor byl pro kterou metriku automaticky vybrán (a umožní ho ručně opravit)
+- přibylo devět tlačítek napříč Přehledem/Zařízeními/Upozorněními/Profilem, která dřív nic nedělala ("Spravovat", "Zobrazit vše", "Zjistit více"...) - teď vedou na odpovídající stránku; "Upravit profil" a "Historie upozornění" byly odstraněny, protože pro ně neexistuje (a v případě profilu ani nemůže existovat) žádná funkce
+- MQTT (lokálně) nyní skutečně publikuje živé metriky a Home Assistant MQTT discovery konfiguraci na lokální broker (add-on si o připojovací údaje řekne automaticky přes `services: mqtt:want`), místo aby jen natvrdo hlásilo "Připraveno"
+- Webhooky měly hotové API na pozadí, ale nikde se nedaly nastavit a nikdy se samy nespustily - teď mají v Nastavení skutečný formulář a spouští se automaticky při nízkém/plném stavu baterie, přetoku do sítě, výpadku zařízení nebo jakékoli z těchto událostí
+
 ## [0.7.6] - 2026-09-17
 
 - okamžitý výkon FVE, sítě a baterie (Přehled, Grafy, Zdraví FVE, Zařízení) se zobrazoval tisíckrát vyšší, než ve skutečnosti je - agent sbírá a ukládá tyto hodnoty ve wattech (viz `expectedUnit: 'W'` v metric-resolver.ts), ale rozhraní k nim jen připisovalo jednotku "kW" bez dělení 1000; běžná ranní hodnota 47 W výroby se tak zobrazovala jako 47,0 kW. Přidán převod na kW na všech místech, kde se okamžitý výkon zobrazuje; energetické (kWh/MWh) hodnoty tímto dotčeny nejsou

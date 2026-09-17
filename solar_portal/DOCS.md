@@ -1,4 +1,4 @@
-# Solario Local 0.7.6 — Configuration and Technical Documentation
+# Solario Local 0.7.7 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
