@@ -1,6 +1,6 @@
-# Solario Local 0.7.7 real settings, backup/export, dark mode, MQTT, webhooks
+# Solario Local 0.7.8 five reference pages rebuilt, real automation list, real period comparison
 name: Solario Local
-version: "0.7.7"
+version: "0.7.8"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

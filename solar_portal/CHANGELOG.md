@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.8] - 2026-09-17
+
+- stránky Grafy, Zařízení, Automatizace, Upozornění a Zdraví FVE byly přestavěny přesně podle dodaných návrhů: nový vzhled karet s barevným podbarvením a barevnou hodnotou, větší písmo a ikony, fotografie na plnou plochu karty místo výřezu a širší odsazení od levého panelu
+- fotografie byly znovu vyextrahovány z návrhů v plném rozlišení - dosavadní obrázky byly zmenšeniny, které se v rozhraní zvětšovaly zpět a byly proto rozmazané; `device-grid.webp` měl navíc poškozenou hlavičku a nešel vůbec vykreslit
+- obrázek na Zdraví FVE měl v sobě napevno vykreslenou maketu karty "Celkový stav systému"; dosavadní pokus o její začernění domaloval do obrázku druhý dům. Nyní se používá čistý výřez z návrhu a skutečná karta se stavem je umístěna přesně přes tu vytištěnou
+- seznam automatizací se načítal z `/automations`, což je adresa, kterou backend nikdy neposkytoval - stránka proto vždy ukazovala hlášku "žádné automatizace", i když jich systém měl plno. Nyní čte skutečné `/user-automations` a zobrazuje název, podmínky, poslední spuštění, režim a zdroj každé automatizace, s vyhledáváním a filtrem stavu
+- "Porovnání období" v Grafech dřív dopočítávalo předchozí období jako násobek toho aktuálního (výroba × 0,84) - tedy vymyšlené číslo. Nyní se obě období počítají ze skutečné uložené historie a odznaky "↑/↓ %" u výroby a spotřeby z nich vycházejí
+- nové styly kolidovaly s existujícími pravidly `product-redesign.css`, která používají stejnou předponu `sl-`; kvůli tomu se například karta "Aktuální tok energie" vykreslovala jako tmavé kruhy. Nové rozhraní má teď vlastní předponu `sol-`
+
 ## [0.7.7] - 2026-09-17
 
 - Nastavení bylo z velké části jen maketa: název domácnosti/lokalita/časové pásmo byly natvrdo napsaný text, přepínače upozornění a "Automatické zálohování" nešly rozkliknout ani se nikam neukládaly, "Cena elektřiny" byla jen ke čtení, "Zálohovat nyní"/"Obnovit ze zálohy"/"Exportovat data"/"Diagnostické logy" nic nedělaly a "Jazyk"/"Motiv vzhledu" ukazovaly pevnou hodnotu. Teď je vše skutečně funkční: název domácnosti a cena elektřiny jdou upravit přímo v řádku, upozornění se ukládají, "Motiv vzhledu" opravdu přepíná do reálného tmavého režimu, "Zálohovat nyní"/"Obnovit ze zálohy" stahují a nahrávají skutečnou zálohu nastavení a mapování entit, "Exportovat data" stáhne CSV s historií a "Diagnostické logy" zobrazí, který senzor byl pro kterou metriku automaticky vybrán (a umožní ho ručně opravit)
