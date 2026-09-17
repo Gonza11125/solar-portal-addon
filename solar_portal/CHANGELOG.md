@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.5] - 2026-09-17
+
+- odznak "Systém v pořádku" v hlavičce, pilulka "Živá data" na Přehledu, seznam "Namapování a dostupnost dat", stav "Všechny komponenty v pořádku" a "Rychlá diagnostika" na Zdraví FVE a panely "Stav zdrojů"/"Poslední kontrola" na Upozorněních byly natvrdo zelené/OK bez ohledu na skutečné připojení - nyní všechny vycházejí ze skutečného stavu spojení stejně jako stránka Nastavení, která je již zobrazovala správně
+- odstraněno pravidlo přepisující pozadí stránky Zdraví FVE na health-hero.webp - tento obrázek měl v sobě napevno vykreslenou maketu karty "Celkový stav systému / V pořádku", která se překrývala se skutečnou dynamickou kartou a zobrazovala dvě protichůdná hlášení najednou
+- automatické rozpoznávání senzorů (průvodce nastavením v agentovi) řadilo jakýkoli senzor s jednotkou obsahující písmeno "w" mezi výkonové senzory - jelikož "Wh", "kWh" i "MWh" toto písmeno také obsahují, mohl se jako zdroj okamžitého výkonu (power_now/grid_power/battery_power) omylem navrhnout kumulativní energetický čítač, což vysvětluje nesmyslně vysoké a strnulé hodnoty výkonu na Přehledu a v Grafech
+
 ## [0.7.4] - 2026-09-16
 
 - nové rozpoznatelné entity `entity_grid_power` a `entity_battery_power` (okamžitý výkon sítě a baterie ve W) - dosud tato data agent vůbec nesbíral, přestože je dashboard i graf toku energie zobrazovaly (vždy jako 0)

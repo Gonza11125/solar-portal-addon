@@ -1,6 +1,6 @@
-# Solario Local 0.7.4 real-time grid/battery power + real reference imagery
+# Solario Local 0.7.5 fix fake "OK" status badges + energy/power sensor discovery mix-up
 name: Solario Local
-version: "0.7.4"
+version: "0.7.5"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
