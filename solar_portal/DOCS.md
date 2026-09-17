@@ -1,4 +1,4 @@
-# Solario Local 0.7.3 — Configuration and Technical Documentation
+# Solario Local 0.7.4 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -22,6 +22,8 @@ Optional manual energy entity overrides:
 - `entity_battery_voltage`
 - `entity_grid_import`
 - `entity_grid_export`
+- `entity_grid_power`
+- `entity_battery_power`
 - `entity_home_consumption`
 - `entity_solar_production`
 - `entity_inverter_power`

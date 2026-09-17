@@ -1,4 +1,4 @@
-# Solario Local 0.7.3
+# Solario Local 0.7.4
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,14 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.4
+
+Version 0.7.4 adds real-time grid and battery power to the data pipeline:
+
+- new optional entity overrides `entity_grid_power` and `entity_battery_power` (instantaneous W), plus automatic discovery for both - these values were previously always zero because nothing collected them, even though the dashboard and energy-flow widget already displayed them,
+- the 24-hour history now stores instantaneous grid/battery power per point, so the "Consumption" and "Grid" lines in the energy chart are computed from real data instead of the cumulative energy (kWh) counter,
+- the battery state-of-charge (%) line in the chart now uses its own right-hand axis instead of sharing (and distorting) the kW-scaled axis.
 
 ## What changed in 0.7.3
 

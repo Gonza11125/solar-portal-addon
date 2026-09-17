@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.4] - 2026-09-16
+
+- nové rozpoznatelné entity `entity_grid_power` a `entity_battery_power` (okamžitý výkon sítě a baterie ve W) - dosud tato data agent vůbec nesbíral, přestože je dashboard i graf toku energie zobrazovaly (vždy jako 0)
+- historie (24h graf) nyní ukládá okamžitý výkon sítě a baterie u každého bodu, takže se "Spotřeba" a "Síť" v grafu Výroba a spotřeba počítají ze skutečných dat místo z energetického (kWh) čítače
+- graf stavu baterie (%) má nyní vlastní pravou osu, aby nedeformoval měřítko výkonové (kW) osy
+- home-hero.webp, alert-hero.webp, health-hero.webp, device-pv.webp a device-wallbox.webp nahrazeny skutečnými obrázky (předchozí soubory byly buď neplatná binární data, nebo poškozený obsah)
+
 ## [0.7.3] - 2026-09-16
 
 - opravena duplicita "LOCAL LOCAL" v logu Home Local rozhraní

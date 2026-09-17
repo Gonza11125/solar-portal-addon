@@ -1,6 +1,6 @@
-# Solario Local 0.7.3 reference design fixes
+# Solario Local 0.7.4 real-time grid/battery power + real reference imagery
 name: Solario Local
-version: "0.7.3"
+version: "0.7.4"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -41,6 +41,8 @@ options:
   entity_kotel_switch: ""
   entity_grid_import: ""
   entity_grid_export: ""
+  entity_grid_power: ""
+  entity_battery_power: ""
   entity_home_consumption: ""
   entity_solar_production: ""
   entity_inverter_power: ""
@@ -67,6 +69,8 @@ schema:
   entity_kotel_switch: str?
   entity_grid_import: str?
   entity_grid_export: str?
+  entity_grid_power: str?
+  entity_battery_power: str?
   entity_home_consumption: str?
   entity_solar_production: str?
   entity_inverter_power: str?
