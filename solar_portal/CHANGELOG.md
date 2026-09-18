@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.5] - 2026-09-18
+
+- opravena chybějící konverze jednotek u výkonových hodnot (FVE, spotřeba, síť, baterie): pokud entita v Home Assistantu hlásí výkon ve W, hodnota se nyní správně převede na kW - dříve se zobrazovalo např. "Spotřeba domu 11 064,0 kW" místo "11,1 kW"
+- opravena chyba, kdy systém hlásil "Dům offline" i s čerstvě přijatými daty - kontrola stáří dat byla citlivá na malý časový posun hodin mezi kontejnerem add-onu a prohlížečem
+
 ## [0.7.4] - 2026-09-16
 
 - nové rozpoznatelné entity `entity_grid_power` a `entity_battery_power` (okamžitý výkon sítě a baterie ve W) - dosud tato data agent vůbec nesbíral, přestože je dashboard i graf toku energie zobrazovaly (vždy jako 0)
