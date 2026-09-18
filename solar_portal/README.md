@@ -1,4 +1,4 @@
-# Solario Local 0.7.13
+# Solario Local 0.7.14
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,10 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.14
+
+- The tariff cards under "Advanced management" on the Profile page were still hardcoded at 9.99 and 19.99 EUR - the last place that had not been converted. They now show what the billing API reports, like the rest of the app. The Smart card also claimed 7 days of history where the add-on actually serves 30.
 
 ## What changed in 0.7.13
 

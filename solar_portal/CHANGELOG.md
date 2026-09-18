@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.14] - 2026-09-18
+
+- ceny tarifů opraveny i na kartě "Pokročilá správa" v Profilu - jediném zbylém místě, kde se ještě zobrazovaly natvrdo napsané částky 9,99 a 19,99 EUR. Nyní se berou z `/billing/me` jako na hlavní stránce Profilu; u tarifu Smart se navíc slibovalo 7 dní historie, ačkoli add-on jich dává 30
+
 ## [0.7.13] - 2026-09-18
 
 - ceny tarifů nastaveny na skutečné: Local 99 Kč, Smart 249 Kč, Pro 499 Kč měsíčně. Dosud backend hlásil 0 / 9,99 / 19,99 EUR a Profil je tak i zobrazoval

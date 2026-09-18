@@ -1,6 +1,6 @@
-# Solario Local 0.7.13 real tariff prices, sharper imagery, layout that scales with the screen
+# Solario Local 0.7.14 real tariff prices everywhere they are shown
 name: Solario Local
-version: "0.7.13"
+version: "0.7.14"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
