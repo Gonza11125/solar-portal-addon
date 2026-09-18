@@ -1,23 +1,95 @@
 # Changelog
 
+## [0.7.12] - 2026-09-18
+
+- **Aktualizace add-onu konečně projde.** Home Assistant si image nestaví, stahuje ho hotový z GHCR, a jeho build na větvi `main` selhával od verze 0.7.7 na kontrole `audit:i18n` (naposledy se úspěšně publikovala 0.7.6). Proto nešlo aktualizovat na nic novějšího. Doplněny všechny chybějící překlady na obou liniích vývoje, kontrola je čistá a build projde celý
+- sloučeny dvě paralelně vyvíjené linie: přestavba všech osmi karet podle dodaných návrhů, oprava dnešní výroby a funkční ovládací prvky na jedné straně, a SVG ilustrace, převod výkonu v agentovi a oprava falešného "offline" na straně druhé
+- **převod výkonu z wattů na kilowatty sjednocen na jedno místo.** Obě linie ho dělaly jinde - agent při sběru, rozhraní při zobrazení - a dohromady by daly hodnoty 1000x menší. Ponechán převod v agentovi, protože data uložená od verze 0.7.5 už jsou v kW a přepnutí zpět by rozbilo existující historii. Dopočítáno na všechna navazující místa: deklarované jednotky v katalogu metrik a v MQTT discovery (hlásily `W`, ačkoli hodnota už byla v kW), práh pro webhook přetoku (0,5 kW místo 500 W, jinak by se nikdy nespustil) a výpočet nabití baterie z historie
+
+## [0.7.11] - 2026-09-18
+
+- **Oprava selhání aktualizace add-onu** ("An unknown error occurred with app ad5e4ef7_solar_portal"). Image se staví přes několik kontrol a jedna z nich, `audit:i18n`, hlídá, že každý český text v rozhraní a každá česká hláška z backendu má anglický protějšek ve slovníku. Tato kontrola padala a build se tím zastavil - ve verzi 0.7.6 na 14 textech, po přestavbě stránek na 121. Doplněny všechny chybějící překlady, kontrola je nyní čistá
+- při té příležitosti se ukázalo, že `ResidenceLightTranslationPairs` a `ResidenceLightAuditTranslationPairs` četl jen audit, ale běhové prostředí je vůbec nenačítalo - stránky Home Local proto zůstávaly v češtině i po přepnutí do angličtiny. Nyní jsou zapojené a anglické rozhraní skutečně funguje (ověřeno na všech osmi stránkách)
+
+## [0.7.10] - 2026-09-18
+
+- **"Výroba 500 kWh" a podobné nesmysly opraveny.** Automatické rozpoznávání senzorů dávalo u metriky "Výroba FVE dnes" vyšší skóre senzoru s "total"/"lifetime" v názvu (+5) než senzoru s "today"/"daily" (+3) - celkový čítač od instalace se tak dostal do kolonky dnešní výroby. Nyní se u denních metrik celkové čítače penalizují a celkové čítače mají vlastní kolonku (`solar_production_total`, `grid_import_total`, `grid_export_total`), o kterou si denní metriky nekonkurují
+- add-on se navíc už nespoléhá jen na název a `state_class`: u každého energetického senzoru se ptá Recorderu, kolik ukazoval hned po půlnoci. Pokud už tehdy držel většinu své hodnoty, jde o kumulativní čítač a dnešní výroba se počítá jako rozdíl. Senzor, který přes půlnoc nespadne na nulu, se navíc trvale označí jako kumulativní - obojí pokryto testy
+- každé tlačítko, řádek a dlaždice se šipkou "›" nyní skutečně někam vede: karty s počty upozornění odrolují na příslušný panel, řádky zdrojů a komponent otevřou Zařízení, řádek automatizace otevře editor, karta "Systém v pořádku" otevře Zdraví FVE. Šipka se vykresluje jen tam, kde opravdu něco dělá
+- doplněna chybějící tlačítka z předlohy: "Spustit test" v Rychlé diagnostice (skutečně se zeptá backendu a vypíše, co odpověděl), "Zobrazit vše" u Doporučení údržby a zvětšení grafu na Grafech
+- Nastavení spadla na bílou stránku, pokud odpověď na uložení webhooku nepřišla v očekávaném tvaru (`Cannot read properties of undefined`); stav se teď přepíše jen platným objektem a neúspěšné přepnutí se vrátí zpět
+- vzhled všech osmi karet sladěn s předlohou: hustota, velikosti karet, ikon a písma, rozložení sloupců a řádků v Nastavení (popisek vlevo, ovládací prvek vyplní zbytek řádku) a graf na Přehledu kreslí dvě řady jako v návrhu
+
+## [0.7.9] - 2026-09-17
+
+- doděláno posledních pět karet podle návrhů: Přehled, Nastavení a Profil mají nový vzhled, domeček v "Aktuálním toku energie" byl vyříznut ve vyšším rozlišení a bez oříznutých šipek, a šipky kolem něj nyní kreslí aplikace, takže ukazují skutečný směr toku (nabíjení baterie míří k baterii, přetok do sítě dolů) - v návrhu mířila šipka vždy stejně bez ohledu na hodnotu
+- seznam automatizací, "Namapování a dostupnost dat" a "Aktivní upozornění" nově vycházejí ze skutečných dat: dostupnost zdroje se pozná podle toho, zda add-on danou metriku opravdu dostává, a upozornění používají tytéž prahy (baterie ≤ 15 %, ≥ 98 %, přetok ≥ 500 W), na kterých se spouštějí webhooky - dřív si je stránka určovala sama
+- "Nabití baterie" v Dnešní bilanci se dopočítává integrací skutečného výkonu baterie z uložené historie; dosud se odkazovalo na pole `batteryChargedToday`, které nikde neexistuje, takže vždy hlásilo 0,0 kWh
+- Lokalita, Časové pásmo, Jednotky, Zobrazení hodnot, Výchozí stránka, Zobrazovat tipy a Zobrazovat animace se nyní skutečně ukládají a mají viditelný efekt (časové pásmo ovlivňuje všechna data a časy, jednotky teplotu, zobrazení hodnot počet desetinných míst, výchozí stránka to, kam add-on po otevření skočí)
+- změna předvolby se okamžitě projeví na celé stránce; formátovací funkce čtou předvolby z modulu, o kterém React neví, takže se stránka po jejich načtení nebo změně znovu vykreslí
+- tarify v Profilu ukazují skutečné ceny a limity z `/billing/me` pro všechny tři tarify a tlačítka opravdu otevřou platební bránu nebo Solario Cloud; dosud tam byly natvrdo napsané částky 99/249/499 Kč a tlačítka Smart a Pro nedělala nic
+- "Napsat podporu" odkazovalo na soukromý e-mail majitele add-onu; nahrazeno odkazem na Solario Cloud
+- v levém panelu se u tarifu zobrazovala pevná cena "499 Kč / měsíc"; nyní se bere z `/billing/me`
+- `/billing/me` hlásilo u tarifu Smart historii 7 dní, zatímco `localPlanPolicy` (která ji skutečně vynucuje) dává 30 dní; limity se teď počítají z jednoho místa a hlídá je test
+- "Členem od" a e-mail v Profilu nešlo naplnit - účet v Solario Local je přístupový kód, ne registrace e-mailem; nahrazeno domácností a datem propojení s cloudem, které add-on skutečně zná
+- odstraněny nepoužívané komponenty původního rozhraní (`Card`, `PageHeader`, `KpiCard`, `PlanPromo`, `EnergyFlow` a další)
+
+## [0.7.8] - 2026-09-17
+
+- stránky Grafy, Zařízení, Automatizace, Upozornění a Zdraví FVE byly přestavěny přesně podle dodaných návrhů: nový vzhled karet s barevným podbarvením a barevnou hodnotou, větší písmo a ikony, fotografie na plnou plochu karty místo výřezu a širší odsazení od levého panelu
+- fotografie byly znovu vyextrahovány z návrhů v plném rozlišení - dosavadní obrázky byly zmenšeniny, které se v rozhraní zvětšovaly zpět a byly proto rozmazané; `device-grid.webp` měl navíc poškozenou hlavičku a nešel vůbec vykreslit
+- obrázek na Zdraví FVE měl v sobě napevno vykreslenou maketu karty "Celkový stav systému"; dosavadní pokus o její začernění domaloval do obrázku druhý dům. Nyní se používá čistý výřez z návrhu a skutečná karta se stavem je umístěna přesně přes tu vytištěnou
+- seznam automatizací se načítal z `/automations`, což je adresa, kterou backend nikdy neposkytoval - stránka proto vždy ukazovala hlášku "žádné automatizace", i když jich systém měl plno. Nyní čte skutečné `/user-automations` a zobrazuje název, podmínky, poslední spuštění, režim a zdroj každé automatizace, s vyhledáváním a filtrem stavu
+- "Porovnání období" v Grafech dřív dopočítávalo předchozí období jako násobek toho aktuálního (výroba × 0,84) - tedy vymyšlené číslo. Nyní se obě období počítají ze skutečné uložené historie a odznaky "↑/↓ %" u výroby a spotřeby z nich vycházejí
+- nové styly kolidovaly s existujícími pravidly `product-redesign.css`, která používají stejnou předponu `sl-`; kvůli tomu se například karta "Aktuální tok energie" vykreslovala jako tmavé kruhy. Nové rozhraní má teď vlastní předponu `sol-`
+
+## [0.7.7] - 2026-09-17
+
+- Nastavení bylo z velké části jen maketa: název domácnosti/lokalita/časové pásmo byly natvrdo napsaný text, přepínače upozornění a "Automatické zálohování" nešly rozkliknout ani se nikam neukládaly, "Cena elektřiny" byla jen ke čtení, "Zálohovat nyní"/"Obnovit ze zálohy"/"Exportovat data"/"Diagnostické logy" nic nedělaly a "Jazyk"/"Motiv vzhledu" ukazovaly pevnou hodnotu. Teď je vše skutečně funkční: název domácnosti a cena elektřiny jdou upravit přímo v řádku, upozornění se ukládají, "Motiv vzhledu" opravdu přepíná do reálného tmavého režimu, "Zálohovat nyní"/"Obnovit ze zálohy" stahují a nahrávají skutečnou zálohu nastavení a mapování entit, "Exportovat data" stáhne CSV s historií a "Diagnostické logy" zobrazí, který senzor byl pro kterou metriku automaticky vybrán (a umožní ho ručně opravit)
+- přibylo devět tlačítek napříč Přehledem/Zařízeními/Upozorněními/Profilem, která dřív nic nedělala ("Spravovat", "Zobrazit vše", "Zjistit více"...) - teď vedou na odpovídající stránku; "Upravit profil" a "Historie upozornění" byly odstraněny, protože pro ně neexistuje (a v případě profilu ani nemůže existovat) žádná funkce
+- MQTT (lokálně) nyní skutečně publikuje živé metriky a Home Assistant MQTT discovery konfiguraci na lokální broker (add-on si o připojovací údaje řekne automaticky přes `services: mqtt:want`), místo aby jen natvrdo hlásilo "Připraveno"
+- Webhooky měly hotové API na pozadí, ale nikde se nedaly nastavit a nikdy se samy nespustily - teď mají v Nastavení skutečný formulář a spouští se automaticky při nízkém/plném stavu baterie, přetoku do sítě, výpadku zařízení nebo jakékoli z těchto událostí
+
+## [0.7.6] - 2026-09-17
+
+- okamžitý výkon FVE, sítě a baterie (Přehled, Grafy, Zdraví FVE, Zařízení) se zobrazoval tisíckrát vyšší, než ve skutečnosti je - agent sbírá a ukládá tyto hodnoty ve wattech (viz `expectedUnit: 'W'` v metric-resolver.ts), ale rozhraní k nim jen připisovalo jednotku "kW" bez dělení 1000; běžná ranní hodnota 47 W výroby se tak zobrazovala jako 47,0 kW. Přidán převod na kW na všech místech, kde se okamžitý výkon zobrazuje; energetické (kWh/MWh) hodnoty tímto dotčeny nejsou
+
+## [0.7.5] - 2026-09-17
+
+- odznak "Systém v pořádku" v hlavičce, pilulka "Živá data" na Přehledu, seznam "Namapování a dostupnost dat", stav "Všechny komponenty v pořádku" a "Rychlá diagnostika" na Zdraví FVE a panely "Stav zdrojů"/"Poslední kontrola" na Upozorněních byly natvrdo zelené/OK bez ohledu na skutečné připojení - nyní všechny vycházejí ze skutečného stavu spojení stejně jako stránka Nastavení, která je již zobrazovala správně
+- odstraněno pravidlo přepisující pozadí stránky Zdraví FVE na health-hero.webp - tento obrázek měl v sobě napevno vykreslenou maketu karty "Celkový stav systému / V pořádku", která se překrývala se skutečnou dynamickou kartou a zobrazovala dvě protichůdná hlášení najednou
+- automatické rozpoznávání senzorů (průvodce nastavením v agentovi) řadilo jakýkoli senzor s jednotkou obsahující písmeno "w" mezi výkonové senzory - jelikož "Wh", "kWh" i "MWh" toto písmeno také obsahují, mohl se jako zdroj okamžitého výkonu (power_now/grid_power/battery_power) omylem navrhnout kumulativní energetický čítač, což vysvětluje nesmyslně vysoké a strnulé hodnoty výkonu na Přehledu a v Grafech
+
+> Následující záznamy 0.7.5-0.7.8 pocházejí z druhé, souběžně vyvíjené linie
+> (větev `main`). Čísla verzí se proto výše opakují; publikovaná z nich byla
+> pouze 0.7.5 a 0.7.6.
+
+## [0.7.8] - 2026-09-18
+
+- nahrazeny všechny výřezy fotek (home-hero, alert-hero, health-hero, fotovoltaika, wallbox) vlastními vektorovými (SVG) ilustracemi vykreslenými přesně na míru rozměrům každého místa - žádné cropování ani nechtěné přiblížení
+- pro vizuální konzistenci dostaly stejný ilustrační styl i baterie a distribuční síť (dřív reálné fotky, teď v jednotném stylu se zbytkem)
+- zvětšeno písmo napříč téměř celým rozhraním - spousta textu byla 8-11 px, nyní minimálně 12 px a úměrně větší nadpisy
+
 ## [0.7.7] - 2026-09-18
 
-- desítky tlačítek v Home Local rozhraní byly čistě dekorativní - nyní skutečně navigují, ukládají nebo stahují reálná data
-- přepínače upozornění a zálohování v Nastavení nyní reálně ukládají svůj stav
-- cenu elektřiny lze v Nastavení upravit a uloží se na server
-- "Zálohovat nyní" doopravdy vyžádá okamžitou zálohu; "Exportovat data"/"Vytvořit report"/"Diagnostické logy" stáhnou reálná data
-- přepínač Měsíčně/Ročně u tarifů přepočítává ceny; tlačítka podpory otevřou e-mail
+- desítky tlačítek v Home Local rozhraní byly čistě dekorativní (bez jakékoli akce) - "Spravovat", "Zobrazit vše", "Spravovat zařízení", "Zobrazit detail", "Upravit profil", "Nastavit", "Zobrazit", "Exportovat data", "Zálohovat nyní", "Obnovit ze zálohy" a další nyní skutečně něco dělají (navigace na existující plnohodnotné stránky, reálné API volání, stažení souboru)
+- všech 5 přepínačů upozornění a přepínač automatického zálohování v Nastavení nyní reálně ukládají svůj stav místo aby byly čistě vizuální
+- cenu elektřiny lze v Nastavení skutečně upravit a uloží se na server
+- nové tlačítko "Zálohovat nyní" doopravdy vyžádá okamžitou zálohu (nový endpoint `POST /system/backup/trigger` + root scheduler v `entrypoint.sh` teď kontroluje požadavek každých 10 s místo čekání celou hodinu)
+- nové tlačítko "Exportovat data" stáhne reálná data (nový endpoint `GET /data/export`); "Vytvořit report" a "Diagnostické logy" mají také funkční stažení
+- přepínač Měsíčně/Ročně u tarifů nyní skutečně přepočítává ceny (roční sleva 17 %)
+- "Napsat podporu"/"Centrum nápovědy" otevřou e-mail na podporu
 
 ## [0.7.6] - 2026-09-18
 
-- opraveno natahování/deformace hero fotek (Přehled, Upozornění, Zdraví FVE) na desktopu - CSS je natahovalo na pevný poměr stran, správná "cover" varianta byla omylem jen v mobilní verzi stylů
-- kartičky s metrikami na Přehledu jsou nyní plně neprůhledné, aby pod nimi neprosvítal obsah fotky na pozadí
-- nahrazena fotka domu na Přehledu za čistší výřez lépe sedící na širokou plochu banneru
+- opraveno natahování/deformace hero fotek (Přehled, Upozornění, Zdraví FVE) na desktopu - CSS je natahovalo na pevný poměr stran (`52%/70%/58% x 100%`), správná "cover" varianta byla omylem jen v mobilní verzi stylů
+- kartičky s metrikami na Přehledu (FVE, Spotřeba domu, Baterie, Síť) jsou nyní plně neprůhledné, aby pod nimi neprosvítal obsah fotky na pozadí
+- nahrazena fotka domu na Přehledu za čistší výřez bez textu a tlačítek, lépe sedící na širokou plochu banneru
 
 ## [0.7.5] - 2026-09-18
 
 - opravena chybějící konverze jednotek u výkonových hodnot (FVE, spotřeba, síť, baterie): pokud entita v Home Assistantu hlásí výkon ve W, hodnota se nyní správně převede na kW - dříve se zobrazovalo např. "Spotřeba domu 11 064,0 kW" místo "11,1 kW"
-- opravena chyba, kdy systém hlásil "Dům offline" i s čerstvě přijatými daty - kontrola stáří dat byla citlivá na malý časový posun hodin mezi kontejnerem add-onu a prohlížečem
+- opravena chyba, kdy systém hlásil "Dům offline" i s čerstvě přijatými daty - kontrola stáří dat byla citlivá na malý časový posun hodin mezi kontejnerem add-onu a prohlížečem a při posunu v opačném směru vždy vyhodnotila data jako neplatná
 
 ## [0.7.4] - 2026-09-16
 
@@ -28,132 +100,143 @@
 
 ## [0.7.3] - 2026-09-16
 
-- opravena duplicita "LOCAL LOCAL" v logu Home Local rozhraní
-- stavové odznaky "Online" / "Připojeno" na stránkách Zařízení a Nastavení nyní odrážejí skutečný stav spojení s Home Assistant/agentem
-- okamžitá hodnota "Spotřeba domu" na Dashboardu a v Grafech se nově počítá z aktuálního výkonu FVE, sítě a baterie (kW) místo z energetického (kWh) čítače, což odstraňuje nesmyslně vysoké hodnoty a zaseklé grafy
-- doplněny chybějící obrázky na pozadí stránek Upozornění a Zdraví FVE
-
-Pozn.: verze 0.6.44–0.7.2 zavedly redesign světlého rozhraní "Home Local", ale nebyly zde v CHANGELOGu průběžně zaznamenány.
-
-## [0.6.43] - 2026-08-21
-
-- interní technická údržba komunikace mezi Solario Local a Solario Cloud
-- zpřesněno chování interních stavů při restartu, opětovném připojení a krátkodobé nedostupnosti Cloudu
-- sjednoceno několik synchronizačních procesů na pozadí a zpracování stavů mezi Local a Cloud
-- změny nemění běžné ovládání, nastavení ani pracovní postup uživatele
-- finální release kandidát prošel Local backend validací, TypeScript buildem a kompletním Home Assistant image/runtime testem včetně restartu PostgreSQL, záloh, izolace procesů a Web UI
-- po publikaci byly samostatně ověřeny manifesty `0.6.43` i `latest` pro `linux/amd64` a `linux/arm64`
-
-## [0.6.42] - 2026-08-20
-
-- opraveno rozlišení mezi chybějícím SOC baterie a skutečně naměřenými 0 %; nedostupný nebo nenamapovaný SOC se už na hlavním dashboardu nezobrazuje jako falešných `0 %`
-- při nedostupném SOC se nezobrazují falešná upozornění na nízkou baterii ani doporučení založená na vysokém nebo nízkém nabití
-- skutečně naměřená hodnota `0 %` zůstává platnou hodnotou a není zaměněna za nedostupnost
-- historické body nově nesou informaci o dostupnosti SOC, takže chybějící měření nevytvářejí v bateriovém grafu umělé nulové propady
-- rozšířena bezpečná Alpha ESS autodetekce o `sensor.alpha_ess_battery_soc` a `sensor.alpha_ess_battery_state_of_charge`; původní `sensor.alpha_ess_soc_battery` zůstává první přesnou volbou
-- Alpha ESS SOC aliasy se přijmou pouze s kompatibilní procentní jednotkou, takže napětí nebo proud nelze omylem použít jako stav nabití
-- doplněny regresní testy pro scénář nedostupné SOC → 53 % → nedostupné SOC → skutečných 0 % a pro alternativní Alpha ESS názvy
-- finální release kandidát prošel Local backend validací, TypeScript buildem a kompletním Home Assistant image/runtime testem včetně restartu PostgreSQL, záloh, izolace procesů a Web UI
-- po publikaci byly samostatně ověřeny manifesty `0.6.42` i `latest` pro `linux/amd64` a `linux/arm64`
-
-## [0.6.41] - 2026-08-19
-
-- sjednoceno nastavení ceny elektřiny a měny mezi Solario Local a Solario Cloud; starý pevný slider `1–15 Kč/kWh` už není součástí výsledného Local ani Cloud frontendu
-- cena za kWh se zadává jako volné kladné číslo a měnu lze vyhledat podle názvu nebo ISO kódu; podporován je libovolný platný třípísmenný kód měny
-- cena a měna se ukládají per lokalita; starší lokality bez uložené měny bezpečně používají CZK
-- karty Dnes / Měsíc / Celkem, cena za kWh, osa grafu, tooltipy a zobrazená historie používají stejnou zvolenou měnu
-- zobrazené historické úspory se přepočítávají podle aktuálně nastavené ceny, aby po změně ceny nebo měny nevznikaly smíšené hodnoty
-- doplněny build-artifact kontroly pro Local i Cloud; release se zastaví, pokud by se do výsledného bundle vrátil starý slider nebo v něm chyběl měnový picker
-- Cloud backend doplnil per-site endpoint pro bezpečné uložení a načtení ceny/měny; validace přijímá i měny s vysokými nominálními cenami a odmítá neplatné vstupy
-- finální release kandidát prošel Local backend validací, Cloud backendem (64/64 testů), TypeScript buildy, dependency audity, překladovým auditem, frontend buildy a kompletním Home Assistant image/runtime smoke testem
-- po publikaci byly samostatným ověřovacím jobem potvrzeny manifesty `0.6.41` i `latest` pro `linux/amd64` a `linux/arm64`
-
-## [0.6.40] - 2026-08-18
-
-- rozšířena kompatibilita Deye / Solarman o reálné názvy `sensor.inverter_*`, včetně variant `energy_import`, `energy_export`, `pv_power` a `battery_capacity`
-- přidán filtrovaný ruční výběr senzorů přímo v Solariu; lze hledat podle friendly name i `entity_id`, doporučené kompatibilní kandidáty řadí Solario nahoru
-- uživatel může opravit i technicky validní, ale významově špatně automaticky nalezený senzor; ruční volba přetrvá restart a lze ji vrátit zpět na automatiku
-- doplněny regresní testy pro skutečné Deye/Solarman názvy a ochranu proti záměně importu/exportu
-- do Úspor přidán vyhledávaný výběr měny podle názvu nebo ISO kódu; staré instalace zůstávají na CZK
-- odstraněn pevný rozsah 1–15 Kč/kWh a nahrazen volným číselným vstupem ceny za kWh, takže fungují EUR, USD, JPY, HUF a další měny s odlišným nominálním rozsahem
-- karty úspor, cena/kWh, osa grafu, tooltip i historické úspory používají zvolenou měnu přes standardní lokalizované formátování
-- historické úspory se při změně ceny/měny konzistentně přecení, aby graf nemíchal body vypočtené různými cenami
-- měna a cena se ukládají per lokalita a přenášejí se i při propojení Local → Cloud
-- přidána anonymní opt-in telemetrie verze; ve výchozím stavu je vypnutá a reportuje pouze náhodné ID instalace, verzi Solario Local a architekturu
-- Solario Cloud dostává stránku Adopce verzí s počtem hlásících instalací, aktivitou za 24 h / 7 dní a rozdělením podle verzí; čísla výslovně představují jen opt-in instalace, ne celkový počet instalací ani GHCR stažení
-- finální release kandidát prošel backend testy, Deye/entity-mapping regresními testy, savings-history testy, i18n auditem, cloud buildem a kompletním Home Assistant image/runtime smoke testem
-
-## [0.6.37] - 2026-08-16
-
-- doplněna explicitní kompatibilita pro standardní entity Deye / Sunsynk / Sol-Ark vytvořené Home Assistant integrací Solarman
-- automaticky se mapuje aktuální výkon, výroba FVE, odběr ze sítě, přetoky, spotřeba domu, SOC a napětí baterie a výkon PV1–PV4
-- pokud jsou dostupné kumulativní čítače, mají přednost před denními senzory, aby Solario mohlo přes Home Assistant Recorder přesně odvodit dnešní i měsíční hodnoty
-- Solarman mapping se aktivuje až po rozpoznání více typických entit se stejným prefixem; náhodný senzor typu `*_total_power` se proto automaticky nepovažuje za FVE
-- pokud je v Home Assistantu více Solarman/Deye zařízení se stejnými suffixy, automatika raději mapping přeskočí než aby vybrala špatný měnič
-- doplněny regresní testy pro běžný Deye naming, vlastní prefix `solarman_`, fallback na denní čítače, ochranu proti falešné shodě a více zařízení
-- dokumentace nově výslovně vysvětluje, že Solario se nepřipojuje přímo k měniči/loggeru, ale čte entity, které už existují v Home Assistantu
-- finální backend validace, Home Assistant image/restart/persistence smoke test i publikace amd64, aarch64 a multi-arch image proběhly úspěšně
-
-## [0.6.36] - 2026-08-15
-
-- opravena chyba 0.6.35, kdy při prvním nedostupném výpočtu z Home Assistant Recorderu mohl agent uložit aktuální kumulativní čítač jako začátek období a následně držet falešnou měsíční nulu
-- nedostupný denní nebo měsíční baseline se nyní neukládá; příslušná perioda zůstane dočasně nedostupná a další sběr ji automaticky zkusí znovu
-- denní a měsíční výpočet jsou nezávislé, takže chybějící měsíční podklad neblokuje platnou dnešní energii
-- backend označí měsíční úsporu jako spolehlivou pouze tehdy, když aktuální data skutečně obsahují měsíční výrobu
-- upgrade z 0.6.35 jednorázově obnoví pouze odvozené periodické trackery; účet, konfigurace, kódy, automatizace ani Home Assistant data se nemažou
-- opraven runtime mix CZ/EN v diagnostice panelů způsobený příliš obecným fragmentem `je` → `is`; diagnostické věty se překládají jako celé významové celky
-- i18n release gate nově kontroluje i runtime ochranu proti nebezpečným globálním gramatickým fragmentům
-- regresní test reprodukuje přesný stav: první měsíční Recorder lookup není dostupný → nevznikne month tracker ani falešná nula → další lookup uspěje → měsíční hodnota se vytvoří
-- finální validace: 20/20 agent testů, 115/115 backend testů, 832 sledovaných českých frází, 0 nepokrytých textů, produkční frontend build a kompletní Home Assistant restart/persistence smoke úspěšné
-- amd64, aarch64 i multi-arch image 0.6.36 byly úspěšně publikovány
-
-## [0.6.35] - 2026-08-15
-
-- opraven zdroj měsíční úspory: kalendářní denní a měsíční energie se při chybějící raw historii umí obnovit z Home Assistant Recorder statistik
-- upgrade jednorázově znovu vytvoří pouze odvozené periodické trackery, takže chybný měsíční základ z 0.6.34 nemůže zůstat zachovaný; účet, konfigurace, přístupové kódy ani Home Assistant data se nemažou
-- doplněny regresní testy pro obnovu měsíčního základu z Recorderu, prioritu skutečné historie a bezpečné odmítnutí neplatné změny
-- dotažené obousměrné přepínání čeština ↔ angličtina na dashboardu, v diagnostice, automatizacích, profilu, dynamických hláškách, e-mailových odkazech a backendových chybách
-- anglická verze používá CZK a anglické formátování data/času; česká verze se při přepnutí vrací zpět na Kč a české formátování
-- opraveny zbývající legacy popisky jako `Solar self-use` a `Local import`, aby se korektně překládaly i zpět do češtiny
-- zpřísněn i18n release gate: jedna přeložená fráze už nemůže skrýt jiný nepřeložený text na stejném řádku
-- finální audit hlásí `I18N_UNCOVERED_TOTAL=0`; prošlo 19/19 agent testů, 113/113 backend testů, produkční frontend build i kompletní Home Assistant image smoke
-- amd64, aarch64 i multi-arch image 0.6.35 byly úspěšně publikovány
-
-## [0.6.34] - 2026-08-15
-
-- opravena měsíční úspora: hodnota za měsíc se už nikdy nenahrazuje dnešní úsporou
-- přehled úspor respektuje příznak spolehlivosti měsíčního výpočtu; pokud přesný měsíční základ chybí, zobrazí se `—` místo zavádějící částky
-- stejná kontrola byla doplněna do energetické diagnostiky
-- opraveny zbývající drobné české názvy a překlepy (`Síť`, `silnější`, `znamenají`, `čerstvá`)
-- finální Home Assistant image validace i publikování amd64, aarch64 a multi-arch image proběhly úspěšně
-
-## [0.6.33] - 2026-08-15
-
-- dokončen audit českého a anglického rozhraní v dashboardu, diagnostice, automatizacích, profilu, prvním spuštění a bezpečnostních stavech
-- doplněny anglické fallbacky pro uživatelské chybové odpovědi backendu a předvyplněné e-mailové odkazy
-- produkční build nyní obsahuje automatický i18n gate; nový český UI text bez anglického pokrytí zastaví sestavení image
-- finální audit sleduje 761 českých překladových frází a hlásí 0 nepokrytých frontend/backend-response textů
-- z veřejného JavaScript bundle odstraněny staré instalačně specifické Shelly aliasy/ID; používají se názvy z Home Assistantu nebo uživatelské aliasy
-- image validace a publikování amd64, aarch64 i multi-arch manifestu proběhly úspěšně
+- opravena duplicita "LOCAL LOCAL" v logu Home Local rozhraní (CSS omylem připojovalo text "LOCAL" k popisku, který už "LOCAL" obsahoval)
+- stavové odznaky "Online" / "Připojeno" na stránkách Zařízení a Nastavení nyní odrážejí skutečný stav spojení s Home Assistant/agentem, dříve byly natvrdo zobrazeny jako připojené i při výpadku
+- okamžitá hodnota "Spotřeba domu" (dashboard a graf toku energie) se už nepočítá z energetického (kWh) čítače spotřeby domu, ale odvozuje se z aktuálního výkonu FVE, sítě a baterie ve stejné jednotce (kW) - odstraňuje nesmyslně vysoké hodnoty a "zaseklé" grafy s osou naškálovanou na tisíce
+- doplněny chybějící obrázky na pozadí stránek Upozornění a Zdraví FVE (`alert-hero.webp`, `health-hero.webp`), které byly v CSS odkazované, ale nikdy nebyly do repozitáře nahrány - zatím jako dočasná kopie hlavní úvodní fotky, doporučeno nahradit vlastními obrázky
 
 ## [0.6.32] - 2026-08-15
 
-- opraven korektní downgrade cloudového entitlementu z SMART/PRO na FREE, aby lokální instalace nemohla držet stará placená oprávnění
-- aktuální ozáření je po západu Slunce vždy 0 W/m² i při stale kladné hodnotě fyzického senzoru
-- doplněny regresní testy pro oba případy
-- aktualizována veřejná instalační a konfigurační dokumentace pro FREE release
+- cloudový entitlement nyní korektně aplikuje i normální downgrade `SMART/PRO -> FREE`, takže lokální add-on nemůže po změně tarifu ponechat stará placená oprávnění
+- doplněny regresní testy pro aktivní downgrade na FREE i fail-closed přechod na FREE při `payment_failed`
+- aktuální ozáření se po západu Slunce vždy vynuluje podle výšky Slunce, a to i když fyzický Home Assistant senzor krátce drží starou kladnou hodnotu
+- doplněny regresní testy pro noční odhad, stale fyzický senzor ozáření a normální denní měření
+- aktualizována instalační a konfigurační dokumentace pro veřejný Home Assistant repozitář a aktuální FREE limity
+- ruční konfigurace energetických entit je správně popsána jako volitelný přepis automatického mapování
 
 ## [0.6.31] - 2026-08-15
 
-- opraven první restart nové instalace, který mohl zneplatnit právě vytvořený přístupový kód
+- opraven první restart nové instalace, který mohl zneplatnit právě vytvořený přístupový kód kvůli chybné detekci staré bezpečnostní migrace
 - doplněny přesné, jednotkami kontrolované Alpha ESS aliasy pro aktuální výrobu, kumulativní výrobu, import/export sítě, spotřebu domu, SOC a napětí baterie
-- ukládání konfigurace agenta zachovává jeho identitu a další provisionované hodnoty
-- Supervisor token se nezapisuje do persistentní konfigurace agenta
+- automatické uložení konfigurace agenta zachovává `deviceId`, automatizace a další provisionované hodnoty
+- Supervisor token předaný pouze procesovým prostředím se nikdy nezapisuje do persistentního `agent-config.json`
+- doplněny regresní testy pro první restart, Alpha ESS mapování a bezpečné ukládání konfigurace agenta
 
 ## [0.6.30] - 2026-08-15
 
-- posílena izolace webového backendu a Home Assistant sběrného agenta
-- doplněna kontrola čerstvosti telemetrie a offline stavu
-- tarifní omezení historie, automatizací a příkazů jsou kontrolována serverově
-- automatizace nad tarifní limit se nemažou, ale bezpečně uzamknou/pozastaví
-- zpřísněna oprávnění persistentních souborů a automatických záloh
+- zásadní release hardening lokálního add-onu: oddělené neprivilegované procesy webu a agenta, omezený lokální backend a bezpečnější Ingress/LAN hranice
+- agent kontroluje čas telemetrie a backend rozlišuje čerstvé a zastaralé spojení, aby web nezobrazoval stará data jako online
+- lokální historie, automatizace a příkazy jsou kontrolované také na backendu podle tarifu a typu instalace
+- automatizace nad tarifní limit se nemažou; stav vykonávání a lock se zachovávají serverově
+- cloudové příkazy a telemetrie jsou izolované při odpojení a opětovném propojení
+- zálohy a persistentní soubory mají zpřísněná oprávnění a add-on při pádu kritického procesu ukončí celý runtime místo ponechání částečně funkčního stavu
+
+## [0.6.27] - 2026-08-08
+
+- vlastní Home Assistant nyní bezpečně předává do propojeného Solario Cloud aktuální `automation.*`, takže web může skutečné HA automatizace načíst a zobrazit ve volbě „Vybrat z local system“
+- HA automatizace lze z webu bezpečně povolit nebo zakázat; cloud nemůže přes tento kanál volat libovolné služby Home Assistantu
+- Solar Box raw Home Assistant entity do cloudu neposílá; ručně ovladatelná zařízení se předávají pouze tarifu PRO
+- cloudový device token zůstává šifrovaný v add-onu a do prohlížeče se neposílá; do cloudu se předává pouze allowlist potřebných atributů
+- cloudové příkazy se přijímají pouze při čerstvém spojení lokálního HA agenta a znovu procházejí lokálním allowlistem entit a akcí
+
+## [0.6.26] - 2026-08-05
+
+- požadavky Solario Local na `/api/ha/*` nyní vždy používají právě vybranou lokalitu, takže seznam existujících automatizací Home Assistantu nezůstane prázdný kvůli neshodě `siteId`
+- výchozí lokalita vyřešená z účtu nebo seznamu lokalit se uloží ještě před prvním načtením Home Assistant entit
+- zachována přísná izolace dat mezi lokalitami; explicitně zadané `siteId` se nikdy nepřepisuje
+
+## [0.6.25] - 2026-08-03
+
+- opraveno chybějící připojení `/api/passkeys` v backendu Solario Local, které způsobovalo hlášku „Zařízení se nepodařilo načíst“, nouzové zobrazení FREE 0/0 a nefunkční vytvoření párování
+- CI nově přímo ověřuje, že passkey API je v hotovém add-on image skutečně namontované a bez relace vrací 401 místo 404
+- správa přihlášených zařízení po aktualizaci načte skutečný tarif a limity Free 2, Smart 5 nebo Pro 8
+
+## [0.6.24] - 2026-08-03
+
+- nové přihlášení přes passkey chráněný Face ID, otiskem prstu nebo PINem zařízení v Solario Local i cloudovém webu
+- nové zařízení se přidává přes jednorázové dvouminutové QR párování, které se generuje pouze lokálně v prohlížeči bez odeslání tokenu externí službě
+- každé zařízení má vlastní credential, název, poslední aktivitu a samostatnou možnost přejmenování nebo okamžitého odebrání
+- odebrané nebo při downgrade pozastavené zařízení ztrácí přístup okamžitě, bez čekání na vypršení relace
+- tarifní limity důvěryhodných zařízení jsou Free 2, Smart 5 a Pro 8; zařízení nad limit se při downgrade nemažou, ale bezpečně pozastaví
+- doplněna ochrana proti opakovanému použití challenge a párovacího tokenu, kontrola sign counteru, HTTPS originu a RP ID
+- cloudové credentialy, párování a challenge jsou uloženy odděleně v PostgreSQL s transakčními zámky a integračními testy
+- přístupový kód zůstává dostupný jako záložní a obnovovací způsob přihlášení
+
+## [0.6.23] - 2026-08-03
+
+- add-on automaticky vyhledá bezpečné zdrojové entity podle ID, názvu, jednotky, device_class a state_class; ručně nastavená platná entita má vždy přednost
+- chybějící denní a měsíční energetické hodnoty se přesně počítají z kumulativních čítačů a Home Assistant Recorderu bez vytváření pomocníků
+- používají se pouze matematicky jednoznačné vztahy; spotřeba domu, teplota, stav baterie a jiné hodnoty se při chybějících nutných vstupech neodhadují
+- systémový monitoring rozlišuje ruční zdroj, automaticky nalezenou entitu, přesný výpočet a stav Nenalezeno včetně vzorce a použitých vstupů
+- nové instalace již neobsahují pevná ID Alpha ESS ani Shelly; všechna pole entit jsou volitelné ruční přepisy automatické detekce
+
+## [0.6.22] - 2026-08-03
+
+- kompletní správce zařízení je nyní přímo v dashboardové záložce Zařízení; samostatná položka mezi Přehledem a Profilem byla odstraněna
+- stará adresa `/devices` bezpečně přesměruje na dashboard, takže nevznikají dvě odlišná místa pro stejnou funkci
+- cookie lišta nabízí přijmout vše, odmítnout volitelné kategorie i vlastní výběr analytických a marketingových cookies
+- souhlas je verzovaný, validovaný, okamžitě se promítá do profilu a při odvolání maže známá volitelná data z cookies i webového úložiště
+
+## [0.6.21] - 2026-08-03
+
+- automatické denní zálohy PostgreSQL, persistentních dat a konfigurace s uchováním dvou nejnovějších archivů
+- tři bezpečné režimy přidání zařízení: Home Assistant, editor a YAML/JSON import
+- předpověď výroby pro dnešní den zůstává stabilní po celý pražský kalendářní den
+
+## [0.6.12] - 2026-07-29
+
+- cloudový dashboard načítá propojení zařízení z PostgreSQL, takže po restartu backendu nezůstane chybně na obrazovce „Čeká se na spárování“
+- partnerské SMART/PRO zařízení při ověření obnovuje trvalý stav online a jeho živá měření se ukládají do cloudové historie
+- stav propojení se na dashboardu automaticky kontroluje každých pět sekund bez ručního obnovení stránky
+- cloudový web i add-on mají responzivní hlavičky, navigaci, karty, modální okna, formuláře a párovací obrazovku pro mobil, tablet i notebook
+- stránky jsou načítané po částech, takže úvodní JavaScript klesl přibližně ze 760–790 kB na 233 kB
+- doplněna přísnější Content Security Policy a ověřeno 0 známých zranitelností ve všech produkčních balíčcích
+
+## [0.6.11] - 2026-07-29
+
+- nový jednorázový SMART/PRO kód může bezpečně znovu aktivovat již známý Solar Box nebo změnit jeho tarif bez vytvoření duplicitního účtu či lokality
+- předchozí partnerský token stejné instalace se při úspěšné reaktivaci atomicky zneplatní; každý jednotlivý kód zůstává použitelný právě jednou
+- opraveno odmítnutí `409`, které blokovalo nový kód u instalace aktivované starším partnerským kódem
+
+## [0.6.10] - 2026-07-29
+
+- vydávání jednorázových SMART/PRO kódů je dostupné pouze z produkčního Linux backend kontejneru přes šifrované SSH, nikoli přes webové API
+- kód se po prvním úspěšném uplatnění definitivně spotřebuje a nelze jej znovu použít ani ve stejné instalaci
+- plaintext kódu se nezapisuje do databáze, URL ani aplikačních logů; PostgreSQL uchovává jen HMAC otisk a auditní stav spotřebování
+
+## [0.6.9] - 2026-07-29
+
+- Solar Box po výběru placeného tarifu zobrazí přímo v informačním dialogu pole pro dlouhý jednorázový aktivační kód
+- partnerské kódy nově aktivují tarif SMART i PRO podle tarifu zvoleného při jejich vydání
+- vydání dalšího partnerského kódu je možné po 30 minutách místo po sedmi dnech
+- stávající jednorázové PRO kódy zůstávají platné a bezpečně uložené pouze jako HMAC otisk
+
+## [0.6.8] - 2026-07-28
+
+- partnerská PRO aktivace nyní bezpečně přenese otisk lokálního přístupového kódu a vytvoří odpovídající cloudový účet
+- po propojení se lze na `solario.cloud` přihlásit stejným přístupovým kódem jako do Solario Local
+- již spotřebovaný PRO kód lze pro stejnou instalaci idempotentně dokončit bez vydání dalšího kódu
+- profil propojené instalace nabízí opravu webového přihlášení původním PRO kódem bez nutnosti odpojovat cloud
+- cloud při aktivaci vytvoří lokalitu, zařízení, celoživotní PRO předplatné a převezme lokální nastavení, mapování i historii
+
+## [0.6.7] - 2026-07-28
+
+- lokální účet se nově zobrazuje jako „Uživatel“ / „User“ místo technického označení „Administrator“
+- existující instalace se starým označením se při načtení bezpečně normalizují bez změny interních oprávnění
+- jednorázový partnerský PRO kód používá existující chráněnou aktivaci s uložením pouze kryptografického otisku
+
+## [0.6.6] - 2026-07-28
+
+- uživatelé se Solar Boxem mají spravované tarify; samoobslužná změna nebo zrušení předplatného je blokované v rozhraní i backendu
+- editor, import a vlastní změny automatizací jsou pro Solar Box vypnuté, zatímco správcem připravené automatizace zůstávají aktivní pouze ke čtení
+- požadavek na novou automatizaci lze odeslat správci fotovoltaiky e-mailem přímo z portálu
+- cloud přebírá typ instalace z add-onu a používá stejné omezení tarifů a automatizací
+- cloudový web má přepínání češtiny a angličtiny, sjednocené tarify, opravené texty cookies a postup při zapomenutém kódu
+- doplněny serverové kontroly konzistence, testy zásad Solar Boxu a bezpečnostní audity produkčních závislostí
+
+## [0.6.5] - 2026-07-26
+
+- po prvním přihlášení je povinný jednorázový výběr mezi Solario Solar Boxem a vlastním Home Assistantem
+- typ instalace se trvale ukládá pro danou lokalitu v add-onu a je viditelný v profilu; vzhled i funkce obou variant zůstávají stejné
+- opraven závod při obnově relace, který mohl při přímém otevření přes Home Assistant předčasně zobrazit přihlášení
+- doplněny anglické překlady průvodce, profilu, cookies, dashboardu a stránky Home Assistant automatizací včetně dynamických časů

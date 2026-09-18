@@ -1,6 +1,6 @@
-# Solario Local 0.7.7 wire up dead buttons and settings to real functionality
+# Solario Local 0.7.12 merged release: reference design, correct daily production, working image build
 name: Solario Local
-version: "0.7.7"
+version: "0.7.12"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -24,6 +24,8 @@ panel_icon: mdi:home-energy-monitor
 panel_title: Solario Local
 panel_admin: true
 homeassistant_api: true
+services:
+  - mqtt:want
 options:
   log_level: info
   database_name: solar_portal
