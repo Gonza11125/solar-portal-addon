@@ -1,6 +1,6 @@
-# Solario Local 0.7.9 remaining three pages, real app preferences, real tariffs and limits
+# Solario Local 0.7.10 correct daily production, every control functional, reference design pass
 name: Solario Local
-version: "0.7.9"
+version: "0.7.10"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

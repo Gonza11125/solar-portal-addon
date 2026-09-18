@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.10] - 2026-09-18
+
+- **"Výroba 500 kWh" a podobné nesmysly opraveny.** Automatické rozpoznávání senzorů dávalo u metriky "Výroba FVE dnes" vyšší skóre senzoru s "total"/"lifetime" v názvu (+5) než senzoru s "today"/"daily" (+3) - celkový čítač od instalace se tak dostal do kolonky dnešní výroby. Nyní se u denních metrik celkové čítače penalizují a celkové čítače mají vlastní kolonku (`solar_production_total`, `grid_import_total`, `grid_export_total`), o kterou si denní metriky nekonkurují
+- add-on se navíc už nespoléhá jen na název a `state_class`: u každého energetického senzoru se ptá Recorderu, kolik ukazoval hned po půlnoci. Pokud už tehdy držel většinu své hodnoty, jde o kumulativní čítač a dnešní výroba se počítá jako rozdíl. Senzor, který přes půlnoc nespadne na nulu, se navíc trvale označí jako kumulativní - obojí pokryto testy
+- každé tlačítko, řádek a dlaždice se šipkou "›" nyní skutečně někam vede: karty s počty upozornění odrolují na příslušný panel, řádky zdrojů a komponent otevřou Zařízení, řádek automatizace otevře editor, karta "Systém v pořádku" otevře Zdraví FVE. Šipka se vykresluje jen tam, kde opravdu něco dělá
+- doplněna chybějící tlačítka z předlohy: "Spustit test" v Rychlé diagnostice (skutečně se zeptá backendu a vypíše, co odpověděl), "Zobrazit vše" u Doporučení údržby a zvětšení grafu na Grafech
+- Nastavení spadla na bílou stránku, pokud odpověď na uložení webhooku nepřišla v očekávaném tvaru (`Cannot read properties of undefined`); stav se teď přepíše jen platným objektem a neúspěšné přepnutí se vrátí zpět
+- vzhled všech osmi karet sladěn s předlohou: hustota, velikosti karet, ikon a písma, rozložení sloupců a řádků v Nastavení (popisek vlevo, ovládací prvek vyplní zbytek řádku) a graf na Přehledu kreslí dvě řady jako v návrhu
+
 ## [0.7.9] - 2026-09-17
 
 - doděláno posledních pět karet podle návrhů: Přehled, Nastavení a Profil mají nový vzhled, domeček v "Aktuálním toku energie" byl vyříznut ve vyšším rozlišení a bez oříznutých šipek, a šipky kolem něj nyní kreslí aplikace, takže ukazují skutečný směr toku (nabíjení baterie míří k baterii, přetok do sítě dolů) - v návrhu mířila šipka vždy stejně bez ohledu na hodnotu
