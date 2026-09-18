@@ -1,4 +1,4 @@
-# Solario Local 0.7.12
+# Solario Local 0.7.13
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,13 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.13
+
+- **Plan prices are the real ones**: Local 99 CZK, Smart 249 CZK, Pro 499 CZK per month. The billing API served 0 / 9.99 / 19.99 EUR, and the Profile page displayed exactly that.
+- Every image is regenerated at twice its size with a resampling pass and a mild unsharp mask. There is no new detail to be had - the sources are the supplied designs - but on a large screen the browser is no longer the thing enlarging the image, which is what made it look soft.
+- **The layout now grows with the screen.** Page gutters and gaps derive from the window width, the maximum width goes from 1600 to 2400 px, and above 1700 and 2200 px the cards, icon tiles and type scale up instead of leaving a laptop-sized column in the middle of a large display. Charts hold an aspect ratio rather than a fixed pixel height, so at 2560 px the dashboard chart is 304 px tall where it used to stay at 161 px.
+- The "Live data" pill on the Dashboard is sized as a share of the hero image; at wider windows it stopped covering the pill printed into the artwork and the printed one showed from underneath.
 
 ## What changed in 0.7.12
 

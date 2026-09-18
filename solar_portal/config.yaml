@@ -1,6 +1,6 @@
-# Solario Local 0.7.12 merged release: reference design, correct daily production, working image build
+# Solario Local 0.7.13 real tariff prices, sharper imagery, layout that scales with the screen
 name: Solario Local
-version: "0.7.12"
+version: "0.7.13"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.13] - 2026-09-18
+
+- ceny tarifů nastaveny na skutečné: Local 99 Kč, Smart 249 Kč, Pro 499 Kč měsíčně. Dosud backend hlásil 0 / 9,99 / 19,99 EUR a Profil je tak i zobrazoval
+- všechny obrázky přegenerovány ve dvojnásobném rozlišení s doostřením. Zdrojem jsou dodané návrhy, takže nejde o nově nasnímaný detail - jde o to, aby obrázek na velké obrazovce nezvětšoval prohlížeč (to je ta rozmazanost), ale aby se naopak zmenšoval z většího originálu
+- rozložení nyní roste s obrazovkou: okraje stránky a mezery se odvozují od šířky okna, maximální šířka zvednuta z 1600 na 2400 px a nad 1700 a 2200 px se zvětšují karty, ikony i písmo. Grafy se místo pevné výšky drží poměru stran, takže na širokém monitoru vyrostou s kartou (na 2560 px je graf 304 px vysoký místo 161 px)
+- štítek "Živá data" na Přehledu se nyní odvozuje od velikosti hero obrázku; při větší šířce nepřekrýval ten vytištěný v grafice a vykukoval zpod něj
+
 ## [0.7.12] - 2026-09-18
 
 - **Aktualizace add-onu konečně projde.** Home Assistant si image nestaví, stahuje ho hotový z GHCR, a jeho build na větvi `main` selhával od verze 0.7.7 na kontrole `audit:i18n` (naposledy se úspěšně publikovala 0.7.6). Proto nešlo aktualizovat na nic novějšího. Doplněny všechny chybějící překlady na obou liniích vývoje, kontrola je čistá a build projde celý
