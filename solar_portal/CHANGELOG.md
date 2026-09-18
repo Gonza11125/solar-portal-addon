@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.11] - 2026-09-18
+
+- **Oprava selhání aktualizace add-onu** ("An unknown error occurred with app ad5e4ef7_solar_portal"). Image se staví přes několik kontrol a jedna z nich, `audit:i18n`, hlídá, že každý český text v rozhraní a každá česká hláška z backendu má anglický protějšek ve slovníku. Tato kontrola padala a build se tím zastavil - ve verzi 0.7.6 na 14 textech, po přestavbě stránek na 121. Doplněny všechny chybějící překlady, kontrola je nyní čistá
+- při té příležitosti se ukázalo, že `ResidenceLightTranslationPairs` a `ResidenceLightAuditTranslationPairs` četl jen audit, ale běhové prostředí je vůbec nenačítalo - stránky Home Local proto zůstávaly v češtině i po přepnutí do angličtiny. Nyní jsou zapojené a anglické rozhraní skutečně funguje (ověřeno na všech osmi stránkách)
+
 ## [0.7.10] - 2026-09-18
 
 - **"Výroba 500 kWh" a podobné nesmysly opraveny.** Automatické rozpoznávání senzorů dávalo u metriky "Výroba FVE dnes" vyšší skóre senzoru s "total"/"lifetime" v názvu (+5) než senzoru s "today"/"daily" (+3) - celkový čítač od instalace se tak dostal do kolonky dnešní výroby. Nyní se u denních metrik celkové čítače penalizují a celkové čítače mají vlastní kolonku (`solar_production_total`, `grid_import_total`, `grid_export_total`), o kterou si denní metriky nekonkurují
