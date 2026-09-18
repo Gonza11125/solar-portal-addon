@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.6] - 2026-09-18
+
+- opraveno natahování/deformace hero fotek (Přehled, Upozornění, Zdraví FVE) na desktopu - CSS je natahovalo na pevný poměr stran, správná "cover" varianta byla omylem jen v mobilní verzi stylů
+- kartičky s metrikami na Přehledu jsou nyní plně neprůhledné, aby pod nimi neprosvítal obsah fotky na pozadí
+- nahrazena fotka domu na Přehledu za čistší výřez lépe sedící na širokou plochu banneru
+
 ## [0.7.5] - 2026-09-18
 
 - opravena chybějící konverze jednotek u výkonových hodnot (FVE, spotřeba, síť, baterie): pokud entita v Home Assistantu hlásí výkon ve W, hodnota se nyní správně převede na kW - dříve se zobrazovalo např. "Spotřeba domu 11 064,0 kW" místo "11,1 kW"

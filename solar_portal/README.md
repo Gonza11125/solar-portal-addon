@@ -1,4 +1,4 @@
-# Solario Local 0.7.5
+# Solario Local 0.7.6
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,12 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.6
+
+- Fixed hero photos (Overview, Alerts, FVE Health) being stretched/distorted on desktop - CSS forced a fixed aspect-ratio stretch there, while the correct proportion-preserving "cover" sizing accidentally only existed in the mobile stylesheet.
+- Dashboard metric cards (PV, Consumption, Battery, Grid) are now fully opaque so the background photo no longer shows through them.
+- Replaced the dashboard hero photo with a cleaner crop that fits the wide banner without needing heavy cropping.
 
 ## What changed in 0.7.5
 

@@ -1,6 +1,6 @@
-# Solario Local 0.7.5 fix power units (W to kW) and clock-skew false-offline
+# Solario Local 0.7.6 fix hero photo cropping/stretching on desktop
 name: Solario Local
-version: "0.7.5"
+version: "0.7.6"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
