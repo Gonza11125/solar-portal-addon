@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.12] - 2026-09-18
+
+- **Aktualizace add-onu konečně projde.** Home Assistant si image nestaví, stahuje ho hotový z GHCR, a jeho build na větvi `main` selhával od verze 0.7.7 na kontrole `audit:i18n` (naposledy se úspěšně publikovala 0.7.6). Proto nešlo aktualizovat na nic novějšího. Doplněny všechny chybějící překlady na obou liniích vývoje, kontrola je čistá a build projde celý
+- sloučeny dvě paralelně vyvíjené linie: přestavba všech osmi karet podle dodaných návrhů, oprava dnešní výroby a funkční ovládací prvky na jedné straně, a SVG ilustrace, převod výkonu v agentovi a oprava falešného "offline" na straně druhé
+- **převod výkonu z wattů na kilowatty sjednocen na jedno místo.** Obě linie ho dělaly jinde - agent při sběru, rozhraní při zobrazení - a dohromady by daly hodnoty 1000x menší. Ponechán převod v agentovi, protože data uložená od verze 0.7.5 už jsou v kW a přepnutí zpět by rozbilo existující historii. Dopočítáno na všechna navazující místa: deklarované jednotky v katalogu metrik a v MQTT discovery (hlásily `W`, ačkoli hodnota už byla v kW), práh pro webhook přetoku (0,5 kW místo 500 W, jinak by se nikdy nespustil) a výpočet nabití baterie z historie
+
 ## [0.7.11] - 2026-09-18
 
 - **Oprava selhání aktualizace add-onu** ("An unknown error occurred with app ad5e4ef7_solar_portal"). Image se staví přes několik kontrol a jedna z nich, `audit:i18n`, hlídá, že každý český text v rozhraní a každá česká hláška z backendu má anglický protějšek ve slovníku. Tato kontrola padala a build se tím zastavil - ve verzi 0.7.6 na 14 textech, po přestavbě stránek na 121. Doplněny všechny chybějící překlady, kontrola je nyní čistá

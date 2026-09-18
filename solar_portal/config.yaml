@@ -1,6 +1,6 @@
-# Solario Local 0.7.11 fixes the failing add-on update (i18n build gate) and the English UI
+# Solario Local 0.7.12 merged release: reference design, correct daily production, working image build
 name: Solario Local
-version: "0.7.11"
+version: "0.7.12"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
