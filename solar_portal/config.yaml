@@ -1,6 +1,6 @@
-# Solario Local 0.7.6 fix hero photo cropping/stretching on desktop
+# Solario Local 0.7.7 wire up dead buttons and settings to real functionality
 name: Solario Local
-version: "0.7.6"
+version: "0.7.7"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

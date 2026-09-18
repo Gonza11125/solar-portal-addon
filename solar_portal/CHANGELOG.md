@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.7] - 2026-09-18
+
+- desítky tlačítek v Home Local rozhraní byly čistě dekorativní - nyní skutečně navigují, ukládají nebo stahují reálná data
+- přepínače upozornění a zálohování v Nastavení nyní reálně ukládají svůj stav
+- cenu elektřiny lze v Nastavení upravit a uloží se na server
+- "Zálohovat nyní" doopravdy vyžádá okamžitou zálohu; "Exportovat data"/"Vytvořit report"/"Diagnostické logy" stáhnou reálná data
+- přepínač Měsíčně/Ročně u tarifů přepočítává ceny; tlačítka podpory otevřou e-mail
+
 ## [0.7.6] - 2026-09-18
 
 - opraveno natahování/deformace hero fotek (Přehled, Upozornění, Zdraví FVE) na desktopu - CSS je natahovalo na pevný poměr stran, správná "cover" varianta byla omylem jen v mobilní verzi stylů
