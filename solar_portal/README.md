@@ -1,4 +1,4 @@
-# Solario Local 0.7.16
+# Solario Local 0.7.17
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,18 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.17
+
+- **HDO is a real tariff at last.** Savings were the day's self-consumed energy times one price, while an `entity_hdo_switch` option sat in the configuration that nothing read. Settings gain a low tariff and a feed-in price, both optional - left empty, everything is computed with the single price exactly as before. With a low tariff set, the day's saving is a running total: each increment of self-consumed energy is priced at the rate in force when it flowed. Monthly and lifetime savings stay on the main price, because there is no basis for splitting them by tariff after the fact.
+- **The feed-in price** applies only to exported energy and is shown separately: that is income, not energy the household did not have to buy.
+- **entity_bojler_switch and entity_kotel_switch are removed.** They were collected and never read by anything; filling them in did nothing.
+- **Long-term history for Pro.** Smart and Pro both kept the same thirty days of detail. There is now a daily aggregate - one row per site per day, a few hundred bytes, so five years of them is smaller than a single day of detail. Local keeps 31 days, Smart a year, Pro five years. Měsíc is thirty bars of real daily totals instead of four figures over the last stored window, and Pro gains a Rok tab.
+- **"Search for sensors again"** in Settings. A wrongly mapped source could only be corrected one metric at a time by hand; manual choices are kept.
+- **The add-on version is visible** in Settings. The backend read it only for anonymous telemetry.
+- **The owner's private email is out of the product.** It was on the sign-in page, in the Profile, in an automation-request link and, worst, in the recovery instructions shown once at registration in both languages. The default is the product's own address and the add-on exposes `support_email`.
+- **Paid upgrades are an add-on option** (`paid_upgrades_enabled`) rather than a code change.
+- 1075 lines of page modules with no import anywhere are deleted; they were carrying stale prices and copy into every build.
 
 ## What changed in 0.7.16
 

@@ -1,6 +1,6 @@
-# Solario Local 0.7.16 functional cleanup: honest status, battery in the arithmetic, Pro date range, real wallbox
+# Solario Local 0.7.17 HDO tariff, long-term history, fresh discovery and the last of the dead code
 name: Solario Local
-version: "0.7.16"
+version: "0.7.17"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -37,15 +37,15 @@ options:
   ha_automations: "[]"
   polling_interval: 5000
   anonymous_usage_stats: false
+  support_email: ""
+  paid_upgrades_enabled: false
   entity_power_now: ""
   entity_energy_today: ""
   entity_battery_soc: ""
   entity_battery_voltage: ""
   entity_room_temperature: ""
   entity_room_humidity: ""
-  entity_bojler_switch: ""
   entity_hdo_switch: ""
-  entity_kotel_switch: ""
   entity_grid_import: ""
   entity_grid_export: ""
   entity_grid_power: ""
@@ -67,15 +67,15 @@ schema:
   ha_automations: str
   polling_interval: int(1000,60000)
   anonymous_usage_stats: bool
+  support_email: str?
+  paid_upgrades_enabled: bool?
   entity_power_now: str?
   entity_energy_today: str?
   entity_battery_soc: str?
   entity_battery_voltage: str?
   entity_room_temperature: str?
   entity_room_humidity: str?
-  entity_bojler_switch: str?
   entity_hdo_switch: str?
-  entity_kotel_switch: str?
   entity_grid_import: str?
   entity_grid_export: str?
   entity_grid_power: str?

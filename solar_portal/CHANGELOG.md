@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.17] - 2026-09-19
+
+- **HDO se konečně počítá.** Úspora byla dnešní vlastní spotřeba krát jedna cena, přestože volba `entity_hdo_switch` v konfiguraci existovala a nikdo ji nečetl. V Nastavení přibyl nízký tarif a výkupní cena, obojí nepovinné - prázdné znamená počítat jednou cenou úplně stejně jako dosud. S vyplněným nízkým tarifem se denní úspora nespočítá až na konci dne jednou sazbou, ale přirůstá průběžně sazbou, která zrovna platí (podle stavu HDO spínače). Měsíční a celková úspora zůstává na hlavní ceně, protože pro zpětné rozdělení podle tarifu nejsou podklady
+- **výkupní cena** se používá jen na energii dodanou do sítě a zobrazuje se odděleně - je to výnos, ne ušetřená energie
+- **`entity_bojler_switch` a `entity_kotel_switch` odstraněny.** Posílaly se agentovi, agent je sbíral a nikdo je nikdy nečetl; kdo je vyplnil, neměl z toho nic. `entity_hdo_switch` zůstává a nově něco dělá
+- **dlouhodobá historie pro tarif Pro.** Smart i Pro držely stejných 30 dní detailu. Nově vzniká denní souhrn - jeden řádek na den a lokalitu, pár set bajtů, takže pět let jich zabere míň než jeden den detailních dat. Local má 31 dní, Smart rok, Pro pět let. Grafy je používají: **Měsíc** už není jen čtyři čísla a poslední uložené okno pod nimi, ale třicet sloupců skutečných denních součtů, a Pro má navíc záložku **Rok**
+- **„Projít senzory znovu"** v Nastavení. Špatně přiřazený zdroj se dosud dal opravit jen po jedné metrice ručně. Ruční volby zůstávají zachované
+- **verze add-onu je vidět** v Nastavení. Backend ji četl jen kvůli anonymní telemetrii, takže zevnitř add-onu nešlo zjistit, co vlastně běží
+- **soukromý e-mail majitele zmizel z produktu.** Byl na přihlašovací stránce, v Profilu, v odkazu na žádost o automatizaci a hlavně v pokynech pro ztrátu obou kódů, česky i anglicky. Výchozí adresa je nyní produktová a add-on má volbu `support_email`
+- **placené tarify jsou volbou add-onu** (`paid_upgrades_enabled`), ne úpravou kódu
+- smazáno 1075 řádků stránek, na které nevedl jediný import a které do každého buildu nosily staré ceny a staré texty
+
 ## [0.7.16] - 2026-09-19
 
 - **„Systém v pořádku" znamenalo jen to, že agent poslal data.** Vybitá baterie, mrtvý senzor ani FVE, která přestala vyrábět, stav nezměnily. Nově je potřeba aktuální spojení, všechny zdroje, které instalace má, a žádné otevřené upozornění vážnější než informační

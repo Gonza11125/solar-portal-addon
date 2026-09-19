@@ -1,4 +1,4 @@
-# Solario Local 0.7.16 — Configuration and Technical Documentation
+# Solario Local 0.7.17 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -37,11 +37,32 @@ Optional comfort/control entities:
 
 - `entity_room_temperature`
 - `entity_room_humidity`
-- `entity_bojler_switch`
-- `entity_hdo_switch`
-- `entity_kotel_switch`
+- `entity_hdo_switch` (low-tariff switch; while it is on, energy used is priced at the low rate)
 
 An empty field means: let Solario safely discover the source. A valid manually selected entity takes precedence over automatic discovery.
+
+## Support address and paid plans
+
+`support_email` sets the address printed in the recovery instructions and on the
+sign-in page; left empty it falls back to the product's own mailbox.
+`paid_upgrades_enabled` decides whether the Smart and Pro checkout is offered at
+all; it is off by default.
+
+## Two-tariff savings and feed-in
+
+The electricity price is the main (high) rate. The low rate and the feed-in
+price may both be left empty, in which case everything is computed with the one
+price exactly as before.
+
+With a low rate set, the day's saving is not taken at the end of the day at one
+price: each increment of self-consumed energy is priced at the rate in force
+when it flowed, following the state of `entity_hdo_switch`. Monthly and lifetime
+savings stay on the main price, because there is no basis for splitting them by
+tariff after the fact.
+
+The feed-in price applies only to energy exported to the grid and is shown
+separately from savings - it is income, not energy that did not have to be
+bought.
 
 ## Alpha ESS and energy data
 
