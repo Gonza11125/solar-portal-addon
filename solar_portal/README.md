@@ -1,4 +1,4 @@
-# Solario Local 0.7.15
+# Solario Local 0.7.16
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,19 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.16
+
+- **"Systém v pořádku" meant only that the agent had reported recently.** A flat battery, a dead sensor or an array that had stopped producing all left it green. It now needs current data, every source the installation has reporting, and no open alert worse than informational.
+- **The availability panel on the Dashboard asked whether a value was present in the payload**, which stays true after the sensor behind it dies. It reads the same per-metric diagnostics as Devices and FVE Health, and says whether a source is unmapped or has stopped reporting.
+- **The battery is in the energy arithmetic.** "Where the production went" counted charging the battery as consumption at home, and "where the consumption came from" left out what the battery gave back. Both are computed from the stored battery power; where it is unknown the slices say so instead of guessing. Coverage was production over consumption, which reads 100 % on a day with a large export - it is now the share the house did not have to buy.
+- **A period is named by the window actually returned.** On Local, Týden gets 24 hours back, and the figures under it were still labelled "za týden".
+- **FVE Health**: no battery component on an installation without a battery, no warning for "not producing" at two in the morning (the sun's elevation decides), and one optional string sensor or lifetime counter no longer drags a whole device to "Partly" - the diagnostics carry a `required` flag the interface was ignoring.
+- **A custom from-to period on Graphs for Pro.** The plan policy promised it; nothing offered it, because /data/history took only a number of hours. The endpoint accepts `from` and `to`, clamped to what the plan retains and refused outside Pro.
+- **The wallbox card has something behind it.** It waited for evPower and evEnergyToday, which nothing produced. They are metrics now - `ev_power` and `ev_energy_today`, discovered from the usual wallbox names, with manual overrides `entity_ev_power` and `entity_ev_energy_today`. Neither is required, so the card stays hidden without a charger.
+- **Claims the code does not cover are gone**: Pro promised unlimited locations the add-on cannot create, the promo cards promised EV charging control and production forecasts, and the Alerts page promised to inform you although the add-on sends neither email nor push. Nothing a customer sees says FREE any more (the internal plan id stays `free`).
+- **English mode formats in English**: nine call sites used a hardcoded cs-CZ for numbers, dates and times.
+- **The settings backup carries the display preferences** (locality, time zone, units, value precision, default page, tips, animations); a restore used to leave every one of them at its default.
 
 ## What changed in 0.7.15
 

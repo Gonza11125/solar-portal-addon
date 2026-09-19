@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.16] - 2026-09-19
+
+- **„Systém v pořádku" znamenalo jen to, že agent poslal data.** Vybitá baterie, mrtvý senzor ani FVE, která přestala vyrábět, stav nezměnily. Nově je potřeba aktuální spojení, všechny zdroje, které instalace má, a žádné otevřené upozornění vážnější než informační
+- **„Dostupnost dat" na Přehledu se ptala jen na to, jestli hodnota v payloadu existuje** - to platí dál i poté, co senzor za ní umře. Nyní čte stejnou diagnostiku po metrikách jako Zařízení a Zdraví FVE a rozlišuje, jestli zdroj není namapovaný, nebo přestal hlásit
+- **baterie je konečně v energetické matematice.** „Kam šla výroba" počítala nabíjení baterie jako spotřebu domu a „Odkud šla spotřeba" vynechávala, co baterie vrátila. Obojí se počítá z uloženého výkonu baterie; kde ho add-on nezná, řekne to („Doma nebo do baterie") místo aby hádal. Pokrytí spotřeby na Přehledu bylo výroba/spotřeba, což při velkém přetoku ukazovalo 100 %, i když dům velkou část odebral ze sítě - nově je to podíl, který jste nemuseli koupit
+- **období se jmenuje podle okna, které se opravdu vrátilo.** Na tarifu Local vrátí „Týden" 24 hodin, ale hodnoty pod ním se pořád jmenovaly „za týden"
+- **Zdraví FVE**: baterie se nevyhodnocuje na instalaci bez baterie, „nevyrábí" ve dvě ráno už není varování (rozhoduje výška slunce) a jeden nepovinný senzor stringu nebo celkový čítač už neshodí celé zařízení na „Částečně" - diagnostika nese příznak `required`, který rozhraní dosud ignorovalo
+- **vlastní období od–do v Grafech pro tarif Pro.** Politika tarifů to slibovala, ale nabízeno nebylo: `/data/history` uměl jen počet hodin. Endpoint nově přijímá `from` a `to`, ořízne je na to, co tarif uchovává, a mimo Pro je odmítne
+- **wallbox má konečně co zobrazovat.** Karta čekala na `evPower` a `evEnergyToday`, které nikdo nevytvářel. Přibyly jako metriky `ev_power` a `ev_energy_today` včetně automatického rozpoznání a ručních přepisů `entity_ev_power` a `entity_ev_energy_today`. Nepovinné - bez nabíječky se karta dál nezobrazí. Třetí údaj býval počet nabíjení, který žádný senzor nehlásí; nahrazen stavem nabíjení
+- **tvrzení, která kód nepokrývá, jsou pryč**: tarif Pro sliboval neomezené lokality, i když add-on žádnou vytvořit neumí; promo karty slibovaly chytrou nabíječku pro EV, predikce výroby a cloudové predikce; Upozornění slibovala, že vás okamžitě informují, ačkoli e-mail ani push add-on neodesílá. Slovo FREE zmizelo ze všeho, co vidí zákazník (interní identifikátor plánu zůstává `free`)
+- **anglický režim je konečně anglický**: devět míst formátovalo čísla, data a časy natvrdo v `cs-CZ`
+- **záloha nastavení obsahuje i předvolby zobrazení** (lokalita, časové pásmo, jednotky, přesnost hodnot, výchozí stránka, tipy, animace); dosud je obnova potichu nechala na výchozích hodnotách
+
 ## [0.7.15] - 2026-09-19
 
 - **"Nabití baterie 5 388,8 kWh" a graf se stupnicí do 8000 kW opraveny.** Okamžitý výkon se ukládá v kW od verze 0.7.5, jenže vaše instalace se kvůli rozbitému buildu nemohla dostat výš než na 0.7.4, takže řádky v `/data` byly ve wattech. Přečtené jako kW jsou tisíckrát vyšší a integrál nabíjení baterie přes ně zase tisíckrát. Uložená historie se při načtení převede

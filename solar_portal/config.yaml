@@ -1,6 +1,6 @@
-# Solario Local 0.7.15 real alerts, real per-device state, savings and the kW fix
+# Solario Local 0.7.16 functional cleanup: honest status, battery in the arithmetic, Pro date range, real wallbox
 name: Solario Local
-version: "0.7.15"
+version: "0.7.16"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -59,6 +59,8 @@ options:
   entity_string_4_power: ""
   entity_production_max_10min: ""
   entity_production_avg_10min: ""
+  entity_ev_power: ""
+  entity_ev_energy_today: ""
 schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)
   database_name: str
@@ -87,5 +89,7 @@ schema:
   entity_string_4_power: str?
   entity_production_max_10min: str?
   entity_production_avg_10min: str?
+  entity_ev_power: str?
+  entity_ev_energy_today: str?
 environment:
   NODE_ENV: production
