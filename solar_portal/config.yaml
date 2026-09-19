@@ -1,6 +1,6 @@
-# Solario Local 0.7.14 real tariff prices everywhere they are shown
+# Solario Local 0.7.15 real alerts, real per-device state, savings and the kW fix
 name: Solario Local
-version: "0.7.14"
+version: "0.7.15"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -24,6 +24,11 @@ panel_icon: mdi:home-energy-monitor
 panel_title: Solario Local
 panel_admin: true
 homeassistant_api: true
+# /share is where an automatic backup is copied, so the user can pull an archive
+# out with the File editor, Samba or the Terminal add-on - /data is reachable
+# only from inside this add-on.
+map:
+  - share:rw
 services:
   - mqtt:want
 options:

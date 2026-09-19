@@ -1,4 +1,4 @@
-# Solario Local 0.7.14
+# Solario Local 0.7.15
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,19 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.15
+
+- **A day's battery charge read 5 388,8 kWh and the chart axis ran to 8000 "kW".** Instantaneous power has been stored in kW since 0.7.5, but no installation could update past 0.7.4 while the image build was broken, so the rows already in /data were watts. Read as kW they are a thousand times too large, and the battery integral over them a thousand times too large again. The stored history is converted when it loads.
+- **Power units are kW in automations too.** The editor asked for watts while the rule engine compared kilowatts, so a rule written as "production > 3000" could never fire; grid export was converted to watts in the same engine, leaving the two power metrics a thousand apart from each other. Thresholds already stored are converted once. The CSV export headers said W for values in kW, and GET /data/export was declared twice.
+- **Savings are visible at last**: today, this month and lifetime on the Dashboard, each with the energy it was computed from, and per period on Graphs. A period whose basis the backend does not trust reads "—".
+- **Today's balance says whether the house produced more than it used**, and what share of the day's consumption the roof covered.
+- **Měsíc and Celkem are no longer the same day relabelled.** The Local plan keeps 24 hours of history, so a month could not be drawn from it. Those tabs now read the cumulative counters the agent derives from Recorder, which really do cover the month and the installation.
+- **Devices and FVE Health say what the add-on actually knows.** Both pages derived everything from one flag, so four cards read Online together and "no critical errors" was printed with no condition behind it. They now read the per-metric diagnostics: "Show detail" lists the sources behind a card - entity name, id, current reading, diagnosed issue - an inverter card appears when Home Assistant reports one, and a check the add-on cannot answer says so instead of passing.
+- **Alerts have somewhere to live**: a month of history in /data, real counts by severity, and one entry per condition rather than one per reading. Two conditions are evaluated every minute beyond the four the webhooks already fire on: a source that stopped reporting, and the sun well up with the array producing nothing for half an hour.
+- **The backup and export cards are gone from Settings.** A backup is written automatically once a day and is now also copied to /share/solario/backups, which the File editor, Samba and the Terminal add-on can reach. Three notification switches remain, and they decide what is actually recorded; the add-on has never sent email or push.
+- Graphs gains energy by hour and two splits: where the production went and where the consumption came from.
+- Comparison badges no longer report percentages against a baseline too small to compare against, and the chart legend no longer paints outside its card.
 
 ## What changed in 0.7.14
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.15] - 2026-09-19
+
+- **"Nabití baterie 5 388,8 kWh" a graf se stupnicí do 8000 kW opraveny.** Okamžitý výkon se ukládá v kW od verze 0.7.5, jenže vaše instalace se kvůli rozbitému buildu nemohla dostat výš než na 0.7.4, takže řádky v `/data` byly ve wattech. Přečtené jako kW jsou tisíckrát vyšší a integrál nabíjení baterie přes ně zase tisíckrát. Uložená historie se při načtení převede
+- **jednotky výkonu sjednoceny na kW i v automatizacích.** Editor psal „W", ale porovnávalo se v kW - pravidlo „výroba > 3000" se tak nikdy nespustilo. Přetok do sítě se v témže enginu převáděl na watty, takže dvě výkonové veličiny byly navzájem tisíckrát vedle. Už uložené prahy se jednou převedou, takže pravidlo znamená to, co jeho autor zamýšlel. Opraveny také hlavičky CSV exportu (hlásily W u hodnot v kW) a zdvojená routa `/data/export`
+- **Úspory jsou konečně vidět**: na Přehledu dnes, tento měsíc a celkem, u každé i energie, ze které se počítá; v Grafech za vybrané období. Období, jehož podklad backend nepovažuje za spolehlivý, ukazuje „—", ne sebejistou nulu
+- **Dnešní bilance říká, jestli jste v plusu nebo v mínusu** a kolik procent spotřeby pokryla výroba
+- **záložky Měsíc a Celkem už nejsou tentýž den pod jiným názvem.** Tarif Local ukládá 24 hodin historie, takže měsíc se z ní nedal nakreslit. Nově čtou kumulativní čítače, které agent odvozuje z Recorderu a které měsíc i celou instalaci skutečně pokrývají. Spotřeba domu takový čítač nemá, a tak ukazuje „—"
+- **Zařízení a Zdraví FVE říkají, co add-on opravdu ví.** Obě stránky dřív odvozovaly všechno z jednoho příznaku, takže čtyři karty hlásily Online najednou a „Žádné kritické chyby" se tisklo bez jakékoli podmínky. Nově čtou diagnostiku po metrikách: „Zobrazit detail" u zařízení otevře seznam zdrojů dané karty (název entity, ID, aktuální hodnota, nalezený problém), přibyla karta Měnič, a kontrola, kterou add-on nedokáže zodpovědět, hlásí „Nelze určit" místo aby prošla
+- **upozornění mají konečně kam se ukládat.** Měsíc historie v `/data`, počty podle závažnosti jsou skutečné a podmínka se zapíše jednou, ne při každém měření. Kromě čtyř podmínek, na kterých už stojí webhooky, se každou minutu vyhodnocují dvě nové: zdroj, který přestal hlásit hodnotu, a slunce vysoko nad obzorem, zatímco FVE půl hodiny nevyrábí
+- **v Nastavení zmizely karty Zálohy a Export dat.** Přepínač „Automatické zálohování" nebyl přepínač - ukazoval, že nějaká záloha existuje, a kliknutím vytvořil další. Záloha se dělá automaticky jednou denně a nově se kopíruje i do `/share/solario/backups`, odkud ji vytáhnete přes File editor, Sambu nebo Terminal. Z pěti přepínačů upozornění zbyly tři, které opravdu řídí, co se zaznamenává; e-mail a push add-on nikdy neodesílal
+- v Grafech přibyla energie po hodinách a dvě rozdělení: kam šla výroba a odkud šla spotřeba
+- procenta srovnání už nevycházejí z nesrovnatelně malého základu („+12 200 %" bylo 12,4 kWh proti 0,1 kWh)
+- legenda grafu se kreslila mimo kartu; řádky se nyní přizpůsobí obsahu
+
 ## [0.7.14] - 2026-09-18
 
 - ceny tarifů opraveny i na kartě "Pokročilá správa" v Profilu - jediném zbylém místě, kde se ještě zobrazovaly natvrdo napsané částky 9,99 a 19,99 EUR. Nyní se berou z `/billing/me` jako na hlavní stránce Profilu; u tarifu Smart se navíc slibovalo 7 dní historie, ačkoli add-on jich dává 30
