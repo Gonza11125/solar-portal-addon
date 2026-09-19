@@ -1,4 +1,4 @@
-# Solario Local 0.7.17
+# Solario Local 0.7.18
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,14 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.18
+
+- **History follows the plan at last**: Local a day and a week, Smart the month as well, Pro a year back with any single day or period selectable. Local used to show today only, although the data was already in the store, and Smart and Pro both showed the same thirty days.
+- **Pro can open any day of the past year.** A year of five-minute readings would be tens of megabytes rewritten every minute, so there is an hourly store instead: one row per hour, 8 760 rows a year, about a megabyte, accumulated from the increments of the daily counters. A day from last autumn still has its shape. In "Vlastní", the same date in both fields opens that day hour by hour; a wider range is drawn day by day.
+- The tab strip is no longer hardcoded: the backend states which periods a plan may select, so the interface cannot offer one the server will refuse.
+- Where the figures come from hourly or daily rows, the comparison of the window's two halves and the percentage badge are gone - they belong to the detailed history and said nothing about the period on screen.
+- Tariff cards and promos state the history in words, read off the same limits the request handlers enforce.
 
 ## What changed in 0.7.17
 

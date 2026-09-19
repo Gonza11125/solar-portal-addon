@@ -1,6 +1,6 @@
-# Solario Local 0.7.17 HDO tariff, long-term history, fresh discovery and the last of the dead code
+# Solario Local 0.7.18 history by plan: a week on Local, a month on Smart, any day of the year on Pro
 name: Solario Local
-version: "0.7.17"
+version: "0.7.18"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

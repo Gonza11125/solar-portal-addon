@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.18] - 2026-09-19
+
+- **historie podle tarifu, jak má být**: Local den a týden, Smart navíc měsíc, Pro navíc rok a vlastní výběr. Local měl dosud jen dnešek, přestože v úložišti data byla
+- **Pro si může otevřít libovolný den až rok zpětně.** Podrobná měření po několika minutách se rok držet nedají - byly by to desítky megabajtů přepisovaných každou minutu - a tak vznikl hodinový souhrn: řádek na hodinu, rok jich je 8 760, tedy zhruba megabajt. Den z loňska tak pořád má svůj průběh. Ve výběru „Vlastní" stačí zadat stejné datum dvakrát a otevře se ten den po hodinách; jiný rozsah se vykreslí po dnech
+- záložky v Grafech už nejsou natvrdo: backend hlásí, která období tarif obslouží, takže rozhraní nemůže nabídnout něco, co server odmítne
+- u součtů z hodinových a denních souhrnů zmizelo porovnání polovin okna a procentuální odchylka - vztahovaly se k podrobné historii, ne k vybranému období
+- tarifní karty a promo bloky říkají historii slovy („Historie: den, týden, měsíc a rok"), ne počtem dní, a berou ji z limitů, které backend skutečně vynucuje
+
 ## [0.7.17] - 2026-09-19
 
 - **HDO se konečně počítá.** Úspora byla dnešní vlastní spotřeba krát jedna cena, přestože volba `entity_hdo_switch` v konfiguraci existovala a nikdo ji nečetl. V Nastavení přibyl nízký tarif a výkupní cena, obojí nepovinné - prázdné znamená počítat jednou cenou úplně stejně jako dosud. S vyplněným nízkým tarifem se denní úspora nespočítá až na konci dne jednou sazbou, ale přirůstá průběžně sazbou, která zrovna platí (podle stavu HDO spínače). Měsíční a celková úspora zůstává na hlavní ceně, protože pro zpětné rozdělení podle tarifu nejsou podklady

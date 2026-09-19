@@ -1,4 +1,4 @@
-# Solario Local 0.7.17 — Configuration and Technical Documentation
+# Solario Local 0.7.18 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -40,6 +40,23 @@ Optional comfort/control entities:
 - `entity_hdo_switch` (low-tariff switch; while it is on, energy used is priced at the low rate)
 
 An empty field means: let Solario safely discover the source. A valid manually selected entity takes precedence over automatic discovery.
+
+## History by plan
+
+History is kept at three resolutions, because each costs differently:
+
+- **detailed** (a reading every few minutes) - Local a day and a week, Smart and Pro a month,
+- **hourly** (one row per hour) - Local 7 days, Smart 31 days, Pro 366 days,
+- **daily** (one row per day) - Local 31 days, Smart a year, Pro 5 years.
+
+A year of detailed readings would be tens of megabytes rewritten every minute,
+so Pro does not reach further by keeping more detail but through the coarser
+rows: any day of the past year opens from its hourly rows and still has its
+shape, and whole periods are summed from the daily ones.
+
+The tabs on the Graphs page match what the plan will actually serve. "Celkem"
+is available on every plan - it does not read stored history at all, but the
+lifetime counters from Home Assistant.
 
 ## Support address and paid plans
 
