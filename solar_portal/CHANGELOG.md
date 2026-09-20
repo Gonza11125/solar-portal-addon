@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.7.20] - 2026-09-20
+
+- Ekonomika v Přehledu: oddělený odhad úspory a výkupu, vysvětlení výpočtu a omezení baterií, označení historických přepočtů aktuální cenou. Chybějící finanční hodnoty nejsou nuly.
+- Přehlednější rozložení grafů a Zdraví FVE bez prázdných reklamních sloupců a opakovaných karet aktivního Pro. Responzivní horní stavový panel.
+- Nabídky používají ilustraci domu bez vloženého tlačítka; každá má jedno skutečné tlačítko. Smart vidí jednu nabídku Pro.
+- Diagnostické entity agenta mají jednotku odpovídající normalizovanému číslu (kW/kWh). Diagnostika rozlišuje převoditelné jednotky a nesprávný fyzikální rozměr.
+- Nenalezené volitelné senzory se v přehledu neoznačují za poruchu. Skutečně nakonfigurované zdroje s výpadkem zůstávají viditelné. Všechna doporučení lze rozbalit.
+- Rychlý test volá existující API aktuálních dat. Text u baterie netvrdí bez podkladu, že nabíjí pouze ze slunce.
+- Graf dne používá dnešní měření v nastaveném časovém pásmu. Historie se při otevřené stránce obnovuje.
+- Kombinovaný graf správně kreslí také baterii a síť; baterie má vlastní procentní osu.
+- Grafy nerozlišují přímou spotřebu a baterii bez podkladů pro přesné určení původu energie.
+- Aktualizované české i anglické texty; cloudová nabídka neslibuje nativní mobilní aplikaci ani garantovanou zálohu.
+
+
+## [0.7.19] - 2026-09-19
+
+- Nabídka delší historie přímo v grafech vysvětluje přínos Smart a Pro, aniž by měnila zobrazená měření. Šipky respektují dostupná období.
+- Jednotný stav tarifu pro přehled, grafy a profil. Pro již nenabízí přechod na Smart; spravované Solar Box instalace nedostávají samoobslužné nabídky.
+- Nákupní tlačítka respektují skutečnou dostupnost placených aktivací. Otevření platebního procesu funguje i v prohlížečích blokujících pozdní vyskakovací okna a má záložní odkaz.
+- Úspory a CSV export používají nastavenou měnu. Ověřená nulová úspora se zobrazí jako nula; chybějící teplota jako pomlčka.
+- Denní historie omezuje skutečné kalendářní období, ne jen počet posledních záznamů. Neplatná data a obrácená období se odmítají.
+- Hodinové souhrny nepřičítají celý výpadek sběru do hodiny obnovení. Chybějící čítač a krátký pokles čítače nevytvářejí falešný přírůstek.
+- Prázdné vlastní období se nezaměňuje za aktuální historii; agregované grafy nepoužívají baterii z jiného podrobného okna.
+- Nabídka zkoušky neblokuje první použití automatickým dialogem. Texty používají název Local a odpovídají dostupným funkcím.
+- Lepší zalamování ovládání grafů a výběru dat, klávesnicové zvýraznění a označení aktivní navigace. Název a ikona karty prohlížeče odpovídají Solariu.
+
 ## [0.7.18] - 2026-09-19
 
 - **historie podle tarifu, jak má být**: Local den a týden, Smart navíc měsíc, Pro navíc rok a vlastní výběr. Local měl dosud jen dnešek, přestože v úložišti data byla
