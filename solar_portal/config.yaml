@@ -1,6 +1,6 @@
-# Solario Local 0.7.20 history by plan: a week on Local, a month on Smart, any day of the year on Pro
+# Solario Local 0.7.21 history by plan: a week on Local, a month on Smart, any day of the year on Pro
 name: Solario Local
-version: "0.7.20"
+version: "0.7.21"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

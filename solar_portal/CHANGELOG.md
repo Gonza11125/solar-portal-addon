@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.21]- 2026-09-21
+
+- Nový přehled Solario Home, samostatná Ekonomika a osm hlavních sekcí. Živé hodnoty jsou vykreslené nad čistou ilustrací domu.
+- Automatizace jsou ve všech tarifech na míru a spravované týmem Solario. Zákaznický editor a početní limity byly odstraněny; přehled zachovává stav a historii spuštění. Dříve vypnutá pravidla se nezapínají.
+- Kontextové nabídky Smart a Pro podle historie, ekonomiky a pokročilé správy, bez opakovaných reklamních oken.
+- Ekonomické souhrny rozlišují chybějící data od nuly; Pro má CSV a tisk do PDF. Samostatný přínos baterie ani návratnost bez doložených vstupů nejsou slibovány.
+- Pokročilé mapování, export a webhooky jsou oddělené od základního nastavení. V rozhraní se používá značka Solario.
+- Ověřeno sestavením frontend/backend, integračními testy spravovaných automatizací a kontrolou devíti obrazovek na čtyřech šířkách.
+
 ## [0.7.20] - 2026-09-20
 
 - Ekonomika v Přehledu: oddělený odhad úspory a výkupu, vysvětlení výpočtu a omezení baterií, označení historických přepočtů aktuální cenou. Chybějící finanční hodnoty nejsou nuly.
