@@ -1,4 +1,4 @@
-# Solario Local 0.7.18 — Configuration and Technical Documentation
+# Solario Local 0.7.22 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -22,64 +22,22 @@ Optional manual energy entity overrides:
 - `entity_battery_voltage`
 - `entity_grid_import`
 - `entity_grid_export`
-- `entity_grid_power`
-- `entity_battery_power`
 - `entity_home_consumption`
 - `entity_solar_production`
 - `entity_inverter_power`
 - `entity_string_1_power` through `entity_string_4_power`
 - `entity_production_max_10min`
 - `entity_production_avg_10min`
-- `entity_ev_power` (wallbox charging power)
-- `entity_ev_energy_today` (energy charged today)
 
 Optional comfort/control entities:
 
 - `entity_room_temperature`
 - `entity_room_humidity`
-- `entity_hdo_switch` (low-tariff switch; while it is on, energy used is priced at the low rate)
+- `entity_bojler_switch`
+- `entity_hdo_switch`
+- `entity_kotel_switch`
 
 An empty field means: let Solario safely discover the source. A valid manually selected entity takes precedence over automatic discovery.
-
-## History by plan
-
-History is kept at three resolutions, because each costs differently:
-
-- **detailed** (a reading every few minutes) - Local a day and a week, Smart and Pro a month,
-- **hourly** (one row per hour) - Local 7 days, Smart 31 days, Pro 366 days,
-- **daily** (one row per day) - Local 31 days, Smart a year, Pro 5 years.
-
-A year of detailed readings would be tens of megabytes rewritten every minute,
-so Pro does not reach further by keeping more detail but through the coarser
-rows: any day of the past year opens from its hourly rows and still has its
-shape, and whole periods are summed from the daily ones.
-
-The tabs on the Graphs page match what the plan will actually serve. "Celkem"
-is available on every plan - it does not read stored history at all, but the
-lifetime counters from Home Assistant.
-
-## Support address and paid plans
-
-`support_email` sets the address printed in the recovery instructions and on the
-sign-in page; left empty it falls back to the product's own mailbox.
-`paid_upgrades_enabled` decides whether the Smart and Pro checkout is offered at
-all; it is off by default.
-
-## Two-tariff savings and feed-in
-
-The electricity price is the main (high) rate. The low rate and the feed-in
-price may both be left empty, in which case everything is computed with the one
-price exactly as before.
-
-With a low rate set, the day's saving is not taken at the end of the day at one
-price: each increment of self-consumed energy is priced at the rate in force
-when it flowed, following the state of `entity_hdo_switch`. Monthly and lifetime
-savings stay on the main price, because there is no basis for splitting them by
-tariff after the fact.
-
-The feed-in price applies only to energy exported to the grid and is shown
-separately from savings - it is income, not energy that did not have to be
-bought.
 
 ## Alpha ESS and energy data
 
