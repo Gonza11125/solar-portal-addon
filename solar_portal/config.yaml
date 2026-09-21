@@ -1,6 +1,6 @@
-# Solario Local 0.7.25 recovery from 0.6.47 with the real plan names and prices
+# Solario Local 0.7.26 republished from the 0.7.19 source
 name: Solario Local
-version: "0.7.25"
+version: "0.7.26"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -24,6 +24,13 @@ panel_icon: mdi:home-energy-monitor
 panel_title: Solario Local
 panel_admin: true
 homeassistant_api: true
+# /share is where an automatic backup is copied, so the user can pull an archive
+# out with the File editor, Samba or the Terminal add-on - /data is reachable
+# only from inside this add-on.
+map:
+  - share:rw
+services:
+  - mqtt:want
 options:
   log_level: info
   database_name: solar_portal
@@ -31,17 +38,18 @@ options:
   polling_interval: 5000
   anonymous_usage_stats: false
   support_email: ""
+  paid_upgrades_enabled: false
   entity_power_now: ""
   entity_energy_today: ""
   entity_battery_soc: ""
   entity_battery_voltage: ""
   entity_room_temperature: ""
   entity_room_humidity: ""
-  entity_bojler_switch: ""
   entity_hdo_switch: ""
-  entity_kotel_switch: ""
   entity_grid_import: ""
   entity_grid_export: ""
+  entity_grid_power: ""
+  entity_battery_power: ""
   entity_home_consumption: ""
   entity_solar_production: ""
   entity_inverter_power: ""
@@ -51,6 +59,8 @@ options:
   entity_string_4_power: ""
   entity_production_max_10min: ""
   entity_production_avg_10min: ""
+  entity_ev_power: ""
+  entity_ev_energy_today: ""
 schema:
   log_level: list(trace|debug|info|notice|warning|error|fatal)
   database_name: str
@@ -58,17 +68,18 @@ schema:
   polling_interval: int(1000,60000)
   anonymous_usage_stats: bool
   support_email: str?
+  paid_upgrades_enabled: bool?
   entity_power_now: str?
   entity_energy_today: str?
   entity_battery_soc: str?
   entity_battery_voltage: str?
   entity_room_temperature: str?
   entity_room_humidity: str?
-  entity_bojler_switch: str?
   entity_hdo_switch: str?
-  entity_kotel_switch: str?
   entity_grid_import: str?
   entity_grid_export: str?
+  entity_grid_power: str?
+  entity_battery_power: str?
   entity_home_consumption: str?
   entity_solar_production: str?
   entity_inverter_power: str?
@@ -78,5 +89,8 @@ schema:
   entity_string_4_power: str?
   entity_production_max_10min: str?
   entity_production_avg_10min: str?
+  entity_ev_power: str?
+  entity_ev_energy_today: str?
 environment:
   NODE_ENV: production
+
