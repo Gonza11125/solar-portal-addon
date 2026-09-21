@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.25] - 2026-09-21
+
+- **základní tarif se jmenuje LOCAL a stojí 99 Kč měsíčně.** Dosud se jmenoval FREE a tvářil se jako bezplatný — v profilu, v kartách tarifů, v hlášce o limitu automatizací i v nabídce a doběhu PRO trialu. Vnitřní identifikátor tarifu se nemění, takže propojení s Cloudem ani uložená oprávnění nejsou dotčena
+- ceny na jednom místě: LOCAL 99 Kč, SMART 249 Kč, PRO 499 Kč měsíčně
+
 ## [0.7.24] - 2026-09-21
 
 Obsah verze 0.6.47 doplněný o to, co podle dokumentace add-onu chybělo:

@@ -1,6 +1,6 @@
-# Solario Local 0.7.24 recovery from 0.6.47 with the documented gaps closed
+# Solario Local 0.7.25 recovery from 0.6.47 with the real plan names and prices
 name: Solario Local
-version: "0.7.24"
+version: "0.7.25"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

@@ -1,4 +1,4 @@
-# Solario Local 0.7.24 — Configuration and Technical Documentation
+# Solario Local 0.7.25 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -57,16 +57,16 @@ When upgrading from 0.6.35, only the derived periodic tracker file is removed on
 
 If history or reliable statistical data required for an exact calculation is missing, Solario does not label an unverified estimate as an exact value. Diagnostics show the source and calculation state where applicable.
 
-## FREE plan
+## LOCAL plan
 
-Server-enforced FREE limits:
+The LOCAL plan is the base plan of Solario Local at 99 CZK a month. Server-enforced limits:
 
 - history: maximum **24 hours**,
 - **1 custom Solario automation**,
 - native Home Assistant `automation.*` entities do not count against that one slot,
 - the standard safe Home Assistant entity overview is available,
 - general manual device control and the device editor/import workflow require PRO,
-- AI recommendations are disabled in FREE.
+- AI recommendations are disabled on the LOCAL plan.
 
 Automations above the active plan limit are not deleted; they are locked or paused according to their origin and the current plan.
 

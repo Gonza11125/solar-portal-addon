@@ -1,4 +1,4 @@
-# Solario Local 0.7.24
+# Solario Local 0.7.25
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -41,9 +41,9 @@ Savings are calculated as:
 
 If a trustworthy period baseline is not available, Solario leaves that period temporarily unavailable rather than presenting an unverified estimate as an exact value.
 
-## FREE plan
+## LOCAL plan
 
-FREE provides the local foundation for a user's own Home Assistant installation:
+LOCAL provides the local foundation for a user's own Home Assistant installation:
 
 - current PV production, battery and energy-balance overview,
 - daily, monthly and lifetime energy values when Home Assistant provides the required data,
@@ -56,7 +56,7 @@ FREE provides the local foundation for a user's own Home Assistant installation:
 - selectable savings currency,
 - Czech and English UI.
 
-AI recommendations, general device editor/import and general manual device control are not active in FREE and require PRO.
+AI recommendations, general device editor/import and general manual device control are not active in LOCAL and require PRO.
 
 ## Anonymous version statistics
 
