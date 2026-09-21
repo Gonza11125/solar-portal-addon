@@ -1,4 +1,4 @@
-# Solario Local 0.7.22 — Configuration and Technical Documentation
+# Solario Local 0.7.24 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -28,6 +28,10 @@ Optional manual energy entity overrides:
 - `entity_string_1_power` through `entity_string_4_power`
 - `entity_production_max_10min`
 - `entity_production_avg_10min`
+
+Optional support address:
+
+- `support_email` — the address Solario shows on the sign-in page, in the profile and in the lost-codes instructions. An empty field means the product address `podpora@solario.cloud`.
 
 Optional comfort/control entities:
 
@@ -71,6 +75,10 @@ Automations above the active plan limit are not deleted; they are locked or paus
 Solario can use Home Assistant `weather.*`, `sun.sun`, or a suitable sun-elevation sensor. If a physical irradiance sensor is not available, current irradiance may be derived from weather and sun elevation.
 
 When `sunElevation <= 0`, current irradiance is always **0 W/m²**. This also applies when a physical Home Assistant sensor briefly retains an old positive value after sunset.
+
+## Custom entity names
+
+An entity can be renamed inside Solario. The name applies only within Solario and is stored per site in `/data/entity-names.json`. Clearing the name removes the override, and the entity goes back to its Home Assistant name.
 
 ## Network and persistent data
 

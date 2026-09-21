@@ -1,6 +1,6 @@
-# Solario Local 0.7.22 exact recovery from 0.6.47
+# Solario Local 0.7.24 recovery from 0.6.47 with the documented gaps closed
 name: Solario Local
-version: "0.7.22"
+version: "0.7.24"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -30,6 +30,7 @@ options:
   ha_automations: "[]"
   polling_interval: 5000
   anonymous_usage_stats: false
+  support_email: ""
   entity_power_now: ""
   entity_energy_today: ""
   entity_battery_soc: ""
@@ -56,6 +57,7 @@ schema:
   ha_automations: str
   polling_interval: int(1000,60000)
   anonymous_usage_stats: bool
+  support_email: str?
   entity_power_now: str?
   entity_energy_today: str?
   entity_battery_soc: str?

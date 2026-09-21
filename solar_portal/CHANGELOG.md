@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.24] - 2026-09-21
+
+Obsah verze 0.6.47 doplněný o to, co podle dokumentace add-onu chybělo:
+
+- **přejmenování entity se uloží.** Rozhraní posílalo nový název na `/entity-names`, ale takový endpoint v backendu nikdy neexistoval; název se ukázal a po obnovení stránky byl pryč. Backend teď názvy ukládá do `/data/entity-names.json` zvlášť pro každou lokalitu; prázdný název vrátí entitě jméno z Home Assistantu
+- **ceny tarifů odpovídají skutečnosti**: SMART 249 Kč / měsíc a PRO 499 Kč / měsíc místo 9,99 a 19,99 EUR. FREE zůstává zdarma, protože tak ho popisuje dokumentace add-onu
+- **soukromý e-mail majitele zmizel z produktu.** Výchozí adresa podpory je `podpora@solario.cloud` a nová volba `support_email` umožní instalatérovi nastavit vlastní adresu
+
 ## [0.7.22] - 2026-09-21
 
 Návrat k verzi 0.6.47. Obsah add-onu je přesně ten, který běžel 5. září 2026 jako 0.6.47; vyšší číslo má jen proto, aby ho Home Assistant nabídl jako aktualizaci i instalacím, které už jely na 0.7.x. Vše, co přinesly verze 0.6.48 až 0.7.21 - vizuální redesign i funkce postavené na něm - v této verzi není.
