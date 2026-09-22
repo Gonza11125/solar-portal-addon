@@ -1,4 +1,4 @@
-# Solario Local 0.7.30 — Configuration and Technical Documentation
+# Solario Local 0.7.31 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -113,6 +113,10 @@ Automations above the active plan limit are not deleted; they are locked or paus
 Solario can use Home Assistant `weather.*`, `sun.sun`, or a suitable sun-elevation sensor. If a physical irradiance sensor is not available, current irradiance may be derived from weather and sun elevation.
 
 When `sunElevation <= 0`, current irradiance is always **0 W/m²**. This also applies when a physical Home Assistant sensor briefly retains an old positive value after sunset.
+
+## History storage
+
+Detailed readings (one point every five minutes, 30 days back) are stored in `/data/history/`, one file per calendar day; only today's file is rewritten, and only when a reading is appended. The hourly and daily summaries have their own files and are written on an interval, always at the turn of the hour and of the day. A planned stop of the add-on writes everything out at once.
 
 ## Network and persistent data
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.31] - 2026-09-22
+
+- **Add-on přestal ničit SD kartu.** Celá historie ležela v jednom souboru, který se přepisoval celý **každou minutu** — u třiceti dnů měření to je 4,7 MB na jeden zápis, tedy zhruba **7 GB denně**. Přitom nové měření přibývá jen jednou za pět minut. Nově má každý den vlastní soubor a přepisuje se jen ten dnešní, a jen když opravdu přibude měření: naměřeno **24 MB denně** místo gigabajtů
+- **Hodinové a denní souhrny se ukládají v rozumných intervalech** (po 10 a 30 minutách) a navíc vždy při přelomu hodiny a dne, takže žádná hodina ani den nezůstanou nezapsané
+- **Plánované zastavení nebo restart doplňku nic neztratí** — Solario si při vypnutí vše zapíše. Při tvrdém výpadku napájení se ztratí nanejvýš pár minut přírůstků v souhrnech, nikdy celá hodina
+- **Aktualizace nic nemaže.** Uložená měření se jednorázově přesunou do souborů po dnech; denní soubory se zapíšou dřív, než se přepíše hlavní soubor, takže výpadek proudu uprostřed přesunu jen znamená, že se přesun zopakuje při dalším startu
+- **Návrat na starší verzi zůstává bezpečný.** Hlavní soubor si ponechává formát, kterému starší verze rozumí, takže se nespustí s chybou. Denní soubory na disku počkají, a když se instalace vrátí na novější verzi, měření se spojí dohromady — žádné se neztratí ani nezapočítá dvakrát
+- po obnovení ze zálohy se práva k souborům historie srovnají při startu, aby doplněk mohl dál zapisovat
+
 ## [0.7.30] - 2026-09-22
 
 - **Čerstvá instalace už ví, kde začít.** Dokud Solario nemá senzor výroby, je první věcí na Přehledu pruh **Začněte přiřazením senzorů** s cestou do nastavení. Dosud se nová instalace tvářila jako hotová aplikace plná pomlček a nikde nebylo řečeno, co s tím

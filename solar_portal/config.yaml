@@ -1,6 +1,6 @@
-# Solario Local 0.7.30 a start for a fresh installation and pages that say what they do
+# Solario Local 0.7.31 stops rewriting megabytes onto the SD card every minute
 name: Solario Local
-version: "0.7.30"
+version: "0.7.31"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
