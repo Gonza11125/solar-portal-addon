@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.29] - 2026-09-22
+
+Prvních deset minut nového zákazníka:
+
+- **Automatizace mají konečně dveře.** Stránka slibovala „automatizace na míru od týmu Solario" a nenabízela jediný způsob, jak si o ně říct. Přibylo tlačítko **Požádat o automatizaci**, které otevře předvyplněný e-mail na adresu podpory (`support_email`, jinak produktová adresa) včetně ID lokality
+- **Přihlašovací stránka se jmenuje jako produkt.** Stálo tam „Solar Portal", zatímco doplněk, menu i obchod říkají Solario Home. Zbytek starého názvu zmizel i z registrace
+- **Pozdrav na přehledu byl rozbitý.** Výchozí jméno účtu je „Uživatel", takže první řádek zněl „Vítejte doma, Uživatel" — a bez jména dokonce „Vítejte doma, doma". Skloňování řešila výjimka jen pro dvě jména. Teď je tam prosté „Vítejte doma"
+- **Přístupové kódy jdou stáhnout do souboru** místo ručního opisování a text o ztrátě kódů říká pravdu: kódy jsou jen na vašem serveru, nikdo je neobnoví na dálku, obnova vyžaduje zásah přímo v add-onu
+- **Rozhraní mluví o Home Assistantu jménem.** Místo „lokálního systému" je všude Home Assistant, karta „Dostupnost dat" se jmenuje „Senzory z Home Assistantu" a z grafů zmizelo „uložené okno" a „rozdělení uloženého okna"
+- webhooky se přesunuly mezi ostatní technické ovládání do „Pokročilého nastavení", takže mezi upozorněními a vzhledem aplikace už nevyskočí formulář s tokenem
+
 ## [0.7.28] - 2026-09-22
 
 - **„Systém vyžaduje pozornost" svítilo pořád, i když bylo všechno v pořádku.** Stav systému vyžadoval, aby hlásilo *všech pět* zdrojů včetně meteostanice a chytrého elektroměru — tedy věcí, které většina domácností v Home Assistantu vůbec nemá. Nenamapovaný zdroj už není porucha: červeně je jen zdroj, který namapovaný je a přestal hlásit, dále výpadek spojení, chybějící zdroj výroby a otevřené upozornění závažnější než informační
