@@ -1,6 +1,6 @@
-# Solario Local 0.7.27 republished from the 0.7.21 source: the current design with Ekonomika
+# Solario Local 0.7.28 honest system status: what the household does not have is not a fault
 name: Solario Local
-version: "0.7.27"
+version: "0.7.28"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

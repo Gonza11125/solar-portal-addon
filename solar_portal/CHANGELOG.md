@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.28] - 2026-09-22
+
+- **„Systém vyžaduje pozornost" svítilo pořád, i když bylo všechno v pořádku.** Stav systému vyžadoval, aby hlásilo *všech pět* zdrojů včetně meteostanice a chytrého elektroměru — tedy věcí, které většina domácností v Home Assistantu vůbec nemá. Nenamapovaný zdroj už není porucha: červeně je jen zdroj, který namapovaný je a přestal hlásit, dále výpadek spojení, chybějící zdroj výroby a otevřené upozornění závažnější než informační
+- **„Dostupnost dat"** rozlišuje tři stavy místo dvou: zdroj hlásí data (zeleně), zdroj nehlásí hodnotu (červeně), a zdroj, který instalace nemá (šedě, „Není v instalaci"). Kolečko počítá jen zdroje, které skutečně existují, takže se z 3/5 nestane trvalá výtka
+- **Upozornění** nebarvila stránku červeně podle závažnosti — stačila jedna informační zpráva. Informační události se dál vypisují, ale stav systému neovlivňují; přehled a stránka upozornění se tak konečně shodnou
+- **Zařízení**: karta zařízení, které v instalaci není, byla oranžová „Bez dat" a napořád se počítala do „Vyžaduje pozornost". Nově je šedá „Není v instalaci" a do počtu nejde
+- **Zařízení neukazují sebevědomé nuly.** Stav nabití, výkon, dnešní i celková výroba a dodávka do sítě se zobrazí jen tehdy, když za nimi stojí hlásící zdroj; jinak je tam „—"
+- **Zdraví FVE**: kontrola baterie na instalaci bez baterie neznamená neúspěch, ale „neznámé", počet komponent se počítá jen z těch, které mají zdroj, a bez údaje o výšce Slunce se netvrdí, že „Slunce je pod obzorem"
+
 ## [0.7.27] - 2026-09-22
 
 Návrat k aktuálnímu designu. Obsah je přesně ten, který vyšel jako 0.7.21, tedy včetně stránky Ekonomika; vyšší číslo má jen proto, aby ho Home Assistant nabídl instalacím, které mezitím dostaly 0.7.22 až 0.7.26.
