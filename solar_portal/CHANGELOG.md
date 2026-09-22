@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.30] - 2026-09-22
+
+- **Čerstvá instalace už ví, kde začít.** Dokud Solario nemá senzor výroby, je první věcí na Přehledu pruh **Začněte přiřazením senzorů** s cestou do nastavení. Dosud se nová instalace tvářila jako hotová aplikace plná pomlček a nikde nebylo řečeno, co s tím
+- **Volba typu instalace mluví jasně.** „Používám vlastní lokální instalaci" se jmenuje **„Mám vlastní Home Assistant"** a je u ní napsané, že volbu později nepůjde změnit
+- **Ekonomika je na jednom místě.** Karta na Přehledu ukazuje dnešní odhad, nastavenou cenu a odkaz do Ekonomiky; měsíc, výkup i celá metodika výpočtu zůstávají na stránce Ekonomika, kde už stejně jsou. Přehled tak neodrazuje třemi výhradami nad jedním číslem
+- **„Zdraví FVE" se jmenuje „Stav systému".** Stránka kontroluje spojení, senzory a komponenty — a sama přiznávala, že skryté servisní závady panelů nehodnotí. Název teď odpovídá tomu, co dělá
+
 ## [0.7.29] - 2026-09-22
 
 Prvních deset minut nového zákazníka:

@@ -1,6 +1,6 @@
-# Solario Local 0.7.29 first impressions: one product name, plain words, a door on every promise
+# Solario Local 0.7.30 a start for a fresh installation and pages that say what they do
 name: Solario Local
-version: "0.7.29"
+version: "0.7.30"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
