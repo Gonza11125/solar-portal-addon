@@ -1,6 +1,6 @@
-# Solario Local 0.7.26 republished from the 0.7.19 source
+# Solario Local 0.7.27 republished from the 0.7.21 source: the current design with Ekonomika
 name: Solario Local
-version: "0.7.26"
+version: "0.7.27"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

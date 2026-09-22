@@ -1,4 +1,4 @@
-# Solario Local 0.7.26
+# Solario Local 0.7.27
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 

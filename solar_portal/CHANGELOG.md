@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.27] - 2026-09-22
+
+Návrat k aktuálnímu designu. Obsah je přesně ten, který vyšel jako 0.7.21, tedy včetně stránky Ekonomika; vyšší číslo má jen proto, aby ho Home Assistant nabídl instalacím, které mezitím dostaly 0.7.22 až 0.7.26.
+
+## [0.7.21] - 2026-09-21
+
+- Nový přehled Solario Home, samostatná Ekonomika a osm hlavních sekcí. Živé hodnoty jsou vykreslené nad čistou ilustrací domu.
+- Automatizace jsou ve všech tarifech na míru a spravované týmem Solario. Zákaznický editor a početní limity byly odstraněny; přehled zachovává stav a historii spuštění. Dříve vypnutá pravidla se nezapínají.
+- Kontextové nabídky Smart a Pro podle historie, ekonomiky a pokročilé správy, bez opakovaných reklamních oken.
+- Ekonomické souhrny rozlišují chybějící data od nuly; Pro má CSV a tisk do PDF. Samostatný přínos baterie ani návratnost bez doložených vstupů nejsou slibovány.
+- Pokročilé mapování, export a webhooky jsou oddělené od základního nastavení. V rozhraní se používá značka Solario.
+- Ověřeno sestavením frontend/backend, integračními testy spravovaných automatizací a kontrolou devíti obrazovek na čtyřech šířkách.
+
 ## [0.7.26] - 2026-09-21
 
 Návrat k vzhledu a funkcím verze 0.7.19. Obsah je přesně ten, který vyšel jako 0.7.19; vyšší číslo má jen proto, aby ho Home Assistant nabídl jako aktualizaci instalacím, které mezitím dostaly návrat na 0.6.47 (0.7.22 až 0.7.25). Změny z verzí 0.7.20 a 0.7.21 v této verzi nejsou.
