@@ -1,6 +1,6 @@
-# Solario Local 0.7.31 stops rewriting megabytes onto the SD card every minute
+# Solario Local 0.7.32 the weather row tells the truth about what the household has
 name: Solario Local
-version: "0.7.31"
+version: "0.7.32"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

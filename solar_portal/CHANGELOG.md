@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.32] - 2026-09-22
+
+- **„Meteostanice: Připojeno" svítilo úplně každému.** Řádek se řídil tím, jestli Solario dostalo snímek počasí — jenže ten je „dostupný" už tehdy, když Home Assistant zná jen polohu Slunce, a entita `sun.sun` je v každé instalaci. Za meteostanici se teď počítá jen skutečný zdroj: entita `weather.*` nebo naměřené ozáření. Instalace, která má jen polohu Slunce, vidí **„Jen poloha Slunce"**, a když není ani ta, „Není v instalaci"
+- stejná oprava v kartě senzorů na Přehledu, aby se Nastavení a Přehled nerozcházely
+
 ## [0.7.31] - 2026-09-22
 
 - **Add-on přestal ničit SD kartu.** Celá historie ležela v jednom souboru, který se přepisoval celý **každou minutu** — u třiceti dnů měření to je 4,7 MB na jeden zápis, tedy zhruba **7 GB denně**. Přitom nové měření přibývá jen jednou za pět minut. Nově má každý den vlastní soubor a přepisuje se jen ten dnešní, a jen když opravdu přibude měření: naměřeno **24 MB denně** místo gigabajtů
