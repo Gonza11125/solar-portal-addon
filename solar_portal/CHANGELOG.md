@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.34] - 2026-09-24
+
+- Opraven vizuální přetok textu v kruhovém ukazateli **Senzory z Home Assistantu**. Uvnitř zůstává jen počet zdrojů a krátké „zdrojů online“, text je vystředěný a nemůže přetéct přes zelený prstenec.
+- Náhled domácnosti v levém sidebaru je nově čtvercový, lehce přiblížený a vycentrovaný na samotný dům, takže nepůsobí jako široký výřez s velkým množstvím prázdné oblohy.
+- Žádná změna tarifů, logiky měření ani API.
+
 ## [0.7.33] - 2026-09-24
 
 - Jedna serverová capability matrix pro Local / Smart / Pro. Tarifní karty, API a route guardy už neudržují vlastní rozdílné seznamy funkcí.
