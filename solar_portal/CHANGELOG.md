@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.7.33] - 2026-09-24
+
+- Jedna serverová capability matrix pro Local / Smart / Pro. Tarifní karty, API a route guardy už neudržují vlastní rozdílné seznamy funkcí.
+- **Local**: den + týden historie, základní ekonomika a aktuální Stav systému, pevné vestavěné alerty, katalog a formulář žádosti o automatizaci. Nepřipojený požadavek se uloží lokálně místo falešného odeslání.
+- **Smart**: měsíc historie, detailní ekonomika, 30denní historie stavu, editovatelné vestavěné prahy, vzdálená upozornění/push přes ověřený Solario Cloud link a 1 automatizace v ceně.
+- **Pro**: rok + vlastní období, dlouhodobá ekonomika, návratnost pouze z 365 úplných doložených dní, vlastní pravidla upozornění, servisní report, 3 automatizace v ceně, editor zařízení, CSV/PDF, API a webhooky.
+- Alertové prahy se mezi Localem a Cloudem synchronizují v jednotkách, které opravdu používají. Okamžitá spotřeba domu se vyhodnocuje jen z přesného `home_power` senzoru; denní kWh se za okamžitý kW nevydávají.
+- Downgrade nastavení nemaže: Local použije bezpečné výchozí prahy a Smart nevyhodnocuje Pro custom rules, uložená data ale zůstanou pro případný návrat k vyššímu tarifu.
+- Automatizační požadavky se přes ověřený device token ukládají do Cloud databáze; bez Cloud linku drží Local požadavek v persistentní frontě a po propojení jej zkusí doručit.
+- Zachována ochrana SD karty z 0.7.31: detailní historie je po denních shardech, hodinové/denní agregace mají omezenou frekvenci zápisu a při plánovaném vypnutí se telemetrie flushne.
+- Zachováno chování 0.7.28–0.7.32: chybějící volitelný senzor je neutrální, nová instalace dostane jasný krok přiřazení senzorů, produkt se jmenuje Solario Home a `sun.sun` se nevydává za meteostanici.
+- Přístupové kódy lze stáhnout při první registraci i po obnově. Text výslovně říká, že ztrátu obou kódů nelze vyřešit vzdáleným „dohledáním“.
+- Smart cloudová stránka upozornění zobrazuje vestavěná pravidla a push; editor vlastních pravidel se zobrazí jen v Pro.
+
 ## [0.7.32] - 2026-09-22
 
 - **„Meteostanice: Připojeno" svítilo úplně každému.** Řádek se řídil tím, jestli Solario dostalo snímek počasí — jenže ten je „dostupný" už tehdy, když Home Assistant zná jen polohu Slunce, a entita `sun.sun` je v každé instalaci. Za meteostanici se teď počítá jen skutečný zdroj: entita `weather.*` nebo naměřené ozáření. Instalace, která má jen polohu Slunce, vidí **„Jen poloha Slunce"**, a když není ani ta, „Není v instalaci"
