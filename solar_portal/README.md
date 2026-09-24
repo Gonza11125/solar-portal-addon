@@ -1,4 +1,4 @@
-# Solario Local 0.7.32
+# Solario Local 0.7.33
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,16 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.33
+
+- **One enforced capability matrix now defines Local, Smart and Pro.** Tariff cards and API authorization read the same backend policy instead of maintaining separate promises.
+- **Local** keeps live monitoring, day/week history, basic economics, current system status, fixed built-in alerts, and commissioned-automation requests.
+- **Smart** adds month history, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and **1 commissioned automation included**.
+- **Pro** adds year/custom periods, long-term economics, ROI only from a complete verified 365-day basis, custom alert rules, service reports, **3 commissioned automations included**, device editing for own-HA installations, CSV/PDF, API and webhooks.
+- Paid settings survive downgrade. Features outside the active plan stop being editable/evaluated, but their stored configuration is retained for a later upgrade.
+- Commissioned-automation requests are persisted locally when Cloud is unavailable and are delivered through the verified device link when possible.
+- The SD-card-safe sharded history from 0.7.31 remains in place, and fresh-install sensor guidance, neutral optional sensors, truthful weather-source status, and downloadable access-code files from 0.7.28-0.7.32 remain preserved.
 
 ## What changed in 0.7.18
 
