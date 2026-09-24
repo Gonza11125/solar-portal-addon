@@ -1,6 +1,6 @@
-# Solario Local 0.7.33 unified Local / Smart / Pro product matrix
+# Solario Local 0.7.34 dashboard visual polish
 name: Solario Local
-version: "0.7.33"
+version: "0.7.34"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
