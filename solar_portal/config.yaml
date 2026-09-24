@@ -1,6 +1,6 @@
-# Solario Local 0.7.32 the weather row tells the truth about what the household has
+# Solario Local 0.7.33 unified Local / Smart / Pro product matrix
 name: Solario Local
-version: "0.7.32"
+version: "0.7.33"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -51,6 +51,7 @@ options:
   entity_grid_power: ""
   entity_battery_power: ""
   entity_home_consumption: ""
+  entity_home_power: ""
   entity_solar_production: ""
   entity_inverter_power: ""
   entity_string_1_power: ""
@@ -81,6 +82,7 @@ schema:
   entity_grid_power: str?
   entity_battery_power: str?
   entity_home_consumption: str?
+  entity_home_power: str?
   entity_solar_production: str?
   entity_inverter_power: str?
   entity_string_1_power: str?
