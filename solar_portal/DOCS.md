@@ -1,4 +1,4 @@
-# Solario Local 0.7.32 — Configuration and Technical Documentation
+# Solario Local 0.7.33 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -25,6 +25,7 @@ Optional manual energy entity overrides:
 - `entity_grid_power`
 - `entity_battery_power`
 - `entity_home_consumption`
+- `entity_home_power` (optional instantaneous home power in kW for exact power-alert evaluation)
 - `entity_solar_production`
 - `entity_inverter_power`
 - `entity_string_1_power` through `entity_string_4_power`
@@ -95,22 +96,20 @@ When upgrading from 0.6.35, only the derived periodic tracker file is removed on
 
 If history or reliable statistical data required for an exact calculation is missing, Solario does not label an unverified estimate as an exact value. Diagnostics show the source and calculation state where applicable.
 
-## FREE plan
+## Local / Smart / Pro capability matrix
 
-Server-enforced FREE limits:
+The backend has one canonical plan policy and the UI advertises those same enforced capabilities:
 
-- history: maximum **24 hours**,
-- **1 custom Solario automation**,
-- native Home Assistant `automation.*` entities do not count against that one slot,
-- the standard safe Home Assistant entity overview is available,
-- general manual device control and the device editor/import workflow require PRO,
-- AI recommendations are disabled in FREE.
+- **Local (internal id `free`)**: detailed history up to 7 days, Day/Week tabs, basic economics, current system status, fixed built-in alerts, automation catalogue/request flow, and 0 commissioned automations included.
+- **Smart**: detailed history up to 30 days, Month tab, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and 1 commissioned automation included.
+- **Pro**: 30 days of detailed history plus 366 days of hourly history and 5 years of daily history, Year and custom ranges, long-term economics, ROI from a complete verified 365-day basis, custom alerts, service report, 3 commissioned automations included, device editor, export/PDF, API and webhooks.
 
-Automations above the active plan limit are not deleted; they are locked or paused according to their origin and the current plan.
+The number of already commissioned rules is not a runtime execution quota. Downgrading does not delete paid settings or existing commissioned automations. The active entitlement still governs what can be edited or evaluated: Local uses fixed alert thresholds, Smart does not run Pro custom alert rules, and manual device editing/control remains Pro-only for an own-Home-Assistant installation.
+
 
 ## Weather and solar conditions
 
-Solario can use Home Assistant `weather.*`, `sun.sun`, or a suitable sun-elevation sensor. If a physical irradiance sensor is not available, current irradiance may be derived from weather and sun elevation.
+Solario can use Home Assistant `weather.*`, a measured irradiance sensor, `sun.sun`, or a suitable sun-elevation sensor. Only a real `weather.*` source or measured irradiance counts as a weather station; `sun.sun` alone is shown as **Sun position only**. If a physical irradiance sensor is not available, current irradiance may be derived from weather and sun elevation.
 
 When `sunElevation <= 0`, current irradiance is always **0 W/m²**. This also applies when a physical Home Assistant sensor briefly retains an old positive value after sunset.
 
@@ -126,7 +125,7 @@ Detailed readings (one point every five minutes, 30 days back) are stored in `/d
 - local Web UI: port `3000`, no host mapping by default
 - maximum JSON body: **1 MiB**
 
-The access code and recovery code are shown during initial registration and should be stored safely. Account state, local settings, built-in agent identity, automations, mappings, and energy trackers are persisted in `/data`, so a normal restart does not require a new registration.
+The access code and recovery code are shown during initial registration and can be downloaded to a local text file; a newly rotated pair after recovery can be downloaded as well. If both codes are lost, they cannot be looked up remotely and recovery requires direct service access to that add-on. Account state, local settings, investment inputs, alert rules, commissioned-automation request queue, built-in agent identity, automations, mappings, and energy trackers are persisted in `/data`, so a normal restart does not require a new registration.
 
 The one-time 0.6.36 repair affects only derived periodic trackers.
 
