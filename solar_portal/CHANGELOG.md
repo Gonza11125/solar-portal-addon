@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.35] - 2026-09-24
+
+- Odstraněn obrázek domácnosti z karty **Rodinný dům** v levém sidebaru; zůstává pouze název domácnosti a pravdivý stav Online/Offline.
+- Stavové indikátory v sidebaru i horní liště už při Offline nezůstávají zelené.
+- Horní karta **Systém v pořádku / Systém vyžaduje pozornost** už nepoužívá univerzální text „Zkontrolujte připojení zařízení.“ pro každý problém.
+- Přehled nyní rozlišuje: odpojený systém, kritický alert, běžný alert, chybějící zdroj výroby a nedostupný připojený zdroj dat. Barva a text odpovídají skutečnému důvodu.
+- Informační alert sám o sobě už nepřepíná stav systému do červeného varování.
+- Stránka **Stav systému** používá stejnou reason-aware logiku a ukazuje konkrétní problém místo zavádějícího textu o připojení.
+- Žádná změna tarifů, měření ani API.
+
 ## [0.7.34] - 2026-09-24
 
 - Opraven vizuální přetok textu v kruhovém ukazateli **Senzory z Home Assistantu**. Uvnitř zůstává jen počet zdrojů a krátké „zdrojů online“, text je vystředěný a nemůže přetéct přes zelený prstenec.
