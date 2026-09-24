@@ -1,6 +1,6 @@
-# Solario Local 0.7.34 dashboard visual polish
+# Solario Local 0.7.35 truthful system status
 name: Solario Local
-version: "0.7.34"
+version: "0.7.35"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
