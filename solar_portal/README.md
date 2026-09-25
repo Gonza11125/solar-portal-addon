@@ -1,4 +1,4 @@
-# Solario Local 0.7.36
+# Solario Local 0.7.37
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,16 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.37
+
+- **Both development lines are merged.** Everything from 0.7.33-0.7.36 and from 0.7.27-0.7.32 is included. History that 0.7.31/0.7.32 stored in `/data/history` is imported once into the 0.7.33+ per-day files without duplicates; the old folder is renamed to `history.imported`, nothing is deleted.
+- **Local shows its limits with the household's own numbers.** History is stored the same way on every plan; the plan only decides how far back you can look. Graphs and Economics therefore say how many days are already stored, that Local shows the last 7 and that Smart opens the rest immediately. The new `GET /api/data/retention` returns day counts only, never readings.
+- **Alerts:** Local sees how many events the last 30 days held and that Smart delivers them to a phone; Smart sees what Pro's custom rules add.
+- **Pro: yearly energy calendar.** Every day of the last 12 months as a square coloured by production, best and average day, 12-month production, and every month next to the same month last year. Only verified daily values are used; a day without one stays empty, never zero. Other plans see a locked preview that marks only the days already stored, with no invented values.
+- Plan cards promise only what exists: "API" is gone from Pro (there is no separate API access), and Smart names its included automation instead of "custom automations".
+- The 7-day Pro trial is offered only when paid plans are enabled (`paid_upgrades_enabled`).
+- The "Energy by hour" chart legend no longer overflows its card.
 
 ## What changed in 0.7.36
 

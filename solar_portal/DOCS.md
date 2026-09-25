@@ -1,4 +1,4 @@
-# Solario Local 0.7.36 — Configuration and Technical Documentation
+# Solario Local 0.7.37 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -102,7 +102,7 @@ The backend has one canonical plan policy and the UI advertises those same enfor
 
 - **Local (internal id `free`)**: detailed history up to 7 days, Day/Week tabs, basic economics, current system status, fixed built-in alerts, automation catalogue/request flow, and 0 commissioned automations included.
 - **Smart**: detailed history up to 30 days, Month tab, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and 1 commissioned automation included.
-- **Pro**: 30 days of detailed history plus 366 days of hourly history and 5 years of daily history, Year and custom ranges, long-term economics, ROI from a complete verified 365-day basis, custom alerts, service report, 3 commissioned automations included, device editor, export/PDF, API and webhooks.
+- **Pro**: 30 days of detailed history plus 366 days of hourly history and 5 years of daily history, Year and custom ranges, long-term economics, ROI from a complete verified 365-day basis, custom alerts, service report, 3 commissioned automations included, device editor, yearly energy calendar with month-over-last-year comparison, export/PDF and webhooks.
 
 The number of already commissioned rules is not a runtime execution quota. Downgrading does not delete paid settings or existing commissioned automations. The active entitlement still governs what can be edited or evaluated: Local uses fixed alert thresholds, Smart does not run Pro custom alert rules, and manual device editing/control remains Pro-only for an own-Home-Assistant installation.
 

@@ -1,6 +1,6 @@
-# Solario Local 0.7.36 unified system status
+# Solario Local 0.7.37 tiers that lead somewhere
 name: Solario Local
-version: "0.7.36"
+version: "0.7.37"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

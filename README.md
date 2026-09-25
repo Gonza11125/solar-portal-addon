@@ -1,18 +1,18 @@
 # Solario Local pro Home Assistant
 
-Aktuální stabilní verze: **0.7.20** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.37** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Local do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Local je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.20
+## Co přináší 0.7.37
 
-- opravené rozložení Přehledu, Grafů a Zdraví FVE na počítači i mobilu,
-- odstraněné duplicitní nabídky a tlačítko vložené v obrázku,
-- správné jednotky diagnostických metrik a méně falešných chyb volitelných senzorů,
-- opravený rychlý test, vykreslení baterie a sítě a obnovování historie,
-- základní ekonomika s odděleným odhadem úspory a výkupu a s vysvětlením omezení výpočtu.
+- Local od prvního dne ukazuje, kolik dní historie už add-on uložil, a že je Smart zpřístupní hned po přechodu - nic se neztrácí,
+- Pro má roční kalendář energie: každý den roku podle výroby a každý měsíc vedle stejného měsíce loni, jen z ověřených údajů,
+- upozornění v Localu říkají, kolik událostí za 30 dní nastalo; Smart je doručí na telefon,
+- tarifní karty slibují jen to, co add-on opravdu umí,
+- sloučené obě vývojové linie včetně bezpečného převzetí historie z 0.7.31/0.7.32.
 
 ## Instalace
 

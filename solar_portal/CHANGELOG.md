@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.37] - 2026-09-25
+
+- **Sloučeny obě vývojové linie.** Verze obsahuje vše z 0.7.33–0.7.36 i z 0.7.27–0.7.32. Historie, kterou 0.7.31/0.7.32 uložila do `/data/history`, se při prvním startu jednou převezme do denních souborů 0.7.33+ bez duplicit a původní složka se přejmenuje na `history.imported` (nic se nemaže).
+- **Local ukazuje své hranice s vlastními čísly domácnosti.** Historie se ukládá stejně na všech tarifech, tarif určuje jen, jak daleko zpět je vidět. Grafy a Ekonomika proto říkají „Solario už uložilo N dní, Local ukazuje posledních 7“ a že Smart je zpřístupní hned po přechodu. Nový endpoint `GET /api/data/retention` vrací jen počty dní, nikdy měření.
+- **Upozornění:** Local vidí, kolik událostí za posledních 30 dní nastalo a že je Smart doručí na telefon. Smart vidí, co přidávají vlastní pravidla z Pro.
+- **Pro: Roční kalendář energie.** Každý den posledních 12 měsíců jako políčko podle výroby, nejlepší a průměrný den, výroba za 12 měsíců a každý měsíc vedle stejného měsíce loni. Počítá se jen z denních údajů označených jako ověřené; den bez údaje zůstane prázdný, nikdy nula. Ostatní tarify vidí uzamčený náhled, který zvýrazní jen dny, které už add-on uložil - bez vymyšlených hodnot.
+- Tarifní karty a propagace slibují jen to, co add-on opravdu dělá: z Pro zmizelo „API“ (samostatný API přístup neexistuje), Smart už neslibuje „automatizace na míru“, ale počet automatizací v ceně.
+- Nabídka 7denního zkušebního Pro se zobrazí jen tehdy, když jsou placené tarify zapnuté (`paid_upgrades_enabled`); jinak by šlo Pro vyzkoušet a pak nebylo co koupit.
+- Opravena legenda grafu „Energie po hodinách“, která přetékala pod kartu.
+
 ## [0.7.36] - 2026-09-25
 
 - **Přehled, Upozornění a Stav systému používají jeden společný výpočet globálního stavu.** Nemůže se už stát, že Přehled hlásí aktivní warningy a Stav systému současně zůstane zelený.
