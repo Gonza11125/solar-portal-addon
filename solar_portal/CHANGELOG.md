@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.36] - 2026-09-25
+
+- **Přehled, Upozornění a Stav systému používají jeden společný výpočet globálního stavu.** Nemůže se už stát, že Přehled hlásí aktivní warningy a Stav systému současně zůstane zelený.
+- Společný stav vychází ze stejného živého připojení, stejné diagnostiky provozních senzorů a stejného seznamu otevřených warning/critical upozornění.
+- Všechny tři stránky načítají stejný rozsah alertů, takže se počet aktivních upozornění neliší kvůli jinému limitu API.
+- Doplňkové diagnostické senzory, jako jednotlivé stringy nebo lifetime countery, zůstávají viditelné ve Stav systému, ale samy o sobě nesnižují globální stav domácnosti.
+- Text globálního stavu je sjednocený: offline, kritická upozornění, aktivní warningy, chyba provozního zdroje, chybějící zdroj výroby nebo nedostupný provozní senzor.
+- Opraven drobný text „k lokálnímu systému“.
+- Žádná změna tarifů, výpočtu energie ani veřejného API.
+
 ## [0.7.35] - 2026-09-24
 
 - Odstraněn obrázek domácnosti z karty **Rodinný dům** v levém sidebaru; zůstává pouze název domácnosti a pravdivý stav Online/Offline.
