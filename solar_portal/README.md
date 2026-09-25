@@ -1,4 +1,4 @@
-# Solario Local 0.7.35
+# Solario Local 0.7.36
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,14 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.36
+
+- Dashboard, Alerts and System Status now use one canonical global health calculation.
+- All three views read the same connectivity state, operational sensor diagnostics and open warning/critical alerts, so they cannot disagree about whether the household needs attention.
+- The same alert window is used everywhere, preventing different active-alert counts caused by different API limits.
+- Supplemental diagnostics such as individual PV strings and lifetime counters remain visible but do not downgrade global household health by themselves.
+- No tariff, energy-calculation or public-API behavior changed.
 
 ## What changed in 0.7.35
 
