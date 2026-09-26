@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.41] - 2026-09-26
+
+- **Požadavky na automatizaci na míru už neuvíznou ve stavu „Čeká na opakování“.** Add-on rozlišuje dočasný výpadek (Solario Cloud nedostupný nebo s chybou, zkouší se automaticky znovu) od odmítnutí (propojení neplatí, Cloud požadavek nepřijal). Odmítnutý požadavek už nezkouší každých 5 minut dokola; znovu ho pošle po novém propojení nebo tlačítkem „Zkusit znovu“.
+- Každý požadavek ukazuje datum, text, stav (Odesláno, Čeká na opakování, Nepřijato, Uloženo v add-onu) a u neodeslaných srozumitelný důvod. Důvod se zapisuje i do logu add-onu.
+- **Solario Cloud** (vyžaduje nasazení na `solario.cloud`): požadavek přijme i od instalace propojené párovacím kódem bez tarifu a zapíše ho jako Local. Dřív ho odmítal chybou 403, takže požadavky z Localu nikdy nedorazily. Přijetí požadavku žádné oprávnění nepřidává.
+
 ## [0.7.40] - 2026-09-26
 
 Obsahuje i vše z 0.7.39 (příprava na platební bránu), která do Home Assistantu samostatně nevyšla.
