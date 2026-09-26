@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.7.40] - 2026-09-26
+
+Obsahuje i vše z 0.7.39 (příprava na platební bránu), která do Home Assistantu samostatně nevyšla.
+
+- **Grafy: filtr hodnot.** Nad grafy je řádek „Zobrazit“ s přepínači Výroba, Spotřeba, Síť a Baterie. Volba platí pro všechny grafy na stránce a prohlížeč si ji pamatuje. Hodnota, pro kterou zvolené období nemá data, je zašedlá a poslední zobrazenou hodnotu nejde vypnout.
+- **Stav baterie má vlastní graf** pod výkonem, na stejné časové ose. Výkon v kW a nabití v % už nesdílí jeden graf se dvěma stupnicemi; neznámý stav nabití je mezera, ne pád na nulu.
+- **Sloupcové grafy** za den a za období ukazují i odběr ze sítě a dodávku do sítě.
+- **Vlastní období opravdu funguje:** předvolby (Včera, Posledních 7 a 30 dní, Tento a Minulý měsíc, Posledních 365 dní), data se použijí až tlačítkem Zobrazit, prohozená data se srovnají, období se ořízne na dostupnou historii a šipky posouvají vybrané období o jeho délku. Dny se počítají v časovém pásmu domácnosti, ne v UTC. Jeden den starší, než sahá hodinová historie, se ukáže jako denní souhrn místo prázdného grafu. Výběr sahá tak daleko, jak daleko tarif drží denní souhrny.
+- **Úvodní strana:** Dnešní bilance ukazuje pruhy „Kam šla dnešní výroba“ a „Odkud přišla spotřeba“ z již měřených hodnot a karta Ekonomika sloupečky úspory za posledních 7 dní (jen ověřené dny; den bez údaje je prázdné místo, ne nula).
+- Barvy grafů jsou ověřené na rozlišitelnost i pro poruchy barvocitu: o odstín tmavší oranžová pro výrobu a sytější fialová pro síť.
+
+## [0.7.39] - 2026-09-26
+
+- **Připraveno na bezpečnou platební bránu a plynulý přechod na placený tarif.** Zatím skryté za volbou `paid_upgrades_enabled`, veřejná verze zůstává v tarifu Local.
+- Profil provede zákazníka přechodem: potvrzení s cenou a podmínkami, platba v novém okně na `solario.cloud`, průběh ve třech krocích a potvrzení „Solario Smart je aktivní“ s odkazy na to, co se odemklo. Tarif se po zaplacení zapne sám.
+- Druhé kliknutí, obnovení stránky ani druhá záložka nezaloží druhou platbu. Relace, která už může být zaplacená, se nikdy nepřepíše.
+- Nahrazené a nedokončené platby add-on ještě 7 dní hlídá, takže pozdě potvrzená platba se neztratí. Dvojí platbu nepoužije a zákazníkovi řekne, jak o vrácení požádat.
+- Změna tarifu u zaplaceného předplatného (Smart ↔ Pro, zrušení) vede do účtu na `solario.cloud`, add-on nezaloží druhé předplatné.
+- Add-on pošle zákazníka platit jen na stránku služby Solario Cloud. Adresu jiného hostitele odmítne a adresu účtu už nebere z konfigurace.
+- Pokročilá stránka profilu už neotevírá platbu přímo v rámu Home Assistantu, kde ji platební brány odmítají zobrazit. Vede do stejného postupu na Profilu.
+- Soubor rozdělaných plateb přešel na verzi 2; soubor z 0.7.38 a starších se načte beze ztráty.
+- Návrh pro web (volba brány, stránka platby, webhooky, účet zákazníka, doklady, právní minimum, test před spuštěním) je v `docs/solario-cloud-platby-navrh.md`.
+
 ## [0.7.38] - 2026-09-26
 
 - **Levé menu při posouvání zůstává na místě.** Na delších stránkách (Grafy, Ekonomika, Upozornění) menu odjelo se stránkou a vedle grafů zůstal prázdný tmavý pruh. Příčinou bylo `overflow-x: hidden` na `body`, kvůli kterému se menu „přilepilo“ k prvku, který se sám nikdy neposouvá; nahrazeno `overflow-x: clip`.

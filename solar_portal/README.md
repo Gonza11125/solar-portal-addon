@@ -1,4 +1,4 @@
-# Solario Local 0.7.38
+# Solario Local 0.7.40
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,22 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.40
+
+Includes 0.7.39, which was not offered on its own.
+
+- **Chart value filter.** A "Zobrazit" row above the charts switches production, consumption, grid and battery on and off for every chart on the page; the choice is remembered per browser.
+- **Battery charge has its own strip** under the power chart on the same time axis, so kW and % no longer share one chart with two scales. Day and period bars include grid import and export.
+- **The custom period really works:** presets, an explicit "Zobrazit" button, reversed dates are swapped, the range is clamped to the plan's history and the arrows move it by its own length. Days follow the household's time zone.
+- **Dashboard:** where today's production went and where consumption came from as split bars, and seven days of verified savings as small bars, drawn from values the add-on already measures.
+- Chart colours checked for colour-blind separation.
+
+## What changed in 0.7.39
+
+- **Ready for a payment gateway and a smooth move to a paid plan**, still behind `paid_upgrades_enabled`. The Profile page confirms price and terms, opens the payment on `solario.cloud` in its own tab, follows payment, confirmation and activation, and switches the plan on by itself.
+- A second click, a reload or a second tab never starts a second payment; a session that may already be paid is never replaced; late payments are still picked up for seven days; a household that already pays changes its plan in its Solario Cloud account.
+- Checkout and account pages must be served by Solario Cloud itself.
 
 ## What changed in 0.7.38
 

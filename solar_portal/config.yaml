@@ -1,6 +1,6 @@
-# Solario Local 0.7.38 sidebar and hero layout fixes
+# Solario Local 0.7.40 chart filters, custom period and payment readiness
 name: Solario Local
-version: "0.7.38"
+version: "0.7.40"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
