@@ -1,6 +1,6 @@
-# Solario Local 0.7.37 tiers that lead somewhere
+# Solario Local 0.7.38 sidebar and hero layout fixes
 name: Solario Local
-version: "0.7.37"
+version: "0.7.38"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud

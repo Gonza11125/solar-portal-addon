@@ -1,4 +1,4 @@
-# Solario Local 0.7.37
+# Solario Local 0.7.38
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,14 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.38
+
+- The left menu stays in place while long pages scroll; it used to slide away with the page and leave an empty strip beside the charts.
+- The profile card and the alerts hero no longer overflow on screens up to ~1500px, where they cut off their right edge including the "Upravit profil" button.
+- The profile artwork no longer carries a painted copy of that button.
+- The Smart and Pro blurbs name what each plan adds; the docs state correctly that the "Celkem" tab belongs to Pro.
+- No change to measurements, data storage or the API.
 
 ## What changed in 0.7.37
 

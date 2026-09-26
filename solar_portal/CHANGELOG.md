@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.38] - 2026-09-26
+
+- **Levé menu při posouvání zůstává na místě.** Na delších stránkách (Grafy, Ekonomika, Upozornění) menu odjelo se stránkou a vedle grafů zůstal prázdný tmavý pruh. Příčinou bylo `overflow-x: hidden` na `body`, kvůli kterému se menu „přilepilo“ k prvku, který se sám nikdy neposouvá; nahrazeno `overflow-x: clip`.
+- **Karta Profilu a úvodní obrázek Upozornění už nepřetékají** na obrazovkách do cca 1500 px. Dříve byly širší než stránka a usekávaly svůj pravý okraj včetně tlačítka „Upravit profil“.
+- Z obrázku v kartě Profilu zmizela namalovaná kopie tlačítka „Upravit profil“, která po opravě přetékání prosvítala vedle skutečného tlačítka.
+- Popisky tarifů Smart a Pro říkají, co tarif opravdu přidává, místo „automatizace na míru“; náhled vlastních pravidel Pro ve Smart má podobu karty.
+- Dokumentace uvádí správně, že záložka „Celkem“ v Grafech patří k tarifu Pro.
+- Žádná změna měření, ukládání dat ani API.
+
 ## [0.7.37] - 2026-09-25
 
 - **Sloučeny obě vývojové linie.** Verze obsahuje vše z 0.7.33–0.7.36 i z 0.7.27–0.7.32. Historie, kterou 0.7.31/0.7.32 uložila do `/data/history`, se při prvním startu jednou převezme do denních souborů 0.7.33+ bez duplicit a původní složka se přejmenuje na `history.imported` (nic se nemaže).
