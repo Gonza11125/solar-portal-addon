@@ -1,6 +1,6 @@
-# Solario Local 0.7.41 automation requests that say why
+# Solario Local 0.7.42 subscriptions for every plan, with a trial
 name: Solario Local
-version: "0.7.41"
+version: "0.7.42"
 slug: solar_portal
 description: Local solar monitoring portal with automatic exact energy metric discovery
 url: https://solario.cloud
@@ -24,6 +24,9 @@ panel_icon: mdi:home-energy-monitor
 panel_title: Solario Local
 panel_admin: true
 homeassistant_api: true
+# Lets the add-on switch its own automatic updates on and off with the
+# subscription (update-policy.mjs), only when paid plans are enabled.
+hassio_api: true
 # /share is where an automatic backup is copied, so the user can pull an archive
 # out with the File editor, Samba or the Terminal add-on - /data is reachable
 # only from inside this add-on.

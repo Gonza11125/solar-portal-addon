@@ -1,4 +1,4 @@
-# Solario Local 0.7.41
+# Solario Local 0.7.42
 
 Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -11,6 +11,17 @@ Solario Local is a local Home Assistant application for solar PV overview, energ
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.42
+
+Preparation of subscriptions for every plan. It applies only with `paid_upgrades_enabled` switched on; without it nothing changes for customers.
+
+- After the access code is created, the household picks Local, Smart or Pro and tries it **free for 14 days**, without a card, or continues without a plan. Made for the Solar Box, where the customer only gets a link to the add-on.
+- Every plan, Local included, is a subscription. Paying is possible during the trial or after it (Profile). A banner shows the days left, the end of a cancelled subscription, or that the installation runs without one.
+- Without a subscription the add-on keeps running as Local without Solario's services and without updates: no requests for commissioned automations, no Solario Cloud, and the add-on switches its own automatic updates off through the Supervisor. Measurements, charts and automations already set up keep running; nothing is deleted.
+- Local never uploads measurements to Solario Cloud, not even when its trial starts.
+- The add-on now asks for Supervisor API access (`hassio_api`) to switch automatic updates. Only a small helper process gets the token; the web part still does not.
+- Solario Cloud (needs deploying on `solario.cloud`): Local plan, a 14-day trial of the chosen plan, plan changes up and down, and paying after a trial continues the same account.
 
 ## What changed in 0.7.41
 

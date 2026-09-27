@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.42] - 2026-09-27
+
+Příprava předplatného pro všechny tarify. Platí jen se zapnutou volbou `paid_upgrades_enabled`; bez ní se pro zákazníky nic nemění.
+
+- **Výběr tarifu po vytvoření přístupového kódu.** Nová stránka nabídne Local, Smart a Pro, každý na **14 dní zdarma** bez karty, nebo „Pokračovat bez tarifu“. Hodí se hlavně pro Solar Box: zákazník dostane jen odkaz na add-on a o Home Assistantu vědět nemusí.
+- **Každý tarif je předplatné, i Local.** Zaplatit jde kdykoli během zkušební doby i po ní (Profil → „Zaplatit …“). Pruh nahoře ukazuje zbývající dny zkušební doby, konec zrušeného předplatného nebo že instalace běží bez předplatného.
+- **Bez předplatného** běží add-on jako Local bez služeb a bez aktualizací: žádosti o automatizace na míru se neposílají, Solario Cloud se nepoužívá a add-on si přes Supervisor vypne automatické aktualizace. Měření, grafy a už nastavené automatizace běží dál, nic se nemaže. Po zaplacení se vše vrátí.
+- Tarif Local neposílá do Solario Cloud žádná měření, ani při spuštění zkušební doby.
+- Add-on nově žádá přístup k API Supervisoru (`hassio_api`) kvůli přepínání automatických aktualizací. Token dostane jen malý pomocný proces, webová část ho dál nemá.
+- **Solario Cloud** (vyžaduje nasazení na `solario.cloud`): tarif Local v předplatném, zkušební doba vybraného tarifu (`POST /api/trials/start`, 14 dní, i pro Solar Box), webhook `subscription.updated` pro změnu tarifu nahoru i dolů a pro zrušení vzaté zpět, oprava zaplacení po zkušební době (import narážel na stejný přístupový kód). Tarif Local nemá přístup na web Cloudu. Starší add-ony a jejich 7denní zkušební Pro fungují beze změny.
+
 ## [0.7.41] - 2026-09-26
 
 - **Požadavky na automatizaci na míru už neuvíznou ve stavu „Čeká na opakování“.** Add-on rozlišuje dočasný výpadek (Solario Cloud nedostupný nebo s chybou, zkouší se automaticky znovu) od odmítnutí (propojení neplatí, Cloud požadavek nepřijal). Odmítnutý požadavek už nezkouší každých 5 minut dokola; znovu ho pošle po novém propojení nebo tlačítkem „Zkusit znovu“.
