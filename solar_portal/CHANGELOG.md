@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.51] - 2026-10-03
+
+- **Přihlášení přes adresu v síti funguje, ať je zadaná jakkoli.** Když se aplikace otevřela přímo na portu 3000 jinak než číselnou adresou 192.168.x.x – například `http://homeassistant.local:3000` nebo přes jiný název počítače – správný přístupový kód skončil hláškou „Přihlášení selhalo“. Aplikace teď svou vlastní stránku pozná podle adresy, kterou prohlížeč použil. Stránky z jiných adres dál odmítá.
+- Hláška u nesprávného kódu teď říká, co se stalo: tato instalace kód nezná. Dřív mluvila o „jednorázovém“ kódu, i když kód jednorázový není.
+- **Předplatné podle pravidel, jak je lidé znají.** Připraveno na spuštění plateb; dokud je Solario nespustí, nic se nemění.
+  - Vyšší tarif platí hned a strhne se jen rozdíl za zbytek zaplaceného období.
+  - Nižší tarif i zrušení platí až od konce zaplaceného období. Do té doby zůstává tarif, za který je zaplaceno.
+  - V Profilu je změna tarifu s potvrzením, zrušení, obnovení zrušeného předplatného, „Ponechat tarif“ u naplánované změny a odkaz na platební kartu a faktury.
+  - Když předplatné skončí, doplněk to jednou oznámí oknem a dál běží jako Local bez služeb Solario, bez podpory a bez automatických aktualizací. Data se nemažou a po zaplacení se vše hned obnoví.
+  - Když neprojde platba za další měsíc, tarif ještě 7 dní běží a doplněk upozorní na kartu.
+  - Placené tarify zapíná Solario Cloud pro všechny instalace najednou. Volba `paid_upgrades_enabled` zůstává pro jednu instalaci.
+
 ## [0.7.50] - 2026-10-03
 
 - **Žádost o automatizaci dojde vždy.** Dřív se žádost z doplňku, který není propojený se Solario Cloud (typicky tarif Local), jen uložila a čekala na propojení. Teď ji doplněk pošle rovnou týmu Solario, i bez propojení. Odejde jen to, co do žádosti vyplníte (typ, popis, e-mail a telefon), a anonymní číslo instalace, aby šlo žádosti z jednoho domu spárovat. Žádosti, které dosud čekaly, se odešlou samy během pár minut po aktualizaci.
