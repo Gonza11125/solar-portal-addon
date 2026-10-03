@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.7.49] - 2026-10-03
+
+- **Tarif si volí každý sám, i se Solar Boxem.** Zmizelo „Spravováno instalatérem“ a „Tarif spravuje váš instalatér“: Solar Box si tarif vybere a změní v Profilu stejně jako vlastní Home Assistant. Kde aplikace dřív odkazovala na správce fotovoltaiky, uvádí teď tým Solario.
+- Volby `support_email` a `support_phone` pro instalační firmy jsou pryč; tlačítko Podpora ukazuje vždy kontakt Solaria.
+- **Stejné logo i v Home Assistantu.** Doplněk se v obchodě i v postranním panelu jmenuje Solario Home a na své stránce má logo Solaria (S se sluncem).
+
+## [0.7.48] - 2026-10-03
+
+- **Kód na tarif přímo v Profilu.** Kdo dostal od Solaria kód na tarif Smart nebo Pro, vloží ho v Profilu do karty „Máte kód na tarif?“ a tarif se zapne na dobu, kterou kód uvádí. Dřív bylo políčko schované v pokročilém profilu, jen pro vlastní Home Assistant a jen bez propojení s Cloudem. Teď funguje i pro Solar Box a i během zkušební doby.
+- Když je Solario už propojené s jiným účtem Solario Cloud, kód se nespotřebuje a aplikace řekne proč.
+
+## [0.7.47] - 2026-10-02
+
+- **Jedno logo Solario všude.** Postranní panel, přihlášení, první spuštění, ikona záložky v prohlížeči i ikona add-onu v obchodě Home Assistantu teď používají stejné logo jako web Solario (S se sluncem). Dřív měla každá část jiné.
+- V Profilu se údaje o instalaci, tarifu a předplatném už nepřekrývají s ručně psaným nápisem na fotografii vpravo.
+
+## [0.7.46] - 2026-10-02
+
+- **Jedna adresa podpory: info@solario.cloud.** Přihlašovací stránka, Profil, pokyny pro ztracený přístupový kód a předvyplněné e-maily teď všude uvádějí `info@solario.cloud` místo dřívější `podpora@solario.cloud`. Instalační firma si dál může nastavit vlastní `support_email`.
+
+## [0.7.45] - 2026-10-02
+
+- **Tlačítko Podpora.** V horní liště je nové tlačítko **Podpora** s e-mailem a telefonem na podporu Solario; stejný kontakt je i v kartě „Potřebujete poradit?“ v Profilu. Kontakt add-on načte ze Solario Cloud, až když panel otevřete, takže nová adresa nebo číslo platí bez nové verze. Když Cloud není dostupný, ukáže se jen produktová adresa, nikdy vymyšlené číslo.
+- Instalační firma, která podporuje své zákazníky sama, může v nastavení add-onu vyplnit `support_email` a nově `support_phone`; pak se ukáže jen její kontakt.
+- Předmět předvyplněných e-mailů už neobsahuje „+“ místo mezer.
+
+## [0.7.44] - 2026-10-02
+
+- **Žádost o automatizaci vyžaduje e-mail a telefon.** Formulář „Chci automatizaci“ se ptá na kontakt, aby se vám tým Solario mohl ozvat. Kontakt se uloží jen u žádosti a odešle se s ní do Solario Cloud; zařízení si ho pamatuje pro příští žádost.
+- Solario Cloud pošle týmu Solario e-mail o každé nové žádosti, s domem, tarifem, popisem a kontaktem. Žádosti odeslané starší verzí add-onu bez kontaktu Cloud dál přijímá.
+
+## [0.7.43] - 2026-09-28
+
+- **Živé hodnoty v Solario Cloud.** Když má někdo dům otevřený v Cloudu, add-on posílá každé měření hned (zhruba každých 5 s), ne jednou za 30 s. Cloud tato živá měření drží jen v paměti a do databáze dál ukládá jedno měření za 30 s. Když se nikdo nedívá, add-on posílá jako dřív. Živá měření posílá jen Cloudu, který o ně požádá.
+- **Baterie s obráceným znaménkem.** Některé měniče (například Alpha ESS) hlásí vybíjení jako kladné číslo. Add-on to pozná sám z vlastních měření (dům nemůže mít zápornou spotřebu; baterie, které klesá nabití, se vybíjí) a výkon baterie otočí. Tok energie a spotřeba v grafech pak sedí. Do Cloudu posílá hodnoty tak, jak je naměřil, Cloud si znaménko pozná sám.
+- **Spotřeba domu se dopočítá i z denní energie měniče.** Když dům nemá vlastní měřič spotřeby a výrobu hlásí jako denní energii měniče, spotřeba se dopočítá (výroba + odběr − dodávka). U domu s baterií se takto nedopočítává, protože by nabíjení baterie vydávala za spotřebu.
+- **Automatizace z Home Assistantu ukazují poslední spuštění** a to, jestli jsou zapnuté, podle Home Assistantu. Dřív u všech stálo „Zatím bez spuštění“.
+- Anglický režim se už nezasekne na textu se slovem „minut“.
+
 ## [0.7.42] - 2026-09-27
 
 Příprava předplatného pro všechny tarify. Platí jen se zapnutou volbou `paid_upgrades_enabled`; bez ní se pro zákazníky nic nemění.

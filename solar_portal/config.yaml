@@ -1,8 +1,8 @@
-# Solario Local 0.7.42 subscriptions for every plan, with a trial
-name: Solario Local
-version: "0.7.42"
+# Solario Home 0.7.49 no installer-managed plans, same logo in the add-on store
+name: Solario Home
+version: "0.7.49"
 slug: solar_portal
-description: Local solar monitoring portal with automatic exact energy metric discovery
+description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
 arch:
   - aarch64
@@ -21,7 +21,7 @@ ingress: true
 ingress_port: 8099
 ingress_entry: /
 panel_icon: mdi:home-energy-monitor
-panel_title: Solario Local
+panel_title: Solario Home
 panel_admin: true
 homeassistant_api: true
 # Lets the add-on switch its own automatic updates on and off with the
@@ -40,7 +40,6 @@ options:
   ha_automations: "[]"
   polling_interval: 5000
   anonymous_usage_stats: false
-  support_email: ""
   paid_upgrades_enabled: false
   entity_power_now: ""
   entity_energy_today: ""
@@ -71,7 +70,6 @@ schema:
   ha_automations: str
   polling_interval: int(1000,60000)
   anonymous_usage_stats: bool
-  support_email: str?
   paid_upgrades_enabled: bool?
   entity_power_now: str?
   entity_energy_today: str?

@@ -1,16 +1,26 @@
-# Solario Local 0.7.42
+# Solario Home 0.7.49
 
-Solario Local is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
+Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
 ## Installation
 
 1. Add `https://github.com/Gonza11125/solar-portal-addon` to Home Assistant repositories.
-2. Install **Solario Local** and start it.
+2. Install **Solario Home** and start it.
 3. Open the Web UI directly from Home Assistant through Ingress.
 4. On first launch, generate both an access code and a recovery code and store them safely.
 5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
+
+## What changed in 0.7.43 to 0.7.49
+
+- **One Solario logo** (the S with the sun) in the app, in the add-on store and in the browser tab; in Home Assistant the add-on is now called **Solario Home**.
+- **Everyone chooses their own plan**, Solar Box included; where the app named the PV installer it now names the Solario team. The `support_email` option for installers is gone.
+- **Plan codes** from Solario are entered in the Profile, in the "Máte kód na tarif?" card.
+- **A Podpora (Support) button** in the top bar with Solario's e-mail and phone; one address everywhere: info@solario.cloud.
+- A request for a custom automation asks for an e-mail and a phone, and the Solario team is e-mailed about it.
+- Live readings in Solario Cloud, a battery that reports discharging as positive is recognised from the readings, and consumption is derived from the inverter's daily energy where no meter exists.
+- In the Profile, the plan details no longer run into the photo.
 
 ## What changed in 0.7.42
 

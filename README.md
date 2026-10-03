@@ -1,29 +1,27 @@
-# Solario Local pro Home Assistant
+# Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.42** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.49** · podporované architektury: **amd64** a **aarch64**
 
-[![Přidat repozitář Solario Local do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
+[![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
-Solario Local je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
+Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.42
+## Co přináší 0.7.43 až 0.7.49
 
-- po vytvoření přístupového kódu jde vybrat tarif a 14 dní ho zkoušet zdarma; připraveno předplatné pro všechny tarify (zatím skryté za volbou `paid_upgrades_enabled`),
-- požadavky na automatizaci ukazují, proč ještě nedorazily, a jdou poslat znovu jedním tlačítkem,
-- v Grafech jdou jednotlivé hodnoty zapínat a vypínat, baterie má vlastní graf a vlastní období má předvolby a posun šipkami,
-- úvodní strana ukazuje, kam šla dnešní výroba a odkud přišla spotřeba, a úspory za posledních 7 dní,
-- add-on je připravený na bezpečnou platební bránu a plynulý přechod na placený tarif,
-- levé menu při posouvání zůstává na místě a karta Profilu ani Upozornění už nepřetékají přes okraj stránky,
-- Local od prvního dne ukazuje, kolik dní historie už add-on uložil, a že je Smart zpřístupní hned po přechodu - nic se neztrácí,
-- Pro má roční kalendář energie: každý den roku podle výroby a každý měsíc vedle stejného měsíce loni, jen z ověřených údajů,
-- upozornění v Localu říkají, kolik událostí za 30 dní nastalo; Smart je doručí na telefon,
-- tarifní karty slibují jen to, co add-on opravdu umí,
-- sloučené obě vývojové linie včetně bezpečného převzetí historie z 0.7.31/0.7.32.
+- **jedno logo Solario** (S se sluncem) v aplikaci, v obchodě doplňků i v záložce prohlížeče; doplněk se v Home Assistantu jmenuje **Solario Home**,
+- **tarif si volí každý sám**, i se Solar Boxem; tam, kde aplikace odkazovala na správce fotovoltaiky, uvádí teď tým Solario,
+- **kód na tarif** od Solaria se zadává v Profilu v kartě „Máte kód na tarif?“,
+- **tlačítko Podpora** v horní liště s e-mailem a telefonem na Solario; všude jedna adresa info@solario.cloud,
+- žádost o automatizaci na míru chce e-mail a telefon, aby se vám tým Solario mohl ozvat,
+- živé hodnoty v Solario Cloud, baterie s obráceným znaménkem rozpoznaná z měření a spotřeba dopočítaná z denní energie měniče,
+- v Profilu se údaje o tarifu nepřekrývají s fotografií.
+
+Podrobnosti jsou v [changelogu](solar_portal/CHANGELOG.md).
 
 ## Instalace
 
 1. V Home Assistantu přidejte repozitář `https://github.com/Gonza11125/solar-portal-addon`.
-2. Nainstalujte **Solario Local** a spusťte jej.
+2. Nainstalujte **Solario Home** a spusťte jej.
 3. Otevřete Web UI přímo z Home Assistantu přes Ingress.
 4. Při prvním otevření vygenerujte přístupový i obnovovací kód a oba bezpečně uložte.
 5. Po prvním přihlášení zvolte typ instalace: **vlastní Home Assistant** nebo **Solario Solar Box**. Volba se po prvním nastavení bezpečnostně uzamkne.
