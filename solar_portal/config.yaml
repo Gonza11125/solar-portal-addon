@@ -1,6 +1,6 @@
-# Solario Home 0.7.49 no installer-managed plans, same logo in the add-on store
+# Solario Home 0.7.50 automation requests reach Solario without a Cloud link
 name: Solario Home
-version: "0.7.49"
+version: "0.7.50"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud

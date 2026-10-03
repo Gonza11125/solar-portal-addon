@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.50] - 2026-10-03
+
+- **Žádost o automatizaci dojde vždy.** Dřív se žádost z doplňku, který není propojený se Solario Cloud (typicky tarif Local), jen uložila a čekala na propojení. Teď ji doplněk pošle rovnou týmu Solario, i bez propojení. Odejde jen to, co do žádosti vyplníte (typ, popis, e-mail a telefon), a anonymní číslo instalace, aby šlo žádosti z jednoho domu spárovat. Žádosti, které dosud čekaly, se odešlou samy během pár minut po aktualizaci.
+
 ## [0.7.49] - 2026-10-03
 
 - **Tarif si volí každý sám, i se Solar Boxem.** Zmizelo „Spravováno instalatérem“ a „Tarif spravuje váš instalatér“: Solar Box si tarif vybere a změní v Profilu stejně jako vlastní Home Assistant. Kde aplikace dřív odkazovala na správce fotovoltaiky, uvádí teď tým Solario.

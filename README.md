@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.49** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.50** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.49
+## Co přináší 0.7.43 až 0.7.50
 
+- **žádost o automatizaci dojde vždy**, i z tarifu Local bez propojení se Solario Cloud; dosud čekající žádosti se po aktualizaci odešlou samy,
 - **jedno logo Solario** (S se sluncem) v aplikaci, v obchodě doplňků i v záložce prohlížeče; doplněk se v Home Assistantu jmenuje **Solario Home**,
 - **tarif si volí každý sám**, i se Solar Boxem; tam, kde aplikace odkazovala na správce fotovoltaiky, uvádí teď tým Solario,
 - **kód na tarif** od Solaria se zadává v Profilu v kartě „Máte kód na tarif?“,

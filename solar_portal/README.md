@@ -1,4 +1,4 @@
-# Solario Home 0.7.49
+# Solario Home 0.7.50
 
 Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,8 +12,9 @@ Solario Home is a local Home Assistant application for solar PV overview, energy
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.7.43 to 0.7.49
+## What changed in 0.7.43 to 0.7.50
 
+- **A request for a commissioned automation always reaches Solario**, Local without a Solario Cloud link included: such an add-on sends it to Solario's request inbox. Requests that were waiting go out on their own after the update.
 - **One Solario logo** (the S with the sun) in the app, in the add-on store and in the browser tab; in Home Assistant the add-on is now called **Solario Home**.
 - **Everyone chooses their own plan**, Solar Box included; where the app named the PV installer it now names the Solario team. The `support_email` option for installers is gone.
 - **Plan codes** from Solario are entered in the Profile, in the "Máte kód na tarif?" card.
@@ -103,7 +104,7 @@ Includes 0.7.39, which was not offered on its own.
 - **Smart** adds month history, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and **1 commissioned automation included**.
 - **Pro** adds year/custom periods, long-term economics, ROI only from a complete verified 365-day basis, custom alert rules, service reports, **3 commissioned automations included**, device editing for own-HA installations, CSV/PDF, API and webhooks.
 - Paid settings survive downgrade. Features outside the active plan stop being editable/evaluated, but their stored configuration is retained for a later upgrade.
-- Commissioned-automation requests are persisted locally when Cloud is unavailable and are delivered through the verified device link when possible.
+- Commissioned-automation requests are persisted locally and delivered through the verified device link, or without a link to Solario's request inbox; one that cannot be sent is retried.
 - The SD-card-safe sharded history from 0.7.31 remains in place, and fresh-install sensor guidance, neutral optional sensors, truthful weather-source status, and downloadable access-code files from 0.7.28-0.7.32 remain preserved.
 
 ## What changed in 0.7.18
