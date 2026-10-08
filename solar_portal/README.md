@@ -1,4 +1,4 @@
-# Solario Home 0.7.51
+# Solario Home 0.7.52
 
 Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,8 +12,9 @@ Solario Home is a local Home Assistant application for solar PV overview, energy
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.7.43 to 0.7.51
+## What changed in 0.7.43 to 0.7.52
 
+- **Production and grid import can no longer show the same number.** One Home Assistant sensor now serves one quantity only; a grid meter's import counter that had also been taken for solar production stays the grid import, and production is looked for again (or shown as unknown rather than wrong). Discovery no longer takes an "import/odběr/nakoupená/elektroměr" counter for production. Security updates of the web server's libraries (proxy-addr, morgan, qs).
 - **Sign-in over the local network works whatever address is used**, a host name such as `http://homeassistant.local:3000` included; before, the right access code ended in "Přihlášení selhalo" there. Pages from other addresses are still refused.
 - **Subscriptions follow the usual rules**, ready for when Solario switches payments on (until then nothing changes): a higher plan applies at once and only the difference is charged; a lower plan and a cancellation apply from the end of the paid period; when a subscription ends the add-on says so once and runs as Local without Solario's services, support or automatic updates, and paying again restores everything at once. A failed renewal keeps the plan for 7 more days.
 - **A request for a commissioned automation always reaches Solario**, Local without a Solario Cloud link included: such an add-on sends it to Solario's request inbox. Requests that were waiting go out on their own after the update.

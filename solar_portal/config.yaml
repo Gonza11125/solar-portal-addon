@@ -1,6 +1,6 @@
-# Solario Home 0.7.51 LAN sign-in by any address and subscription rules ready
+# Solario Home 0.7.52 one sensor per measured quantity, security updates
 name: Solario Home
-version: "0.7.51"
+version: "0.7.52"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.52] - 2026-10-07
+
+- **Jeden senzor už nemůže měřit dvě různé veličiny.** V jednom domě se počítadlo odběru ze sítě z elektroměru přiřadilo zároveň jako výroba FVE. „Vyrobeno dnes“ a „Nakoupená energie“ pak ukazovaly každý den stejné číslo a celková výroba se rovnala celkovému odběru. Doplněk teď jeden senzor použije jen pro jednu veličinu, třeba výrobu, odběr, přetok nebo spotřebu. Pokud je senzor přiřazený ke dvěma, ponechá ho té, které odpovídá jeho název. U druhé veličiny v diagnostice senzorů vysvětlí proč a hledá pro ni správný senzor. Když ho nenajde, hodnota se nezobrazí, místo aby byla špatně.
+- Automatické hledání senzorů už nevezme počítadlo s „odběr“, „import“, „nakoupená“ nebo „elektroměr“ v názvu za výrobu FVE.
+- Bezpečnostní aktualizace knihoven webového serveru doplňku: `proxy-addr` (kritická chyba umožňující podvrhnout IP adresu), `morgan` a `qs`.
+
 ## [0.7.51] - 2026-10-03
 
 - **Přihlášení přes adresu v síti funguje, ať je zadaná jakkoli.** Když se aplikace otevřela přímo na portu 3000 jinak než číselnou adresou 192.168.x.x – například `http://homeassistant.local:3000` nebo přes jiný název počítače – správný přístupový kód skončil hláškou „Přihlášení selhalo“. Aplikace teď svou vlastní stránku pozná podle adresy, kterou prohlížeč použil. Stránky z jiných adres dál odmítá.
