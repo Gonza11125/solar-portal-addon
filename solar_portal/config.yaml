@@ -1,6 +1,6 @@
-# Solario Home 0.7.52 one sensor per measured quantity, security updates
+# Solario Home 0.7.53 automations: what they do, what they are worth, and your controls
 name: Solario Home
-version: "0.7.52"
+version: "0.7.53"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud

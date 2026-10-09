@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.7.53] - 2026-10-09
+
+- **Nová záložka Automatizace: co dům dělá sám a kolik to vynáší.**
+  - **Právě teď:** co který spotřebič dělá. Bojler ohřívá ze slunce, auto čeká, až bude dost přetoku, a ukazuje, kolik ještě chybí.
+  - **Měsíc:** kolik automatizace tento měsíc ušetřily a kolik energie vzaly ze slunce, ve srovnání se stejnými dny minulého měsíce.
+  - **Dnešní den:** běhy spotřebičů nad dnešní výrobou.
+  - **Pravidla:** každé je napsané lidsky, s ukazateli, jak blízko je splnění podmínek.
+  - **Deník:** každý běh i úspora po dnech.
+- **Úspora je jen z toho, co doplněk naměřil.**
+  - Doplněk každou půlminutu sleduje spotřebič každé automatizace. Energii bere z jeho měřáku výkonu, jinak ji odhadne podle výkonu na štítku a označí jako odhad.
+  - Ze slunce se počítá jen to, co v tu chvíli nedodala síť ani baterie.
+  - Kde je nastavený nízký tarif, počítá se úspora proti němu, takže ukazuje menší ze dvou možných čísel.
+- **Ovládání bez volání na Solario.**
+  - „Spustit hned“ a „Dnes vynechat“ u každého spotřebiče.
+  - „Pozastavit na dnes“ a „Dovolená“ až na 60 dní. Po návratu se znovu zapnou jen automatizace, které byly zapnuté.
+  - Nastavení, která tým Solario u automatizace zpřístupní, například hranice přetoku, režim nabíjení auta nebo cílová teplota vody, a to jen v povoleném rozsahu.
+- Když Home Assistant přestane hlásit spotřebič automatizace, objeví se v Upozorněních „Automatizace nemohla běžet“.
+- Ve Smart a Pro je stejná záložka i v Solario Cloud na webu a ovládání z webu provede doplněk doma se stejnými kontrolami.
+- Okna (například „Chci automatizaci“ nebo nabídka tarifu) jsou zase uprostřed obrazovky, ne v levém horním rohu.
+
 ## [0.7.52] - 2026-10-07
 
 - **Jeden senzor už nemůže měřit dvě různé veličiny.** V jednom domě se počítadlo odběru ze sítě z elektroměru přiřadilo zároveň jako výroba FVE. „Vyrobeno dnes“ a „Nakoupená energie“ pak ukazovaly každý den stejné číslo a celková výroba se rovnala celkovému odběru. Doplněk teď jeden senzor použije jen pro jednu veličinu, třeba výrobu, odběr, přetok nebo spotřebu. Pokud je senzor přiřazený ke dvěma, ponechá ho té, které odpovídá jeho název. U druhé veličiny v diagnostice senzorů vysvětlí proč a hledá pro ni správný senzor. Když ho nenajde, hodnota se nezobrazí, místo aby byla špatně.
