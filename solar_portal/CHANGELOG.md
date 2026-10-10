@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.7.55] - 2026-10-10
+
+- **Graf „Dnešní den“ na záložce Automatizace je užitečnější.**
+  - Nad grafem je souhrn dne: kolik se vyrobilo, kolik dům spotřeboval, kolik odteklo do sítě a kolik energie ze slunce využily automatizace.
+  - Graf ukazuje vedle výroby i spotřebu domu a přetok do sítě (zelená plocha), takže je vidět, kdy by se hodilo zapnout spotřebič.
+  - Řádek „Spuštěno“ ukazuje, kdy se dnes spustily ostatní automatizace, třeba rolety nebo světla.
+  - Po najetí myší (na mobilu dotykem) se ukáže každá půlhodina: výroba, spotřeba, přetok a co v ní běželo.
+  - Řádky v grafu mají jen spotřebiče. Rolety a světla tam už nejsou a dva řádky se stejným názvem se rozliší jménem automatizace. Spotřebič, který dnes neběžel, to napíše.
+- Automatizace rolet a světel od týmu Solario se už nepočítají jako spotřebiče: nejsou v „Právě teď“ ani v úspoře a „Pozastavit na dnes“ ani „Dovolená“ je nevypne.
+
 ## [0.7.54] - 2026-10-10
 
 - **Záložka Automatizace ukazuje všechny automatizace domu.** Kromě těch, které nastavil tým Solario, i všechny vaše vlastní z Home Assistantu: rolety při západu slunce, osvětlení zahrady, útlum topení přes noc, upozornění na baterii a další.

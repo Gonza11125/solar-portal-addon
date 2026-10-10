@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.54** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.55** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.54
+## Co přináší 0.7.43 až 0.7.55
 
+- **užitečnější graf „Dnešní den“**: souhrn dne (vyrobeno, spotřeba domu, odteklo do sítě, využito automatizacemi), spotřeba a přetok do sítě v grafu, kdy se spustily ostatní automatizace a detail každé půlhodiny po najetí myší; v řádcích jen spotřebiče, ne rolety,
 - **všechny automatizace domu a panel Ovládání**: záložka Automatizace ukazuje i vaše vlastní automatizace z Home Assistantu (rolety, světla, topení, upozornění) s tím, kdy se spouští a co ovládají, jdou zapnout, vypnout, spustit nebo na dnes vynechat; nový panel Ovládání se všemi roletami (vytáhnout, zastavit, zatáhnout, poloha) a zařízeními, která automatizace řídí (bojler, wallbox, světla, cílová teplota topení); barevnější vzhled; ovládání ve Smart a Pro, v Local vše vidět bez ovládání,
 - **nová záložka Automatizace**: co bojler, auto a spotřebiče právě dělají ze slunce, kolik automatizace tento měsíc ušetřily (z naměřené energie, odhady podle štítku jsou označené), dnešní běhy nad výrobou a deník; tlačítka Spustit hned, Dnes vynechat, Pozastavit na dnes a Dovolená a nastavení, která zpřístupní tým Solario; ve Smart a Pro stejná záložka i v Solario Cloud,
 - **výroba a odběr ze sítě už nemohou ukazovat stejné číslo**: jeden senzor z Home Assistantu se použije jen pro jednu veličinu, takže počítadlo elektroměru se už nezapočítá zároveň jako výroba FVE; bezpečnostní aktualizace knihoven webového serveru,
