@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.7.54] - 2026-10-10
+
+- **Záložka Automatizace ukazuje všechny automatizace domu.** Kromě těch, které nastavil tým Solario, i všechny vaše vlastní z Home Assistantu: rolety při západu slunce, osvětlení zahrady, útlum topení přes noc, upozornění na baterii a další.
+  - U každé je napsané lidsky, kdy se spouští („při západu slunce (15 min předem)“, „každý den v 7:00“, „Venkovní teplota stoupne nad 28 °C“) a co ovládá.
+  - Filtry Vše, Úspora energie, Rolety, Světla, Ostatní a Vypnuté.
+  - Vlastní automatizace z Home Assistantu jde zapnout a vypnout, spustit teď nebo na dnešek vynechat.
+  - Vlastní automatizace, která spíná bojler, wallbox nebo jiný spotřebič, se měří a počítá do úspory stejně jako automatizace od Solaria.
+  - „Pozastavit na dnes“ a „Dovolená“ pozastaví jen automatizace, které spotřebovávají energii. Rolety a světla se dál řídí svými pravidly.
+- **Nový panel Ovládání.** Všechny rolety v domě a zařízení, která automatizace řídí: bojler, wallbox, myčka, tepelné čerpadlo, světla.
+  - Rolety: vytáhnout, zastavit, zatáhnout a nastavit polohu v procentech. Tlačítka pro všechny rolety najednou.
+  - Spotřebiče a světla: zapnout a vypnout, u spotřebičů s měřákem i aktuální příkon.
+  - Topení a ohřev vody: aktuální a cílová teplota, cíl jde změnit.
+  - Garážová vrata a brány v panelu nejsou. Ty zůstávají v Home Assistantu.
+- **Barevnější a přehlednější vzhled.** Nová úvodní část s úsporou za měsíc a stavem domu, barevné dlaždice a karty podle druhu zařízení.
+- Ovládání automatizací a zařízení je součástí tarifů Smart a Pro. V tarifu Local záložka ukazuje vše, jen bez ovládání. Obnovit pozastavené automatizace jde vždy.
+- Ve Smart a Pro je panel Ovládání i v Solario Cloud na webu. Příkaz z webu provede doplněk doma se stejnými kontrolami.
+- Agent jednou za 15 minut přečte z Home Assistantu, co která automatizace dělá. Doplněk teď přijme od agenta až 3 MB dat najednou, aby se vešel i velký dům.
+
 ## [0.7.53] - 2026-10-09
 
 - **Nová záložka Automatizace: co dům dělá sám a kolik to vynáší.**
