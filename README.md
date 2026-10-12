@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.56** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.57** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.56
+## Co přináší 0.7.43 až 0.7.57
 
+- **data se po výpadku nebo aktualizaci zase dostanou do Solario Cloud**: data, která doplněk nemohl odeslat déle než 5 minut, už neblokují odesílání nových,
 - **bezpečnější ovládání a čitelnější vzhled**: vlastní automatizace z Home Assistantu jde z aplikace a z webu ovládat jen tehdy, když řídí rolety, světla, spotřebiče, topení nebo upozornění; vrata, zámky, alarmy, skripty a scény zůstávají jen v Home Assistantu; „Spustit teď“ zachová podmínky automatizace; záloha v /share neobsahuje tajné klíče; lépe čitelné texty, opravený tmavý režim, rozložení pro notebook v Home Assistantu i telefon, jednotné barvy toků energie a dnešní úspora v Kč přímo v obrázku domu,
 - **užitečnější graf „Dnešní den“**: souhrn dne (vyrobeno, spotřeba domu, odteklo do sítě, využito automatizacemi), spotřeba a přetok do sítě v grafu, kdy se spustily ostatní automatizace a detail každé půlhodiny po najetí myší; v řádcích jen spotřebiče, ne rolety,
 - **všechny automatizace domu a panel Ovládání**: záložka Automatizace ukazuje i vaše vlastní automatizace z Home Assistantu (rolety, světla, topení, upozornění) s tím, kdy se spouští a co ovládají, jdou zapnout, vypnout, spustit nebo na dnes vynechat; nový panel Ovládání se všemi roletami (vytáhnout, zastavit, zatáhnout, poloha) a zařízeními, která automatizace řídí (bojler, wallbox, světla, cílová teplota topení); barevnější vzhled; ovládání ve Smart a Pro, v Local vše vidět bez ovládání,

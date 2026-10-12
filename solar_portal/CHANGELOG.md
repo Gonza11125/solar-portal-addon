@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.57] - 2026-10-12
+
+- **Data se po výpadku nebo aktualizaci zase dostanou do Solario Cloud.** Když doplněk nemohl data několik minut odeslat (dům bez internetu, restart při aktualizaci), Solario Cloud je odmítl jako příliš stará a doplněk je zkoušel posílat pořád dokola. Nová data se pak do Cloudu nedostala a dům v Cloudu vypadal jako offline. Doplněk teď data, která už Cloud nepřijme, zahodí a pošle čerstvá. Když Cloud odmítne i čerstvá data kvůli času, napíše doplněk v Profilu, že je potřeba zkontrolovat hodiny Home Assistantu.
+
 ## [0.7.56] - 2026-10-12
 
 - **Bezpečnost.**

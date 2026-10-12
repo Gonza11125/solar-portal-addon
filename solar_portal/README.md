@@ -1,4 +1,4 @@
-# Solario Home 0.7.56
+# Solario Home 0.7.57
 
 Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,8 +12,9 @@ Solario Home is a local Home Assistant application for solar PV overview, energy
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.7.43 to 0.7.56
+## What changed in 0.7.43 to 0.7.57
 
+- **Readings reach Solario Cloud again after an outage or an update.** A reading that could not be sent for over 5 minutes no longer holds back every newer one; the house no longer stays "offline" in the Cloud.
 - **Safer control and a more readable look.** Your own Home Assistant automations can be switched, run or skipped from the app and the web only when every step drives blinds, lights, appliances, heating or notifications; gates, doors, locks, alarms, scripts and scenes stay in Home Assistant, and "Run now" keeps the automation's conditions. The backup copy in /share leaves out the add-on's secrets, and the web UI sends security headers. Readable contrast, a working dark mode, layouts for laptops inside Home Assistant and for phones, one colour per energy flow in every chart, and today's saving right in the Overview picture.
 - **A more useful "Today" chart.** The day's totals (produced, used by the house, sent to the grid, used from the sun by automations), the house's consumption and the export next to production, when the other automations fired, and each half hour's numbers on pointing. Its rows show appliances only, not blinds.
 - **Every automation of the house and a Controls panel.** The Automations tab now also lists your own Home Assistant automations (blinds, lights, heating, notifications) with what starts each one and what it acts on; they can be switched on and off, run now or skipped for today. A new Controls panel has every blind (raise, stop, lower, position, all at once) and the devices the automations drive (water heater, wallbox, lights, heating target temperature); garage doors and gates stay in Home Assistant. A more colourful look. Controls come with Smart and Pro; Local shows everything without them.

@@ -1,6 +1,6 @@
-# Solario Home 0.7.56 safer control, a clearer and more readable look
+# Solario Home 0.7.57 readings reach Solario Cloud again after an outage or an update
 name: Solario Home
-version: "0.7.56"
+version: "0.7.57"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
