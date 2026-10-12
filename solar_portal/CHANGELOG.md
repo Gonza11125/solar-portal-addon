@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.7.56] - 2026-10-12
+
+- **Bezpečnost.**
+  - Automatizace z Home Assistantu jde z aplikace a z webu zapnout, vypnout, spustit nebo vynechat jen tehdy, když všechny její kroky ovládají rolety, světla, spotřebiče, topení nebo posílají upozornění. Automatizace, která otvírá vrata nebo dveře, ovládá zámek, alarm, sirénu, kameru nebo ventil, spouští skript nebo scénu, nebo jejíž nastavení agent nepřečetl, se ovládá jen v Home Assistantu. Karta to napíše.
+  - „Spustit teď“ zachová podmínky automatizace, stejně jako kdyby se spustila sama.
+  - V panelu Ovládání nejsou dveře, okna na motor, zámky ani alarmy.
+  - Kopie zálohy ve složce /share neobsahuje tajné klíče doplňku. Po obnovení z ní je potřeba doplněk znovu propojit se Solario Cloud v Profilu.
+  - Webové rozhraní posílá bezpečnostní hlavičky (CSP, zákaz vložení do cizí stránky, nosniff).
+- **Vzhled.**
+  - Lépe čitelné texty: tmavší šedé popisky, zelené a oranžové texty a tmavé písmo na oranžových tlačítkách.
+  - Přehled ukazuje v obrázku domu dnešní úsporu v Kč a čas posledních dat. Pár wattů už se neukazuje jako nabíjení, přetok nebo výroba.
+  - Tmavý režim je čitelný na všech stránkách, fotky a obrázky mají své barvy.
+  - Na notebooku v Home Assistantu už pod nadpisem stránky nezůstává prázdné místo. Na telefonu se čísla v dlaždicích nelámou a záložky období jdou posouvat.
+  - Výroba, spotřeba, odběr ze sítě a přetok mají ve všech grafech stejnou barvu. Úspora je v Ekonomice zelená a osa je v Kč.
+  - Upozornění s nulou už nejsou červená ani oranžová. V noci je v horní liště měsíc.
+- **Srozumitelnější čísla a texty.**
+  - Záložka Automatizace píše „Automatizace ušetřily v říjnu“, aby úspora automatizací nevypadala jako rozpor s úsporou na Přehledu. Při nule napíše „Zatím žádný běh ze slunce“.
+  - „Teď běží ze slunce“ se ukáže jen u spotřebiče, který opravdu bere hlavně energii ze slunce.
+  - Na telefonu ukazuje panel Ovládání v tarifu Local dvě zamčené dlaždice a odkaz „Další zařízení“ místo dvou obrazovek zamčených ovladačů.
+  - Podpora nabízí telefon, jen když je vyplněný, a odkaz „Časté dotazy“ vede na web.
+  - Opravené popisky barev v grafech, česká a anglická gramatika a anglické popisy tarifů v Profilu.
+
 ## [0.7.55] - 2026-10-10
 
 - **Graf „Dnešní den“ na záložce Automatizace je užitečnější.**

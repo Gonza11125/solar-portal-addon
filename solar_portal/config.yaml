@@ -1,6 +1,6 @@
-# Solario Home 0.7.55 a day chart worth reading: production, consumption, export and every run
+# Solario Home 0.7.56 safer control, a clearer and more readable look
 name: Solario Home
-version: "0.7.55"
+version: "0.7.56"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
