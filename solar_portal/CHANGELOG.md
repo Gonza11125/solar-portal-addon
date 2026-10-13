@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.59] - 2026-10-13
+
+- **Kontrola domu v záložce Automatizace, na všech tarifech.** Karta „Co u vás půjde“ projde zařízení v Home Assistantu a ukáže:
+  - Co dům má: rolety, bojler, topení, wallbox, spotřebiče, světla. Garáž, brány, zámky a alarm vynechá a napíše, že je Solario neovládá.
+  - Kolik za posledních 30 dní odteklo do sítě a kolik by to doma ušetřilo.
+  - U každé automatizace (bojler z přebytků, tepelné čerpadlo, auto, pračka a myčka, baterie, bazén, rolety), jestli jde nastavit hned, co chybí (zařízení, které Home Assistant umí zapnout, nebo měření přetoku), co pořídit a co Solario zvládne do té doby.
+  - Kde zařízení už řídí vlastní automatizace domácnosti, karta to napíše. Solario ji nepřepíše a nastavení s ní sladí.
+  - Kontrola jen čte názvy a stavy zařízení, nic nezapíná.
+- **Žádost o automatizaci s výsledkem kontroly.** Tlačítko „Chci nastavit“ nebo „Chci poradit“ otevře předvyplněnou žádost. Když domácnost nechá zaškrtnuté „Přiložit výsledek kontroly domu“, dostane tým Solario k žádosti i krátké shrnutí kontroly (která zařízení, jaké měření, kolik jde do sítě). V seznamu žádostí domácnost dál vidí jen svůj text a ten se nikdy nezkracuje.
+- Ukázkový dům má Kontrolu domu taky.
+
 ## [0.7.58] - 2026-10-13
 
 - **Tarif Local je zdarma, napořád.** Nic se neplatí, není potřeba zkušební doba ani karta. Předplatné jsou jen Smart (249 Kč) a Pro (499 Kč) měsíčně. Ty jde pořád 14 dní zkoušet zdarma.

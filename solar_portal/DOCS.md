@@ -1,4 +1,4 @@
-# Solario Home 0.7.58 — Configuration and Technical Documentation
+# Solario Home 0.7.59 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -105,6 +105,21 @@ The backend has one canonical plan policy and the UI advertises those same enfor
 - **Pro**: 30 days of detailed history plus 366 days of hourly history and 5 years of daily history, Year and custom ranges, long-term economics, ROI from a complete verified 365-day basis, custom alerts, service report, 3 commissioned automations included, device editor, yearly energy calendar with month-over-last-year comparison, export/PDF and webhooks.
 
 The number of already commissioned rules is not a runtime execution quota. Downgrading does not delete paid settings or existing commissioned automations. The active entitlement still governs what can be edited or evaluated: Local uses fixed alert thresholds, Smart does not run Pro custom alert rules, and manual device editing/control remains Pro-only for an own-Home-Assistant installation.
+
+
+## House check
+
+The "Co u vás půjde" card on the Automations tab (`GET /api/user-automations/check`, every plan) reads the Home Assistant entities in the `switch`, `input_boolean`, `light`, `fan`, `climate`, `water_heater`, `cover`, `number` and `select` domains and rates the automation packages:
+
+- **Water heater from the surplus**: a `switch`/`input_boolean` recognised as a water heater, or a `water_heater`.
+- **Heat pump from the sun**: a `climate`, `water_heater`, `switch`, `select` or `number` whose name points to a heat pump or SG Ready (a radiator thermostat does not count).
+- **Car from the sun**: a wallbox or charging control (`switch`, `input_boolean`, `number`, `select`).
+- **Washing machine and dishwasher from the sun**: works without a smart appliance, by notification.
+- **Battery by prices and tariff** (only where the house has a battery), **Pool** and **Blinds** (only where the house has them).
+
+A package is **Ready** when its device is available and, for the surplus packages, the house measures its export; **Measurement missing** when the device is there but the export is not measured; **Device missing** when Home Assistant does not have it or it is unavailable. The card then says what to get and what Solario does until then. A package whose device a Solario automation already drives shows as running; where the household's own automation drives it, the card says so and still offers the package. Entities that open or guard the house (garage, gates, doors, locks, alarm) are neither counted nor offered. "Up to … CZK a month" is the export of the last 30 days × (electricity price − feed-in price).
+
+An automation request (`POST /api/user-automations/requests`) with `"attachCheck": true` adds a short summary of the check to the message for Solario (at most 1000 characters, 2000 in all; the household's own words are never cut). The add-on stores the summary separately (`context`); the household's list of requests shows their own words only.
 
 
 ## Weather and solar conditions
