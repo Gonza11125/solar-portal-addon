@@ -1,4 +1,4 @@
-# Solario Home 0.7.60 — Configuration and Technical Documentation
+# Solario Home 0.7.61 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -120,6 +120,8 @@ The "Co u vás půjde" card on the Automations tab (`GET /api/user-automations/c
 A package is **Ready** when its device is available and, for the surplus packages, the house measures its export; **Measurement missing** when the device is there but the export is not measured; **Device missing** when Home Assistant does not have it or it is unavailable. The card then says what to get and what Solario does until then. A package whose device a Solario automation already drives shows as running; where the household's own automation drives it, the card says so and still offers the package. Entities that open or guard the house (garage, gates, doors, locks, alarm) are neither counted nor offered. "Up to … CZK a month" is the export of the last 30 days × (electricity price − feed-in price).
 
 With Smart and Pro the add-on sends the check to Solario Cloud with the automation overview (from 0.7.60), so the web shows it and a request made there can carry its summary.
+
+The "Dnešní den" chart on the same tab draws the house's consumption and the export per half hour from the day counters. From 0.7.61 a counter that fell today or yesterday (a sensor that restarts every hour, say) is not trusted for the day: the house is then taken from the power readings - production plus grid minus battery charging, as Solario Cloud does - and the export from the meter's power, and a half hour the counter misses is filled the same way. Without the grid power measured (and the battery power, where there is a battery) the chart shows no consumption rather than a wrong one.
 
 An automation request (`POST /api/user-automations/requests`) with `"attachCheck": true` adds a short summary of the check to the message for Solario (at most 1000 characters, 2000 in all; the household's own words are never cut). The add-on stores the summary separately (`context`); the household's list of requests shows their own words only.
 

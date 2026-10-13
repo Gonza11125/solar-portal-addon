@@ -1,14 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.60** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.61** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.60
+## Co přináší 0.7.43 až 0.7.61
 
-- **graf „Dnešní den“ už neztrácí spotřebu domu**: modrá čára spotřeby už nemá díry, když denní počítadlo po zaokrouhlení poskočí zpět; Kontrola domu je ve Smart a Pro i na webu Solario Cloud,
+- **graf „Dnešní den“ už neztrácí spotřebu domu**: modrá čára spotřeby už nemá díry, když denní počítadlo po zaokrouhlení poskočí zpět, a u senzoru spotřeby, který se během dne nuluje, se spotřeba spočítá z okamžitých výkonů (výroba + síť − nabíjení baterie) stejně jako v Solario Cloud; Kontrola domu je ve Smart a Pro i na webu Solario Cloud,
 - **Kontrola domu v záložce Automatizace, i v Local zdarma**: co Home Assistant v domě má (garáž, brány, zámky a alarm vynechá), kolik za posledních 30 dní odteklo do sítě a kolik by to doma ušetřilo, a u bojleru, tepelného čerpadla, auta, pračky a myčky, baterie, bazénu a rolet, jestli jde automatizace nastavit hned, co chybí, co pořídit a co Solario zvládne do té doby; výsledek jde s vaším souhlasem přiložit k žádosti o automatizaci; kontrola nic nezapíná,
 - **tarif Local je zdarma napořád**: živý přehled, graf dnešního dne, úspora za posledních 7 dní, stav systému, vestavěná upozornění a aktualizace bez platby a bez karty; týden a měsíc historie, ovládání, Solario Cloud a osobní podpora jsou ve Smart (249 Kč) a Pro (499 Kč), které jde 14 dní zkoušet zdarma; doplněk už nikdy nevypíná aktualizace,
 - **data se po výpadku nebo aktualizaci zase dostanou do Solario Cloud**: data, která doplněk nemohl odeslat déle než 5 minut, už neblokují odesílání nových,

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.61] - 2026-10-13
+
+- **Graf „Dnešní den“ ukazuje spotřebu domu i u počítadla, které se během dne nuluje.** Některé senzory spotřeby se nulují třeba každou hodinu. Modrá čára pak měla díry, kopírovala výrobu a souhrn ukazoval nesmyslně malou spotřebu (0,2 kWh za celý den). Doplněk teď takové počítadlo pozná a spočítá spotřebu z okamžitých výkonů: výroba + síť − nabíjení baterie. Stejně to dělá Solario Cloud. Totéž platí pro přetok do sítě. Půlhodinu, kterou počítadlo nepokrylo, doplní ze stejných výkonů. Bez měřeného výkonu sítě se spotřeba nevykreslí, aby graf neukazoval nic vymyšleného.
+
 ## [0.7.60] - 2026-10-13
 
 - **Graf „Dnešní den“ v záložce Automatizace už neztrácí spotřebu domu.** Když denní počítadlo spotřeby po zaokrouhlení poskočilo o setinu kWh zpátky (stává se, když přetok přibude dřív než výroba), zahodila se celá půlhodina a modrá čára měla díry. Malé poskoky zpět se teď přečtou správně; skutečné vynulování počítadla dál znamená mezeru. U domu s baterií se spotřeba dopočítaná z výroby a sítě nepoužije, protože by do ní spadlo nabíjení baterie.

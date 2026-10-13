@@ -1,4 +1,4 @@
-# Solario Home 0.7.60
+# Solario Home 0.7.61
 
 Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,9 +12,9 @@ Solario Home is a local Home Assistant application for solar PV overview, energy
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.7.43 to 0.7.60
+## What changed in 0.7.43 to 0.7.61
 
-- **The "Today" chart keeps the house's consumption.** A day counter that steps back by rounding no longer drops a half hour from the consumption line; with a battery, a consumption worked out from production and the grid is not used. With Smart and Pro the house check reaches the Solario Cloud web too.
+- **The "Today" chart keeps the house's consumption.** A day counter that steps back by rounding no longer drops a half hour from the consumption line; with a battery, a consumption worked out from production and the grid is not used. A consumption sensor that restarts during the day is read from the power readings instead (production plus grid minus battery charging), as Solario Cloud does. With Smart and Pro the house check reaches the Solario Cloud web too.
 - **A house check on the Automations tab, free Local included.** What Home Assistant has in the house (garage doors, gates, locks and alarms are left out), how much went to the grid over the last 30 days and what it would have saved at home, and for the water heater, heat pump, car, washing machine and dishwasher, battery, pool and blinds whether an automation can be set up now, what is missing, what to get and what Solario does until then. With the household's consent the result goes with an automation request. The check only reads; it switches nothing.
 - **The Local plan is free for good.** The live overview, today's chart, the savings of the last 7 days, the system status, built-in alerts and updates, with no payment and no card. The week and month of history, controls, Solario Cloud and personal support come with Smart (249 CZK) and Pro (499 CZK), which can be tried free for 14 days. Going to Local is cancelling the subscription, and the add-on never switches automatic updates off any more; where an older version did, it switches them back on once.
 - **Readings reach Solario Cloud again after an outage or an update.** A reading that could not be sent for over 5 minutes no longer holds back every newer one; the house no longer stays "offline" in the Cloud.

@@ -1,6 +1,6 @@
-# Solario Home 0.7.60 Today chart keeps the house consumption; the house check reaches the web
+# Solario Home 0.7.61 Today chart reads the house from power when its consumption counter resets
 name: Solario Home
-version: "0.7.60"
+version: "0.7.61"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
