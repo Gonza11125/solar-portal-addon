@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.60] - 2026-10-13
+
+- **Graf „Dnešní den“ v záložce Automatizace už neztrácí spotřebu domu.** Když denní počítadlo spotřeby po zaokrouhlení poskočilo o setinu kWh zpátky (stává se, když přetok přibude dřív než výroba), zahodila se celá půlhodina a modrá čára měla díry. Malé poskoky zpět se teď přečtou správně; skutečné vynulování počítadla dál znamená mezeru. U domu s baterií se spotřeba dopočítaná z výroby a sítě nepoužije, protože by do ní spadlo nabíjení baterie.
+- **Kontrola domu i na webu.** Doplněk se Smart nebo Pro posílá výsledek kontroly do Solario Cloud spolu s přehledem automatizací, takže karta „Co u vás půjde“ je i na webu. Žádost o automatizaci odeslaná z webu může nést souhrn kontroly pro tým Solario, když ho domácnost nechá zaškrtnutý.
+
 ## [0.7.59] - 2026-10-13
 
 - **Kontrola domu v záložce Automatizace, na všech tarifech.** Karta „Co u vás půjde“ projde zařízení v Home Assistantu a ukáže:

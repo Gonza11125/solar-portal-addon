@@ -1,4 +1,4 @@
-# Solario Home 0.7.59 — Configuration and Technical Documentation
+# Solario Home 0.7.60 — Configuration and Technical Documentation
 
 Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
 
@@ -118,6 +118,8 @@ The "Co u vás půjde" card on the Automations tab (`GET /api/user-automations/c
 - **Battery by prices and tariff** (only where the house has a battery), **Pool** and **Blinds** (only where the house has them).
 
 A package is **Ready** when its device is available and, for the surplus packages, the house measures its export; **Measurement missing** when the device is there but the export is not measured; **Device missing** when Home Assistant does not have it or it is unavailable. The card then says what to get and what Solario does until then. A package whose device a Solario automation already drives shows as running; where the household's own automation drives it, the card says so and still offers the package. Entities that open or guard the house (garage, gates, doors, locks, alarm) are neither counted nor offered. "Up to … CZK a month" is the export of the last 30 days × (electricity price − feed-in price).
+
+With Smart and Pro the add-on sends the check to Solario Cloud with the automation overview (from 0.7.60), so the web shows it and a request made there can carry its summary.
 
 An automation request (`POST /api/user-automations/requests`) with `"attachCheck": true` adds a short summary of the check to the message for Solario (at most 1000 characters, 2000 in all; the household's own words are never cut). The add-on stores the summary separately (`context`); the household's list of requests shows their own words only.
 

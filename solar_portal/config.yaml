@@ -1,6 +1,6 @@
-# Solario Home 0.7.59 House check: what Home Assistant has and which automations the house is ready for
+# Solario Home 0.7.60 Today chart keeps the house consumption; the house check reaches the web
 name: Solario Home
-version: "0.7.59"
+version: "0.7.60"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
