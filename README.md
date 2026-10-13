@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.57** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.58** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.57
+## Co přináší 0.7.43 až 0.7.58
 
+- **tarif Local je zdarma napořád**: živý přehled, graf dnešního dne, úspora za posledních 7 dní, stav systému, vestavěná upozornění a aktualizace bez platby a bez karty; týden a měsíc historie, ovládání, Solario Cloud a osobní podpora jsou ve Smart (249 Kč) a Pro (499 Kč), které jde 14 dní zkoušet zdarma; doplněk už nikdy nevypíná aktualizace,
 - **data se po výpadku nebo aktualizaci zase dostanou do Solario Cloud**: data, která doplněk nemohl odeslat déle než 5 minut, už neblokují odesílání nových,
 - **bezpečnější ovládání a čitelnější vzhled**: vlastní automatizace z Home Assistantu jde z aplikace a z webu ovládat jen tehdy, když řídí rolety, světla, spotřebiče, topení nebo upozornění; vrata, zámky, alarmy, skripty a scény zůstávají jen v Home Assistantu; „Spustit teď“ zachová podmínky automatizace; záloha v /share neobsahuje tajné klíče; lépe čitelné texty, opravený tmavý režim, rozložení pro notebook v Home Assistantu i telefon, jednotné barvy toků energie a dnešní úspora v Kč přímo v obrázku domu,
 - **užitečnější graf „Dnešní den“**: souhrn dne (vyrobeno, spotřeba domu, odteklo do sítě, využito automatizacemi), spotřeba a přetok do sítě v grafu, kdy se spustily ostatní automatizace a detail každé půlhodiny po najetí myší; v řádcích jen spotřebiče, ne rolety,
@@ -15,7 +16,7 @@ Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, ene
 - **nová záložka Automatizace**: co bojler, auto a spotřebiče právě dělají ze slunce, kolik automatizace tento měsíc ušetřily (z naměřené energie, odhady podle štítku jsou označené), dnešní běhy nad výrobou a deník; tlačítka Spustit hned, Dnes vynechat, Pozastavit na dnes a Dovolená a nastavení, která zpřístupní tým Solario; ve Smart a Pro stejná záložka i v Solario Cloud,
 - **výroba a odběr ze sítě už nemohou ukazovat stejné číslo**: jeden senzor z Home Assistantu se použije jen pro jednu veličinu, takže počítadlo elektroměru se už nezapočítá zároveň jako výroba FVE; bezpečnostní aktualizace knihoven webového serveru,
 - **přihlášení přes adresu v síti funguje vždy**, i přes název počítače (např. `http://homeassistant.local:3000`), nejen přes číselnou adresu,
-- **předplatné podle běžných pravidel**: vyšší tarif platí hned, nižší tarif a zrušení až od konce zaplaceného období; po skončení předplatného běží doplněk jako Local bez podpory a automatických aktualizací a po zaplacení se vše hned obnoví (platí až po spuštění plateb v Solario Cloud),
+- **předplatné podle běžných pravidel**: vyšší tarif platí hned, nižší tarif a zrušení až od konce zaplaceného období; po skončení předplatného běží doplněk jako Local zdarma a po zaplacení se vše hned obnoví (platí až po spuštění plateb v Solario Cloud),
 - **žádost o automatizaci dojde vždy**, i z tarifu Local bez propojení se Solario Cloud; dosud čekající žádosti se po aktualizaci odešlou samy,
 - **jedno logo Solario** (S se sluncem) v aplikaci, v obchodě doplňků i v záložce prohlížeče; doplněk se v Home Assistantu jmenuje **Solario Home**,
 - **tarif si volí každý sám**, i se Solar Boxem; tam, kde aplikace odkazovala na správce fotovoltaiky, uvádí teď tým Solario,
@@ -45,20 +46,20 @@ Názvy entit a zařízení převzaté přímo z Home Assistantu zůstávají už
 
 ## Tarif Local
 
-Local je plnohodnotný lokální základ pro vlastní Home Assistant. Interně se plán
-stále jmenuje `free`; obchodně je to **Local za 99 Kč měsíčně**.
+Local je zdarma napořád: bez platby, bez karty a bez zkušební doby. Interně se plán
+jmenuje `free`.
 
-- přehled aktuální výroby, baterie a energetické bilance,
-- dnešní, měsíční a celkové energetické hodnoty, pokud pro ně Home Assistant poskytuje potřebná data,
-- úspora z fotovoltaiky dnes, tento měsíc a celkem, včetně energie, ze které se počítá,
-- lokální diagnostika zdrojových entit a jejich kvality, na které staví Zařízení i Zdraví FVE,
-- upozornění s měsíční historií (baterie, přetok, výpadek zdroje dat, FVE bez výroby za světla),
+- živý přehled výroby, spotřeby, baterie a sítě a tok energie,
+- graf dnešního dne,
+- úspora v korunách za posledních 7 dní,
+- aktuální stav systému, diagnostika zdrojových entit a vestavěná upozornění v aplikaci,
 - počasí a aktuální solární podmínky,
-- grafy s historií maximálně 24 hodin; měsíční a celkové součty se berou z čítačů Home Assistantu,
-- 1 vlastní Solario automatizace,
-- existující `automation.*` z Home Assistantu lze zobrazit a přidat do Solaria bez čerpání limitu vlastní Solario automatizace,
-- AI doporučení nejsou v Localu aktivní,
-- ruční editor/import zařízení, obecné ruční ovládání zařízení a vlastní období od–do v grafech jsou funkce tarifu PRO.
+- automatizace z Home Assistantu jsou vidět, ovládají se ve Smart a Pro,
+- aktualizace; běží celé u vás doma a měření neodcházejí do cloudu.
+
+Týden a měsíc historie, detailní ekonomika, ovládání, Solario Cloud, upozornění na telefon, automatizace na míru
+a osobní podpora jsou v tarifech **Smart (249 Kč měsíčně)** a **Pro (499 Kč měsíčně)**. Ty jde 14 dní zkoušet
+zdarma. Historie se ukládá na všech tarifech stejně, takže po přechodu jsou starší dny hned vidět.
 
 Automatické zálohy se ukládají do `/data/backups` a kopie do `/share/solario/backups`,
 odkud je lze vytáhnout přes File editor, Sambu nebo Terminal.

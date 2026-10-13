@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.7.58] - 2026-10-13
+
+- **Tarif Local je zdarma, napořád.** Nic se neplatí, není potřeba zkušební doba ani karta. Předplatné jsou jen Smart (249 Kč) a Pro (499 Kč) měsíčně. Ty jde pořád 14 dní zkoušet zdarma.
+- **Co Local obsahuje.**
+  - Živý přehled výroby, spotřeby, baterie a sítě, tok energie a stav systému.
+  - Graf dnešního dne a úsporu v korunách za posledních 7 dní.
+  - Vestavěná upozornění v aplikaci.
+  - Aktualizace.
+- **Co je nově jen ve Smart a Pro.**
+  - Záložka Týden v Grafech. Local má jen Den, Smart má Den, Týden a Měsíc.
+  - Denní souhrny starší než 7 dní.
+  - Osobní podpora e-mailem a telefonem, jakmile Solario spustí platby. Local má návod a časté dotazy. Záruka na SolarBox, objednávky a platby se řeší vždy.
+  - Starší dny se dál ukládají na všech tarifech. Po přechodu na Smart nebo Pro jsou hned vidět.
+- **Aktualizace se už nikdy nevypínají.** Doplněk bez předplatného nechává automatické aktualizace, jak si je domácnost nastavila. Kde je starší verze po skončení předplatného vypnula, jednou je zase zapne.
+- **Přechod na Local je zrušení předplatného.** Smart nebo Pro doběhne do konce zaplaceného období, pak doplněk přejde na Local zdarma. Data se nemažou.
+- Výběr tarifu po prvním spuštění nabízí „Pokračovat s Local zdarma“ vedle zkušební doby Smart a Pro. Lišta „Bez předplatného“ zmizela.
+- Ukázkový dům ukazuje Local jako „Zdarma“ s novými omezeními.
+
 ## [0.7.57] - 2026-10-12
 
 - **Data se po výpadku nebo aktualizaci zase dostanou do Solario Cloud.** Když doplněk nemohl data několik minut odeslat (dům bez internetu, restart při aktualizaci), Solario Cloud je odmítl jako příliš stará a doplněk je zkoušel posílat pořád dokola. Nová data se pak do Cloudu nedostala a dům v Cloudu vypadal jako offline. Doplněk teď data, která už Cloud nepřijme, zahodí a pošle čerstvá. Když Cloud odmítne i čerstvá data kvůli času, napíše doplněk v Profilu, že je potřeba zkontrolovat hodiny Home Assistantu.

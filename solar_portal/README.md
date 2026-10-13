@@ -1,4 +1,4 @@
-# Solario Home 0.7.57
+# Solario Home 0.7.58
 
 Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
 
@@ -12,8 +12,9 @@ Solario Home is a local Home Assistant application for solar PV overview, energy
 
 The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
 
-## What changed in 0.7.43 to 0.7.57
+## What changed in 0.7.43 to 0.7.58
 
+- **The Local plan is free for good.** The live overview, today's chart, the savings of the last 7 days, the system status, built-in alerts and updates, with no payment and no card. The week and month of history, controls, Solario Cloud and personal support come with Smart (249 CZK) and Pro (499 CZK), which can be tried free for 14 days. Going to Local is cancelling the subscription, and the add-on never switches automatic updates off any more; where an older version did, it switches them back on once.
 - **Readings reach Solario Cloud again after an outage or an update.** A reading that could not be sent for over 5 minutes no longer holds back every newer one; the house no longer stays "offline" in the Cloud.
 - **Safer control and a more readable look.** Your own Home Assistant automations can be switched, run or skipped from the app and the web only when every step drives blinds, lights, appliances, heating or notifications; gates, doors, locks, alarms, scripts and scenes stay in Home Assistant, and "Run now" keeps the automation's conditions. The backup copy in /share leaves out the add-on's secrets, and the web UI sends security headers. Readable contrast, a working dark mode, layouts for laptops inside Home Assistant and for phones, one colour per energy flow in every chart, and today's saving right in the Overview picture.
 - **A more useful "Today" chart.** The day's totals (produced, used by the house, sent to the grid, used from the sun by automations), the house's consumption and the export next to production, when the other automations fired, and each half hour's numbers on pointing. Its rows show appliances only, not blinds.
@@ -21,7 +22,7 @@ The built-in local agent connects to Home Assistant automatically through `homea
 - **A new Automations tab.** What the water heater, the car and the appliances are doing with the sun right now, what the automations saved this month (from measured energy; estimates from a device rating are marked), today's runs over today's production, and a log of every run. The household can start a device now, skip today, pause everything for the day or a holiday, and change the settings the Solario team exposed, within the allowed range. Smart and Pro have the same tab in Solario Cloud.
 - **Production and grid import can no longer show the same number.** One Home Assistant sensor now serves one quantity only; a grid meter's import counter that had also been taken for solar production stays the grid import, and production is looked for again (or shown as unknown rather than wrong). Discovery no longer takes an "import/odběr/nakoupená/elektroměr" counter for production. Security updates of the web server's libraries (proxy-addr, morgan, qs).
 - **Sign-in over the local network works whatever address is used**, a host name such as `http://homeassistant.local:3000` included; before, the right access code ended in "Přihlášení selhalo" there. Pages from other addresses are still refused.
-- **Subscriptions follow the usual rules**, ready for when Solario switches payments on (until then nothing changes): a higher plan applies at once and only the difference is charged; a lower plan and a cancellation apply from the end of the paid period; when a subscription ends the add-on says so once and runs as Local without Solario's services, support or automatic updates, and paying again restores everything at once. A failed renewal keeps the plan for 7 more days.
+- **Subscriptions follow the usual rules**, ready for when Solario switches payments on (until then nothing changes): a higher plan applies at once and only the difference is charged; a lower plan and a cancellation apply from the end of the paid period; when a subscription ends the add-on says so once and runs as free Local, and paying again restores everything at once. A failed renewal keeps the plan for 7 more days.
 - **A request for a commissioned automation always reaches Solario**, Local without a Solario Cloud link included: such an add-on sends it to Solario's request inbox. Requests that were waiting go out on their own after the update.
 - **One Solario logo** (the S with the sun) in the app, in the add-on store and in the browser tab; in Home Assistant the add-on is now called **Solario Home**.
 - **Everyone chooses their own plan**, Solar Box included; where the app named the PV installer it now names the Solario team. The `support_email` option for installers is gone.
@@ -247,22 +248,20 @@ Savings are calculated as:
 
 If a trustworthy period baseline is not available, Solario leaves that period temporarily unavailable rather than presenting an unverified estimate as an exact value.
 
-## FREE plan
+## Local plan (free)
 
-FREE provides the local foundation for a user's own Home Assistant installation:
+Local is free for good, with no payment, card or trial. Its internal id is `free`.
 
-- current PV production, battery and energy-balance overview,
-- daily, monthly and lifetime energy values when Home Assistant provides the required data,
-- local diagnostics of source entities and data quality,
+- live overview of production, consumption, battery and grid, and the energy flow,
+- today's chart,
+- savings in CZK over the last 7 days,
+- current system status, local diagnostics of source entities and built-in alerts in the app,
 - weather and current solar conditions,
-- charts with up to 24 hours of history,
-- 1 custom Solario automation,
-- existing Home Assistant `automation.*` entities can be displayed/used without consuming the custom Solario automation slot,
-- automatic entity discovery with searchable manual overrides,
-- selectable savings currency,
-- Czech and English UI.
+- Home Assistant automations are shown; controlling them comes with Smart and Pro,
+- automatic entity discovery with searchable manual overrides, Czech and English UI,
+- updates; everything runs at home and no measurements leave the house.
 
-AI recommendations, general device editor/import and general manual device control are not active in FREE and require PRO.
+The week and month of history, detailed economics, controls, Solario Cloud, phone alerts, commissioned automations and personal support come with **Smart (249 CZK a month)** and **Pro (499 CZK a month)**, both with a 14-day free trial. History is stored the same on every plan, so the older days show as soon as a household upgrades.
 
 ## Anonymous version statistics
 
