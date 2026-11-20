@@ -1,20 +1,18 @@
-# Solario Home 0.7.61 — Configuration and Technical Documentation
+# Konfigurace Solario Home
 
-Solario Local is designed so that a new installation can work without manually entering every energy entity. The built-in agent reads states from Home Assistant and safely selects usable sources using entity ID, name, unit, `device_class`, and `state_class`. Manual fields in the add-on configuration are optional overrides for automatic discovery.
+Solario Home je navržen tak, aby nová instalace fungovala bez ručního vypisování energetických entit. Vestavěný agent načte stavy z Home Assistantu a bezpečně vybere použitelné zdroje podle ID, názvu, jednotky, `device_class` a `state_class`. Ruční pole v konfiguraci add-onu jsou volitelné přepisy automatického výběru.
 
-## Interface language
+## Jazyk rozhraní
 
-Solario Local supports both English and Czech. Language switching applies to the main screens, diagnostics, automations, profile, onboarding, security/QR states, dynamic messages, user-facing error responses, text pre-filled into email links, and date/time/currency formatting.
+Solario Home podporuje češtinu i angličtinu. Přepnutí jazyka se vztahuje na hlavní obrazovky, diagnostiku, automatizace, profil, první spuštění, bezpečnostní/QR stavy, uživatelské chybové odpovědi i text předvyplněný do e-mailových odkazů. Produkční image se od verze 0.6.33 nesestaví, pokud automatický i18n audit najde uživatelský český text bez anglického pokrytí.
 
-Since version 0.6.35, the production image uses a strict audit for uncovered Czech user-facing strings. Version 0.6.36 adds a runtime safety check against overly broad grammatical fragments. In particular, a global `je` → `is` replacement must not be applied to arbitrary DOM sentences; diagnostic messages are translated as complete semantic units.
+Uživatelské názvy entit, automatizací a zařízení převzaté z Home Assistantu se nepřekládají, protože jde o data pojmenovaná uživatelem.
 
-Entity, automation, and device names received from Home Assistant are not translated because they are user-defined data.
+## Základní konfigurace
 
-## Basic configuration
+Výchozí interval čtení je 5000 ms. Povolený rozsah je 1000–60000 ms.
 
-The default polling interval is **5000 ms**. The allowed range is **1000–60000 ms**.
-
-Optional manual energy entity overrides:
+Volitelné ruční přepisy energetických entit:
 
 - `entity_power_now`
 - `entity_energy_today`
@@ -25,164 +23,255 @@ Optional manual energy entity overrides:
 - `entity_grid_power`
 - `entity_battery_power`
 - `entity_home_consumption`
-- `entity_home_power` (optional instantaneous home power in kW for exact power-alert evaluation)
+- `entity_home_power` (okamžitý výkon domu v kW; používá se pouze tehdy, když existuje přesný výkonový senzor)
 - `entity_solar_production`
 - `entity_inverter_power`
-- `entity_string_1_power` through `entity_string_4_power`
+- `entity_string_1_power` až `entity_string_4_power`
 - `entity_production_max_10min`
 - `entity_production_avg_10min`
-- `entity_ev_power` (wallbox charging power)
-- `entity_ev_energy_today` (energy charged today)
+- `entity_ev_power` (nabíjecí výkon wallboxu)
+- `entity_ev_energy_today` (kolik se dnes nabilo)
 
-Optional comfort/control entities:
+Volitelné komfortní/řídicí entity:
 
 - `entity_room_temperature`
 - `entity_room_humidity`
-- `entity_hdo_switch` (low-tariff switch; while it is on, energy used is priced at the low rate)
+- `entity_hdo_switch` (spínač nízkého tarifu; když je sepnutý, počítá se ušetřená energie nízkou sazbou)
 
-An empty field means: let Solario safely discover the source. A valid manually selected entity takes precedence over automatic discovery.
+Prázdné pole znamená „nechat Solario zdroj bezpečně objevit“. Ručně vybraná platná entita má před automatickým objevováním přednost.
 
-## History by plan
+## Alpha ESS
 
-History is kept at three resolutions, because each costs differently:
+Aktuální verze obsahuje přesně kontrolované aliasy pro běžné Alpha ESS entity, které obecné vyhledávání nemusí vždy správně rozpoznat. Alias se použije pouze tehdy, když konkrétní entita opravdu existuje, je dostupná, má číselnou hodnotu a kompatibilní jednotku.
 
-- **detailed** (a reading every few minutes) - Local a day and a week, Smart and Pro a month,
-- **hourly** (one row per hour) - Local 7 days, Smart 31 days, Pro 366 days,
-- **daily** (one row per day) - Local 31 days, Smart a year, Pro 5 years.
+Podporované zdroje zahrnují aktuální výrobu, kumulativní výrobu FVE, kumulativní import/export sítě, spotřebu domu, SOC baterie a napětí baterie.
 
-A year of detailed readings would be tens of megabytes rewritten every minute,
-so Pro does not reach further by keeping more detail but through the coarser
-rows: any day of the past year opens from its hourly rows and still has its
-shape, and whole periods are summed from the daily ones.
+## Denní a měsíční energie
 
-The tabs on the Graphs page match what the plan will actually serve. "Celkem"
-is available on every plan - it does not read stored history at all, but the
-lifetime counters from Home Assistant.
+Pokud Home Assistant poskytuje kumulativní čítač energie, agent z něj odvozuje:
 
-## Support address and paid plans
+- hodnotu za dnešek,
+- hodnotu za aktuální měsíc,
+- celoživotní hodnotu čítače.
 
-`support_email` sets the address printed in the recovery instructions and on the
-sign-in page; left empty it falls back to the product's own mailbox.
-`paid_upgrades_enabled` decides whether the Smart and Pro checkout is offered at
-all; it is off by default.
+Začátek dne a měsíce se získává z Home Assistant Recorderu. Pokud je dostupná statistická změna, lze ji použít pro bezpečné prvotní nasazení trackeru. Trackery jsou persistentní a chrání se proti resetu kumulativního čítače i krátkému falešnému nulovému stavu senzoru.
 
-## Two-tariff savings and feed-in
+Pokud pro přesný výpočet chybí historie, Solario nezačne vydávat neověřený odhad za přesnou hodnotu; diagnostika ukáže použitý zdroj a stav výpočtu.
 
-The electricity price is the main (high) rate. The low rate and the feed-in
-price may both be left empty, in which case everything is computed with the one
-price exactly as before.
+## Historie podle tarifu
 
-With a low rate set, the day's saving is not taken at the end of the day at one
-price: each increment of self-consumed energy is priced at the rate in force
-when it flowed, following the state of `entity_hdo_switch`. Monthly and lifetime
-savings stay on the main price, because there is no basis for splitting them by
-tariff after the fact.
+Historie se ukládá ve třech rozlišeních, protože každé stojí jinak:
 
-The feed-in price applies only to energy exported to the grid and is shown
-separately from savings - it is income, not energy that did not have to be
-bought.
+- **podrobná** (měření po několika minutách) - Local dnešní den, Smart a Pro měsíc,
+- **hodinová** (řádek na hodinu) - Local 1 den, Smart 31 dní, Pro 366 dní,
+- **denní** (řádek na den) - Local 7 dní, Smart rok, Pro 5 let.
 
-## Alpha ESS and energy data
+Rok podrobných měření by znamenal desítky megabajtů přepisovaných každou minutu,
+proto Pro nedosahuje dál zvýšením podrobnosti, ale hrubšími řádky: libovolný den
+za poslední rok se otevře z hodinových řádků a má tak pořád svůj průběh, celá
+období se sčítají z denních.
 
-The current version includes tightly controlled aliases for common Alpha ESS entities. An alias is used only when the specific entity exists, is available, has a numeric value, and uses a compatible unit.
+Ukládá se stejně na všech tarifech - tarif rozhoduje jen o tom, jak daleko
+zpět se domácnost smí podívat. Kdo přejde z Localu na Smart nebo Pro, uvidí
+hned i dny, které add-on uložil ještě v Localu. Rozhraní to říká s vlastními
+čísly domácnosti (`GET /api/data/retention` vrací jen počet uložených dní a
+první den, nikdy samotná měření).
 
-If Home Assistant provides a cumulative energy counter, the agent uses Home Assistant Recorder data to derive today's, current month's, and lifetime values. If raw history around the beginning of a period is missing, the calendar baseline may be recovered from Recorder statistics.
+Záložky v Grafech odpovídají tomu, co tarif skutečně obslouží: Local den a
+týden, Smart navíc měsíc, Pro navíc rok, „Celkem" a vlastní výběr. „Celkem"
+nečte uloženou historii, ale celkové čítače z Home Assistantu.
 
-Version 0.6.36 changes the behavior when the Recorder baseline is unavailable: if a trustworthy baseline cannot be obtained, the agent does not save the current cumulative value as the start of the period and does not publish a false periodic zero from it. The period remains temporarily unavailable and a later collection automatically retries the calculation.
+## Tarifní capability matrix
 
-Daily and monthly baselines are handled independently. A failure to obtain the monthly baseline must therefore not suppress valid daily energy. The backend also treats monthly savings as reliable only when monthly production is explicitly available in the current payload.
+Serverově vynucené funkce mají jeden zdroj pravdy v `localPlanPolicy.ts`:
 
-When upgrading from 0.6.35, only the derived periodic tracker file is removed once and rebuilt from Home Assistant data. The account, local settings, mappings, automations, access/recovery codes, and Home Assistant data are not deleted.
+- **Local (`free`, 99 Kč měsíčně)**: detailní historie dnešního dne, záložka Den, úspora za posledních 7 dní, aktuální Stav systému, pevné vestavěné alerty, katalog automatizací, 0 automatizací v ceně, osobní podpora a aktualizace. Stejné funkce má instalace bez předplatného, jen bez podpory a aktualizací.
+- **Smart**: detail 30 dní, záložky Týden a Měsíc, osobní podpora, detailní ekonomika, 30denní historie Stavu systému, editace vestavěných alertových hranic, Cloud/remote push, 1 automatizace v ceně.
+- **Pro**: detail 30 dní + hodinová historie 366 dní + denní historie 5 let, Rok a Vlastní období, dlouhodobá ekonomika, ROI z úplných doložených 365 dní, vlastní alerty, servisní report, 3 automatizace v ceně, editor zařízení, roční kalendář energie se srovnáním měsíců proti loňsku, export, PDF a webhooky.
 
-If history or reliable statistical data required for an exact calculation is missing, Solario does not label an unverified estimate as an exact value. Diagnostics show the source and calculation state where applicable.
+Počet spravovaných pravidel, která už tým Solario vytvořil, není technický runtime limit. Hodnota „automatizace v ceně“ je obchodní rozsah nové dodávky. Existující spravované automatizace se při downgrade nemažou ani nevypínají.
 
-## Local / Smart / Pro capability matrix
+Placené nastavení se při downgrade zachová na disku. Backend však vždy vyhodnocuje aktuální ověřený entitlement: Local používá pevné prahy, Smart nepouští Pro custom rules a zařízení lze ručně ovládat/editovat pouze v Pro na instalaci typu vlastní Home Assistant.
 
-The backend has one canonical plan policy and the UI advertises those same enforced capabilities:
+## Přechod na placený tarif
 
-- **Local (internal id `free`, free for good)**: today's detailed history, the Day tab, the savings of the last 7 days, current system status, fixed built-in alerts, the automation catalogue, 0 commissioned automations included and no personal support (`personalSupport`).
-- **Smart**: detailed history up to 30 days, Week and Month tabs, personal support, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and 1 commissioned automation included.
-- **Pro**: 30 days of detailed history plus 366 days of hourly history and 5 years of daily history, Year and custom ranges, long-term economics, ROI from a complete verified 365-day basis, custom alerts, service report, 3 commissioned automations included, device editor, yearly energy calendar with month-over-last-year comparison, export/PDF and webhooks.
+Od 0.7.62 jsou předplatným všechny tři tarify: Local (99 Kč), Smart (249 Kč) a Pro (499 Kč) měsíčně. Placené
+tarify se zapínají volbou `paid_upgrades_enabled`, nebo je zapne Solario Cloud pro všechny instalace najednou
+(`paidPlansLive`). Dokud nejsou zapnuté, má každá instalace Local i se službami Solario a aktualizacemi, Smart a Pro
+ukazují „Brzy k dispozici“ a nic se neplatí.
 
-The number of already commissioned rules is not a runtime execution quota. Downgrading does not delete paid settings or existing commissioned automations. The active entitlement still governs what can be edited or evaluated: Local uses fixed alert thresholds, Smart does not run Pro custom alert rules, and manual device editing/control remains Pro-only for an own-Home-Assistant installation.
+Po zapnutí, stejně pro Solar Box i vlastní Home Assistant:
 
+1. Po vytvoření přístupového kódu si zákazník vybere: předplatit Local, vyzkoušet Smart či Pro **14 dní zdarma**
+   bez karty (zkušební doba je jedna na instalaci), nebo pokračovat zatím bez tarifu.
+2. Zaplatit může kdykoli v Profilu. Potvrzení ukáže cenu a podmínky, platba se otevře v novém okně na
+   stránce `solario.cloud` a tarif se po zaplacení zapne sám. Údaje o kartě add-on nikdy nevidí.
+3. Tarif mění nahoru i dolů v Profilu nebo ve svém účtu na `solario.cloud`. Přechod ze Smart nebo Pro na Local je
+   nižší tarif od konce zaplaceného období; zrušené předplatné doběhne do konce zaplaceného měsíce.
+4. Bez předplatného (po zkušební době bez platby nebo po doběhnutí zrušeného) se **nic nezablokuje**: add-on běží
+   dál s funkcemi Localu, měření, grafy a už nastavené automatizace fungují a nic se nemaže. Chybí jen osobní
+   podpora, automatizace na míru, Solario Cloud a automatické aktualizace. Po zaplacení se vše vrátí.
 
-## House check
+Automatické aktualizace přepíná pomocný proces s tokenem Supervisoru (`/data/update-policy.json` s `once: true`), a to
+jen při změně: když předplatné začne, jednou je zapne, když skončí, jednou je vypne. Mezi tím nastavení v Home
+Assistantu nechává na domácnosti; ruční aktualizaci nezakazuje. Bez zapnutých placených tarifů je nevypíná nikdy.
 
-The "Co u vás půjde" card on the Automations tab (`GET /api/user-automations/check`, every plan) reads the Home Assistant entities in the `switch`, `input_boolean`, `light`, `fan`, `climate`, `water_heater`, `cover`, `number` and `select` domains and rates the automation packages:
+Tarif Local neposílá žádná měření do Solario Cloud; ten je součástí tarifů Smart a Pro.
 
-- **Water heater from the surplus**: a `switch`/`input_boolean` recognised as a water heater, or a `water_heater`.
-- **Heat pump from the sun**: a `climate`, `water_heater`, `switch`, `select` or `number` whose name points to a heat pump or SG Ready (a radiator thermostat does not count).
-- **Car from the sun**: a wallbox or charging control (`switch`, `input_boolean`, `number`, `select`).
-- **Washing machine and dishwasher from the sun**: works without a smart appliance, by notification.
-- **Battery by prices and tariff** (only where the house has a battery), **Pool** and **Blinds** (only where the house has them).
+Pojistky:
 
-A package is **Ready** when its device is available and, for the surplus packages, the house measures its export; **Measurement missing** when the device is there but the export is not measured; **Device missing** when Home Assistant does not have it or it is unavailable. The card then says what to get and what Solario does until then. A package whose device a Solario automation already drives shows as running; where the household's own automation drives it, the card says so and still offers the package. Entities that open or guard the house (garage, gates, doors, locks, alarm) are neither counted nor offered. "Up to … CZK a month" is the export of the last 30 days × (electricity price − feed-in price).
+- Druhé kliknutí, obnovení stránky ani druhá záložka nezaloží druhou platbu. Vrátí se rozdělaná relace.
+- Relaci, která už může být zaplacená, add-on nikdy nepřepíše. Nahrazené a nedokončené relace ještě
+  7 dní hlídá, takže pozdě potvrzená platba se neztratí. Dvojí platbu nepoužije a řekne zákazníkovi,
+  ať požádá o vrácení.
+- Kdo už platí, mění nebo ruší tarif ve svém účtu na `solario.cloud`. Add-on druhé předplatné nezaloží.
+- Platit se posílá jen na stránku `solario.cloud`. Adresy jiných hostitelů add-on odmítne.
+- Rozdělané platby jsou v `/data/cloud-activation.json`, přístupový token relace je šifrovaný (AES-256-GCM).
+- Automatické aktualizace přepíná jen pomocný proces add-onu přes Supervisor (`hassio_api`), a to jen
+  při jednorázovém obnovení popsaném výše. Webová část add-onu token Supervisoru nemá; jen zapíše
+  požadavek do `/data/update-policy.json`.
 
-With Smart and Pro the add-on sends the check to Solario Cloud with the automation overview (from 0.7.60), so the web shows it and a request made there can carry its summary.
+Návrh pro web je v repozitáři v `docs/solario-cloud-platby-navrh.md`.
 
-The "Dnešní den" chart on the same tab draws the house's consumption and the export per half hour from the day counters. From 0.7.61 a counter that fell today or yesterday (a sensor that restarts every hour, say) is not trusted for the day: the house is then taken from the power readings - production plus grid minus battery charging, as Solario Cloud does - and the export from the meter's power, and a half hour the counter misses is filled the same way. Without the grid power measured (and the battery power, where there is a battery) the chart shows no consumption rather than a wrong one.
+## Automatizace: přehled a ovládání domácností
 
-An automation request (`POST /api/user-automations/requests`) with `"attachCheck": true` adds a short summary of the check to the message for Solario (at most 1000 characters, 2000 in all; the household's own words are never cut). The add-on stores the summary separately (`context`); the household's list of requests shows their own words only.
+Záložka Automatizace ukazuje všechny automatizace domu, panel Ovládání s roletami a zařízeními, co dům právě dělá sám, kolik automatizace tento měsíc ušetřily, dnešní běhy nad dnešní výrobou a deník všech běhů. Všechno je z toho, co add-on naměřil:
 
+- Každou půlminutu add-on sleduje spotřebič každé automatizace a ukládá běhy, které spustila automatizace nebo domácnost tlačítkem (`/data/automation-activity.json`, 400 dní). Ruční zapnutí mimo automatizaci se nepočítá.
+- Energie je z měřáku výkonu spotřebiče („měřeno“), jinak z výkonu na štítku („odhad“). Bez obojího je běh jen časově zaznamenaný a stránka úsporu neukazuje.
+- Ze slunce se počítá jen to, co v tu chvíli nedodala síť ani baterie.
+- Graf „Dnešní den“ ukazuje po půlhodinách výrobu (průměr okamžitého výkonu), spotřebu domu a přetok do sítě (z denních počítadel; malý poskok počítadla zpět po zaokrouhlení se přečte jako nula; spotřeba dopočítaná z výroby a sítě se u domu s baterií nepoužije). Když počítadlo dnes nebo včera kleslo (třeba senzor, který se nuluje každou hodinu), spočítá se spotřeba z okamžitých výkonů: výroba + odběr ze sítě − přetok − nabíjení baterie, a přetok z výkonu elektroměru. Stejně to dělá Solario Cloud. Ze stejných výkonů se doplní i půlhodina, kterou počítadlo nepokrylo. Bez měřeného výkonu sítě (a u domu s baterií i jejího výkonu) se spotřeba nevykreslí, běhy spotřebičů a kdy se dnes spustily ostatní automatizace. Spotřeba a přetok se ukazují jen tam, kde je dům měří. Úspora = energie ze slunce × (cena elektřiny − výkupní cena). Je-li nastavený nízký tarif, počítá se s ním, protože spotřebič by jinak běžel v něm.
 
-## Weather and solar conditions
+Domácnost může bez žádosti na tým Solario:
 
-Solario can use Home Assistant `weather.*`, a measured irradiance sensor, `sun.sun`, or a suitable sun-elevation sensor. Only a real `weather.*` source or measured irradiance counts as a weather station; `sun.sun` alone is shown as **Sun position only**. If a physical irradiance sensor is not available, current irradiance may be derived from weather and sun elevation.
+- **Spustit hned**: zapne spotřebič a na dobu běhu pozastaví jeho pravidlo, aby ho Home Assistant hned nevypnul. Výchozí délka: bojler 2 h, auto 3 h, bazén a tepelné čerpadlo 2 h, ostatní 1 h. Myčka a pračka se jen zapnou.
+- **Dnes vynechat** (u běžícího spotřebiče „Zastavit na dnes“): pravidlo platí znovu od půlnoci.
+- **Pozastavit na dnes** a **Dovolená** (až 60 dní): pozastaví automatizace, které spotřebovávají energii (všechny od Solaria a ty vlastní, které spínají spotřebič). Automatizace Home Assistantu se vypnou a po skončení znovu zapnou, ale jen ty, které byly zapnuté. Rolety a světla běží dál.
+- **Nastavení**, která tým Solario u automatizace zpřístupnil, a to jen v povoleném rozsahu.
 
-When `sunElevation <= 0`, current irradiance is always **0 W/m²**. This also applies when a physical Home Assistant sensor briefly retains an old positive value after sunset.
+Tým Solario to u automatizace v `/data/user-automations.json` určí takto (nic z toho není povinné):
 
-## History storage
+```json
+{
+  "id": "automation.ohrev_vody",
+  "name": "Ohřev vody z přebytků",
+  "category": "hot_water",
+  "description": "Když posílám do sítě víc než 1,5 kW, ohřeju bojler. Jen 10–15 h.",
+  "device": {
+    "kind": "water",
+    "label": "Bojler",
+    "entityId": "switch.bojler",
+    "powerEntityId": "sensor.bojler_power",
+    "ratedKw": 2.0,
+    "temperatureEntityId": "sensor.bojler_teplota",
+    "targetTemperature": 60
+  },
+  "controls": {
+    "boost": { "minutes": 90 },
+    "skip": true,
+    "settings": [
+      { "entityId": "input_number.bojler_prebytek", "label": "Zapnout od přetoku", "unit": "kW", "min": 0.5, "max": 3, "step": 0.1 },
+      { "entityId": "input_select.wallbox_rezim", "label": "Režim nabíjení", "options": ["Jen slunce", "Slunce + minimum", "Co nejrychleji"] }
+    ]
+  }
+}
+```
 
-Detailed readings (one point every five minutes, 30 days back) are stored in `/data/history/`, one file per calendar day; only today's file is rewritten, and only when a reading is appended. The hourly and daily summaries have their own files and are written on an interval, always at the turn of the hour and of the day. A planned stop of the add-on writes everything out at once.
+- Bez `device.entityId` je spotřebičem první vypínatelná entita z akcí pravidla. Bez `powerEntityId` se hledá senzor výkonu pojmenovaný po spotřebiči (`switch.bojler` → `sensor.bojler_power`).
+- `kind` je jedno z `water`, `car`, `dish`, `pool`, `heat`, `battery`, `blinds`, `light`, `other`. Jinak se odvodí z kategorie, názvu nebo entity.
+- Nastavení mohou být `input_number`, `number`, `input_select`, `select`, `input_boolean`, `climate` a `water_heater`. Pravidlo v Home Assistantu má číst hodnotu z tohoto pomocníka. Rozsah je průnikem toho, co povolí Solario, a toho, co přijme entita.
+- `"boost": false` nebo `"skip": false` tlačítko u automatizace skryje.
 
-## Network and persistent data
+### Vlastní automatizace z Home Assistantu
 
-- Home Assistant API: `http://supervisor/core`
+Záložka ukazuje i všechny automatizace, které Solario nenastavilo (nejvýše 100). Agent jednou za 15 minut přečte jejich konfiguraci přes WebSocket Home Assistantu (`automation/config`) a k entitě automatizace přidá, čím se spouští a které entity ovládá (atributy `solario_triggers`, `solario_targets`, `solario_description`). Konfiguraci Home Assistant vrací jen u automatizací, které mají `id` (všechny vytvořené v editoru); ostatní se ukážou jen s názvem a stavem.
+
+- Domácnost je může zapnout a vypnout, spustit teď (`automation.trigger`) nebo na dnešek vynechat.
+- Automatizace, která spíná spotřebič (`switch`, `input_boolean`, `light`, `fan`) poznaný jako bojler, auto, myčka, bazén nebo tepelné čerpadlo, se měří a počítá do úspory jako automatizace od Solaria. Místo „Spustit teď“ má „Spustit hned“ pro spotřebič.
+- Výpadek jejich spotřebiče se v Upozorněních nehlásí; hlásí se jen u automatizací od Solaria.
+
+### Panel Ovládání
+
+Panel obsahuje všechny `cover.*` v domě kromě garážových vrat, bran a dveří (`device_class` `garage`, `gate`, `door` nebo takový název), spotřebiče automatizací od Solaria a cíle vlastních automatizací v doménách `light`, `fan`, `climate`, `water_heater`. Obecný `switch` z vlastní automatizace se ukáže jen tehdy, když vypadá jako spotřebič nebo světlo, aby se v panelu neobjevilo třeba nastavení střídače. Nejvýše 40 zařízení.
+
+- Rolety: `open_cover`, `close_cover`, `stop_cover` a `set_cover_position` (když je roleta podporuje, podle `supported_features`).
+- Spotřebiče a světla: `turn_on`, `turn_off`.
+- Topení a ohřev vody: `set_temperature` v rozsahu `min_temp`–`max_temp` entity.
+
+Ovládání automatizací i panelu je ve Smart a Pro. V tarifu Local je vše vidět bez ovládání; obnovit pozastavené automatizace jde vždy.
+
+Když Home Assistant přestane spotřebič hlásit na víc než 15 minut, objeví se v Upozorněních „Automatizace nemohla běžet“. Ve Smart a Pro posílá add-on stejný přehled do Solario Cloud (každých 10 minut, při otevřené stránce každých 20 s) a ovládání z webu provede add-on se stejnými kontrolami.
+
+### Kontrola domu
+
+Karta „Co u vás půjde“ (`GET /api/user-automations/check`, na všech tarifech) projde entity Home Assistantu v doménách `switch`, `input_boolean`, `light`, `fan`, `climate`, `water_heater`, `cover`, `number` a `select` a vyhodnotí balíčky automatizací:
+
+- **Bojler z přebytků**: `switch`/`input_boolean` poznaný jako bojler nebo `water_heater`.
+- **Tepelné čerpadlo ze slunce**: `climate`, `water_heater`, `switch`, `select` nebo `number`, jehož název ukazuje na tepelné čerpadlo nebo SG Ready (termostat radiátoru se nepočítá).
+- **Auto ze slunce**: wallbox nebo nabíjení (`switch`, `input_boolean`, `number`, `select`).
+- **Pračka a myčka ze slunce**: funguje i bez chytrého spotřebiče, upozorněním.
+- **Baterie podle cen a tarifu** (jen když dům baterii má), **Bazén** a **Rolety** (jen když je dům má).
+
+Balíček je **Připraveno**, když je zařízení dostupné a dům měří přetok do sítě (u balíčků z přebytků), **Chybí měření**, když zařízení je, ale přetok se neměří, a **Chybí zařízení**, když ho Home Assistant nemá nebo je nedostupné. Karta pak napíše, co pořídit a co Solario dělá do té doby. Balíček, jehož zařízení už řídí automatizace od Solaria, je „Už běží“; řídí-li ho vlastní automatizace domácnosti, karta to napíše a balíček nabízí dál. Entity, které otvírají nebo hlídají dům (garáž, brány, dveře, zámky, alarm), se nepočítají ani nenabízejí. Částka „až … Kč měsíčně“ je přetok za posledních 30 dní × (cena elektřiny − výkupní cena).
+
+Ve Smart a Pro posílá doplněk kontrolu do Solario Cloud spolu s přehledem automatizací (od 0.7.60), takže ji ukazuje i web a žádost z webu může nést její souhrn.
+
+Žádost o automatizaci (`POST /api/user-automations/requests`) s `"attachCheck": true` přidá ke zprávě pro Solario krátké shrnutí kontroly (nejvýše 1000 znaků, celkem do 2000 znaků; text domácnosti se nezkracuje). V add-onu se shrnutí ukládá zvlášť (`context`) a domácnost v seznamu žádostí vidí jen svůj text.
+
+## Solario Solar Box vs vlastní Home Assistant
+
+Typ instalace se volí jednou po prvním přihlášení a potom je bezpečnostně uzamčen.
+
+- **vlastní Home Assistant**: uživatel může v rámci svého tarifu spravovat Solario automatizace a pracovat s podporovanými lokálními funkcemi,
+- **Solario Solar Box**: spravované automatizace jsou z uživatelského pohledu pouze ke čtení; změny provádí správce instalace.
+
+## Počasí a sluneční podmínky
+
+Solario umí použít Home Assistant `weather.*`, fyzický senzor ozáření, `sun.sun` nebo vhodný senzor výšky Slunce. Za skutečnou meteostanici se považuje pouze `weather.*` nebo měřený senzor ozáření; samotné `sun.sun` se v UI označí jako „Jen poloha Slunce“. Pokud není dostupný fyzický senzor ozáření, může Solario ozáření odvodit z počasí a výšky Slunce.
+
+Při `sunElevation <= 0` je aktuální ozáření vždy 0 W/m². Toto pravidlo platí i pro případ, kdy fyzický Home Assistant senzor po západu Slunce krátce drží starou kladnou hodnotu.
+
+## Síť
+
+- HA API: `http://supervisor/core`
 - backend: `127.0.0.1:5000`
-- Ingress: port `8099`, Home Assistant Ingress proxy only
-- local Web UI: port `3000`, no host mapping by default
-- maximum JSON body: **1 MiB**
+- Ingress: port 8099, pouze Home Assistant Ingress proxy
+- lokální Web UI: port 3000, ve výchozím stavu bez host mappingu; po explicitním zapnutí pouze privátní/LAN síť
+- maximální JSON body: 1 MiB
 
-The access code and recovery code are shown during initial registration and can be downloaded to a local text file; a newly rotated pair after recovery can be downloaded as well. If both codes are lost, they cannot be looked up remotely and recovery requires direct service access to that add-on. Account state, local settings, investment inputs, alert rules, commissioned-automation request queue, built-in agent identity, automations, mappings, and energy trackers are persisted in `/data`, so a normal restart does not require a new registration.
+Vestavěný agent dostává Supervisor token pouze přes procesové prostředí. Token se nezapisuje do `/data/agent-config.json` a webový backend jej nedostává.
 
-The one-time 0.6.36 repair affects only derived periodic trackers.
+## MQTT (lokálně)
 
-## Installation behavior
+Add-on deklaruje `services: - mqtt:want`, takže pokud máte v Home Assistantu nastavenou MQTT integraci (např. add-on Mosquitto broker), Supervisor automaticky vloží přihlašovací údaje (`MQTT_HOST`, `MQTT_PORT`, `MQTT_USERNAME`, `MQTT_PASSWORD`) do prostředí agenta - žádné ruční nastavení není potřeba. Pokud MQTT broker není dostupný, tato integrace se jen neaktivuje a zbytek add-onu funguje beze změny.
 
-For a standard local Home Assistant installation, the built-in agent connects automatically through `homeassistant_api`. No separate local agent pairing code or additional Home Assistant integration is required.
+Po připojení agent:
 
-The default user-facing access method is Home Assistant Ingress. Direct LAN access on port 3000 is optional and not published by default.
+- publikuje aktuální metriky (stejné klíče jako v diagnostice, např. `power_now`, `battery_soc`, `grid_power`) jako zachovanou (retained) JSON zprávu na `solario/local/state`,
+- publikuje stav dostupnosti na `solario/local/availability` (`online`/`offline` přes Last Will),
+- jednorázově zveřejní Home Assistant MQTT discovery konfiguraci pro hlavní senzory (výkon FVE, výroba dnes, stav baterie, výkon sítě, výkon baterie, spotřeba domu) pod `homeassistant/sensor/solario_local/…/config`, takže se automaticky objeví jako nativní entity Home Assistanta.
 
-## First launch and access
+Stav připojení je vidět v Nastavení → Integrace → „MQTT (lokálně)".
 
-On first launch, the user generates an access code and a recovery code. Both should be stored securely. After the first sign-in, the installation type can be selected as either a user's own Home Assistant installation or a Solario Solar Box. The selected installation type is security-locked after initial setup.
+## Webhooky
 
-Normal add-on restarts preserve the account and access state through persistent `/data` storage.
+V Nastavení → Integrace → „Webhooky" lze nastavit cílovou URL, volitelný token a jednu ze sledovaných událostí. Tlačítko „Otestovat" vždy odešle testovací POST požadavek bez ohledu na to, jestli právě nastala sledovaná událost.
 
-## Automatic mapping behavior
+Backend vyhodnocuje události při každém zpracování dat z agenta a webhook zavolá jen při **přechodu** stavu (ne opakovaně, dokud podmínka trvá):
 
-Automatic discovery is intended to reduce manual configuration while avoiding arbitrary matches. Candidate sources are evaluated using their identifiers, names, units, `device_class`, and `state_class`. Manual valid overrides always win over discovery.
+- `battery_low` - stav baterie klesne na 15 % nebo méně,
+- `battery_full` - stav baterie stoupne na 98 % nebo více,
+- `grid_export` - okamžitý výkon sítě přejde ze záporného/nulového na záporný (jakýkoli přetok),
+- `solar_surplus` - přetok do sítě přesáhne 500 W,
+- `device_offline` - periodická kontrola (každých 30 s) zjistí, že lokalita přestala posílat data,
+- `alert_created` - souhrnná volba, která se spustí při jakékoli z výše uvedených událostí.
 
-When a required source cannot be established reliably, Solario should prefer an unavailable/diagnostic state over presenting an unsupported value as exact.
+Tělo POST požadavku obsahuje `{ event, configuredEvent, siteId, timestamp, source, data }`, kde `data.triggeredBy` u volby `alert_created` říká, která konkrétní podmínka nastala.
 
-## PV diagnostics behavior
+## Persistentní data a přístup
 
-Where individual string-power entities are available, Solario can use them for string-level diagnostics and comparison. Supporting recent production values such as the 10-minute maximum and average can also be mapped.
+Přístupový i obnovovací kód se při první registraci zobrazí jednou; registrační i obnovovací obrazovka umožní novou dvojici stáhnout do lokálního textového souboru. Pokud se ztratí oba kódy, není možné je vzdáleně „dohledat“ - obnova vyžaduje přímý servisní zásah v daném add-onu.
 
-Low production can make percentage differences between strings misleading. In such conditions, the interface reports that power is too low for a reliable comparison rather than presenting the result as a confirmed PV fault.
+Podrobná historie se ukládá atomicky do denních souborů `<live-data-store>.history/YYYY-MM-DD.json`. Hlavní `live-data-store.json` zůstává malý a nese živý stav a kompatibilní metadata. Starý monolitický formát se při upgradu migruje transakčně: nejdřív se vytvoří denní shardy a teprve potom se hlavní soubor zlehčí. Hodinové agregace se zapisují nejvýše po 10 minutách nebo na hranici hodiny, denní nejvýše po 30 minutách nebo na hranici dne; při plánovaném ukončení se persistentní telemetrie flushne.
 
-## Savings calculation behavior
-
-Savings are based on the configured electricity price and PV energy consumed on site. When production and export values are available, self-consumption is calculated as production minus export.
-
-Daily, monthly, and lifetime savings require the corresponding energy basis. If the monthly basis is not yet trustworthy, Solario must not present it as a reliable monthly value. Once Recorder provides a valid monthly delta, the calculation can recover automatically.
-
-## Data ownership and localization
-
-Names of entities, devices, and automations imported from Home Assistant remain exactly as the user configured them. Solario's own UI strings and system messages are localized independently.
-
-## Supported architectures
-
-- `amd64`
-- `aarch64`
+Stav účtu, lokální nastavení, investiční vstupy, alertová pravidla, fronta žádostí o automatizace, agent identity a energetické trackery jsou v persistentním `/data`. Placená data se při downgrade nemažou.

@@ -1,285 +1,84 @@
-# Solario Home 0.7.61
-
-Solario Home is a local Home Assistant application for solar PV overview, energy balance, diagnostics and safe automations. The default access path uses secured Home Assistant Ingress; direct LAN port 3000 is optional and is not published by default.
-
-## Installation
-
-1. Add `https://github.com/Gonza11125/solar-portal-addon` to Home Assistant repositories.
-2. Install **Solario Home** and start it.
-3. Open the Web UI directly from Home Assistant through Ingress.
-4. On first launch, generate both an access code and a recovery code and store them safely.
-5. After the first sign-in, choose the installation type: **your own Home Assistant** or **Solario Solar Box**. The selection is security-locked after initial setup.
-
-The built-in local agent connects to Home Assistant automatically through `homeassistant_api`. A local installation does not generate a separate agent pairing code and does not require an additional inverter connection.
-
-## What changed in 0.7.43 to 0.7.61
-
-- **The "Today" chart keeps the house's consumption.** A day counter that steps back by rounding no longer drops a half hour from the consumption line; with a battery, a consumption worked out from production and the grid is not used. A consumption sensor that restarts during the day is read from the power readings instead (production plus grid minus battery charging), as Solario Cloud does. With Smart and Pro the house check reaches the Solario Cloud web too.
-- **A house check on the Automations tab, free Local included.** What Home Assistant has in the house (garage doors, gates, locks and alarms are left out), how much went to the grid over the last 30 days and what it would have saved at home, and for the water heater, heat pump, car, washing machine and dishwasher, battery, pool and blinds whether an automation can be set up now, what is missing, what to get and what Solario does until then. With the household's consent the result goes with an automation request. The check only reads; it switches nothing.
-- **The Local plan is free for good.** The live overview, today's chart, the savings of the last 7 days, the system status, built-in alerts and updates, with no payment and no card. The week and month of history, controls, Solario Cloud and personal support come with Smart (249 CZK) and Pro (499 CZK), which can be tried free for 14 days. Going to Local is cancelling the subscription, and the add-on never switches automatic updates off any more; where an older version did, it switches them back on once.
-- **Readings reach Solario Cloud again after an outage or an update.** A reading that could not be sent for over 5 minutes no longer holds back every newer one; the house no longer stays "offline" in the Cloud.
-- **Safer control and a more readable look.** Your own Home Assistant automations can be switched, run or skipped from the app and the web only when every step drives blinds, lights, appliances, heating or notifications; gates, doors, locks, alarms, scripts and scenes stay in Home Assistant, and "Run now" keeps the automation's conditions. The backup copy in /share leaves out the add-on's secrets, and the web UI sends security headers. Readable contrast, a working dark mode, layouts for laptops inside Home Assistant and for phones, one colour per energy flow in every chart, and today's saving right in the Overview picture.
-- **A more useful "Today" chart.** The day's totals (produced, used by the house, sent to the grid, used from the sun by automations), the house's consumption and the export next to production, when the other automations fired, and each half hour's numbers on pointing. Its rows show appliances only, not blinds.
-- **Every automation of the house and a Controls panel.** The Automations tab now also lists your own Home Assistant automations (blinds, lights, heating, notifications) with what starts each one and what it acts on; they can be switched on and off, run now or skipped for today. A new Controls panel has every blind (raise, stop, lower, position, all at once) and the devices the automations drive (water heater, wallbox, lights, heating target temperature); garage doors and gates stay in Home Assistant. A more colourful look. Controls come with Smart and Pro; Local shows everything without them.
-- **A new Automations tab.** What the water heater, the car and the appliances are doing with the sun right now, what the automations saved this month (from measured energy; estimates from a device rating are marked), today's runs over today's production, and a log of every run. The household can start a device now, skip today, pause everything for the day or a holiday, and change the settings the Solario team exposed, within the allowed range. Smart and Pro have the same tab in Solario Cloud.
-- **Production and grid import can no longer show the same number.** One Home Assistant sensor now serves one quantity only; a grid meter's import counter that had also been taken for solar production stays the grid import, and production is looked for again (or shown as unknown rather than wrong). Discovery no longer takes an "import/odběr/nakoupená/elektroměr" counter for production. Security updates of the web server's libraries (proxy-addr, morgan, qs).
-- **Sign-in over the local network works whatever address is used**, a host name such as `http://homeassistant.local:3000` included; before, the right access code ended in "Přihlášení selhalo" there. Pages from other addresses are still refused.
-- **Subscriptions follow the usual rules**, ready for when Solario switches payments on (until then nothing changes): a higher plan applies at once and only the difference is charged; a lower plan and a cancellation apply from the end of the paid period; when a subscription ends the add-on says so once and runs as free Local, and paying again restores everything at once. A failed renewal keeps the plan for 7 more days.
-- **A request for a commissioned automation always reaches Solario**, Local without a Solario Cloud link included: such an add-on sends it to Solario's request inbox. Requests that were waiting go out on their own after the update.
-- **One Solario logo** (the S with the sun) in the app, in the add-on store and in the browser tab; in Home Assistant the add-on is now called **Solario Home**.
-- **Everyone chooses their own plan**, Solar Box included; where the app named the PV installer it now names the Solario team. The `support_email` option for installers is gone.
-- **Plan codes** from Solario are entered in the Profile, in the "Máte kód na tarif?" card.
-- **A Podpora (Support) button** in the top bar with Solario's e-mail and phone; one address everywhere: info@solario.cloud.
-- A request for a custom automation asks for an e-mail and a phone, and the Solario team is e-mailed about it.
-- Live readings in Solario Cloud, a battery that reports discharging as positive is recognised from the readings, and consumption is derived from the inverter's daily energy where no meter exists.
-- In the Profile, the plan details no longer run into the photo.
-
-## What changed in 0.7.42
-
-Preparation of subscriptions for every plan. It applies only with `paid_upgrades_enabled` switched on; without it nothing changes for customers.
-
-- After the access code is created, the household picks Local, Smart or Pro and tries it **free for 14 days**, without a card, or continues without a plan. Made for the Solar Box, where the customer only gets a link to the add-on.
-- Every plan, Local included, is a subscription. Paying is possible during the trial or after it (Profile). A banner shows the days left, the end of a cancelled subscription, or that the installation runs without one.
-- Without a subscription the add-on keeps running as Local without Solario's services and without updates: no requests for commissioned automations, no Solario Cloud, and the add-on switches its own automatic updates off through the Supervisor. Measurements, charts and automations already set up keep running; nothing is deleted.
-- Local never uploads measurements to Solario Cloud, not even when its trial starts.
-- The add-on now asks for Supervisor API access (`hassio_api`) to switch automatic updates. Only a small helper process gets the token; the web part still does not.
-- Solario Cloud (needs deploying on `solario.cloud`): Local plan, a 14-day trial of the chosen plan, plan changes up and down, and paying after a trial continues the same account.
-
-## What changed in 0.7.41
-
-- Requests for a commissioned automation no longer sit at "Čeká na opakování" forever. A temporary failure (Solario Cloud unreachable or erroring) is retried on its own; a refusal (link no longer valid, request not accepted) is retried after a new link or with "Zkusit znovu".
-- Each request shows its date, text, state and, when not delivered, the reason in plain words; the reason is also written to the add-on log.
-- Solario Cloud (needs deploying on `solario.cloud`) now accepts requests from installations linked by a pairing code without a plan and records them as Local.
-
-## What changed in 0.7.40
-
-Includes 0.7.39, which was not offered on its own.
-
-- **Chart value filter.** A "Zobrazit" row above the charts switches production, consumption, grid and battery on and off for every chart on the page; the choice is remembered per browser.
-- **Battery charge has its own strip** under the power chart on the same time axis, so kW and % no longer share one chart with two scales. Day and period bars include grid import and export.
-- **The custom period really works:** presets, an explicit "Zobrazit" button, reversed dates are swapped, the range is clamped to the plan's history and the arrows move it by its own length. Days follow the household's time zone.
-- **Dashboard:** where today's production went and where consumption came from as split bars, and seven days of verified savings as small bars, drawn from values the add-on already measures.
-- Chart colours checked for colour-blind separation.
-
-## What changed in 0.7.39
-
-- **Ready for a payment gateway and a smooth move to a paid plan**, still behind `paid_upgrades_enabled`. The Profile page confirms price and terms, opens the payment on `solario.cloud` in its own tab, follows payment, confirmation and activation, and switches the plan on by itself.
-- A second click, a reload or a second tab never starts a second payment; a session that may already be paid is never replaced; late payments are still picked up for seven days; a household that already pays changes its plan in its Solario Cloud account.
-- Checkout and account pages must be served by Solario Cloud itself.
-
-## What changed in 0.7.38
-
-- The left menu stays in place while long pages scroll; it used to slide away with the page and leave an empty strip beside the charts.
-- The profile card and the alerts hero no longer overflow on screens up to ~1500px, where they cut off their right edge including the "Upravit profil" button.
-- The profile artwork no longer carries a painted copy of that button.
-- The Smart and Pro blurbs name what each plan adds; the docs state correctly that the "Celkem" tab belongs to Pro.
-- No change to measurements, data storage or the API.
-
-## What changed in 0.7.37
-
-- **Both development lines are merged.** Everything from 0.7.33-0.7.36 and from 0.7.27-0.7.32 is included. History that 0.7.31/0.7.32 stored in `/data/history` is imported once into the 0.7.33+ per-day files without duplicates; the old folder is renamed to `history.imported`, nothing is deleted.
-- **Local shows its limits with the household's own numbers.** History is stored the same way on every plan; the plan only decides how far back you can look. Graphs and Economics therefore say how many days are already stored, that Local shows the last 7 and that Smart opens the rest immediately. The new `GET /api/data/retention` returns day counts only, never readings.
-- **Alerts:** Local sees how many events the last 30 days held and that Smart delivers them to a phone; Smart sees what Pro's custom rules add.
-- **Pro: yearly energy calendar.** Every day of the last 12 months as a square coloured by production, best and average day, 12-month production, and every month next to the same month last year. Only verified daily values are used; a day without one stays empty, never zero. Other plans see a locked preview that marks only the days already stored, with no invented values.
-- Plan cards promise only what exists: "API" is gone from Pro (there is no separate API access), and Smart names its included automation instead of "custom automations".
-- The 7-day Pro trial is offered only when paid plans are enabled (`paid_upgrades_enabled`).
-- The "Energy by hour" chart legend no longer overflows its card.
-
-## What changed in 0.7.36
-
-- Dashboard, Alerts and System Status now use one canonical global health calculation.
-- All three views read the same connectivity state, operational sensor diagnostics and open warning/critical alerts, so they cannot disagree about whether the household needs attention.
-- The same alert window is used everywhere, preventing different active-alert counts caused by different API limits.
-- Supplemental diagnostics such as individual PV strings and lifetime counters remain visible but do not downgrade global household health by themselves.
-- No tariff, energy-calculation or public-API behavior changed.
-
-## What changed in 0.7.35
-
-- The household image was removed from the sidebar card; it now shows only the household name and truthful Online/Offline status.
-- Sidebar and top-bar connection indicators no longer stay green while the installation is offline.
-- The system-status card no longer prints a generic connection warning for every problem. It now distinguishes offline state, critical/warning alerts, missing production mapping and unavailable mapped data sources.
-- Informational alerts alone no longer turn the system status into a red warning.
-- The System Status page uses the same reason-aware status logic.
-- No tariff, telemetry or API behavior changed.
-
-## What changed in 0.7.34
-
-- The Home Assistant sensor-status donut no longer lets its caption overflow across the green ring; it keeps the count and a short centered label inside the circle.
-- The household thumbnail in the sidebar uses a square, closer crop centered on the house instead of a wide image dominated by empty sky.
-- No tariff, telemetry or API behavior changed.
-
-## What changed in 0.7.33
-
-- **One enforced capability matrix now defines Local, Smart and Pro.** Tariff cards and API authorization read the same backend policy instead of maintaining separate promises.
-- **Local** keeps live monitoring, day/week history, basic economics, current system status, fixed built-in alerts, and commissioned-automation requests.
-- **Smart** adds month history, detailed economics, 30-day system-status history, editable built-in alert thresholds, remote Cloud access/push, and **1 commissioned automation included**.
-- **Pro** adds year/custom periods, long-term economics, ROI only from a complete verified 365-day basis, custom alert rules, service reports, **3 commissioned automations included**, device editing for own-HA installations, CSV/PDF, API and webhooks.
-- Paid settings survive downgrade. Features outside the active plan stop being editable/evaluated, but their stored configuration is retained for a later upgrade.
-- Commissioned-automation requests are persisted locally and delivered through the verified device link, or without a link to Solario's request inbox; one that cannot be sent is retried.
-- The SD-card-safe sharded history from 0.7.31 remains in place, and fresh-install sensor guidance, neutral optional sensors, truthful weather-source status, and downloadable access-code files from 0.7.28-0.7.32 remain preserved.
+# Solario Home
 
-## What changed in 0.7.18
+Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-- **History follows the plan at last**: Local a day and a week, Smart the month as well, Pro a year back with any single day or period selectable. Local used to show today only, although the data was already in the store, and Smart and Pro both showed the same thirty days.
-- **Pro can open any day of the past year.** A year of five-minute readings would be tens of megabytes rewritten every minute, so there is an hourly store instead: one row per hour, 8 760 rows a year, about a megabyte, accumulated from the increments of the daily counters. A day from last autumn still has its shape. In "Vlastní", the same date in both fields opens that day hour by hour; a wider range is drawn day by day.
-- The tab strip is no longer hardcoded: the backend states which periods a plan may select, so the interface cannot offer one the server will refuse.
-- Where the figures come from hourly or daily rows, the comparison of the window's two halves and the percentage badge are gone - they belong to the detailed history and said nothing about the period on screen.
-- Tariff cards and promos state the history in words, read off the same limits the request handlers enforce.
+## Instalace
 
-## What changed in 0.7.17
+1. V Home Assistantu přidejte repozitář `https://github.com/Gonza11125/solar-portal-addon`.
+2. Nainstalujte **Solario Home** a spusťte jej.
+3. Otevřete Web UI přímo z Home Assistantu přes Ingress.
+4. Při prvním otevření vygenerujte přístupový i obnovovací kód a oba bezpečně uložte.
+5. Po prvním přihlášení zvolte typ instalace: **vlastní Home Assistant** nebo **Solario Solar Box**. Volba se po prvním nastavení bezpečnostně uzamkne.
 
-- **HDO is a real tariff at last.** Savings were the day's self-consumed energy times one price, while an `entity_hdo_switch` option sat in the configuration that nothing read. Settings gain a low tariff and a feed-in price, both optional - left empty, everything is computed with the single price exactly as before. With a low tariff set, the day's saving is a running total: each increment of self-consumed energy is priced at the rate in force when it flowed. Monthly and lifetime savings stay on the main price, because there is no basis for splitting them by tariff after the fact.
-- **The feed-in price** applies only to exported energy and is shown separately: that is income, not energy the household did not have to buy.
-- **entity_bojler_switch and entity_kotel_switch are removed.** They were collected and never read by anything; filling them in did nothing.
-- **Long-term history for Pro.** Smart and Pro both kept the same thirty days of detail. There is now a daily aggregate - one row per site per day, a few hundred bytes, so five years of them is smaller than a single day of detail. Local keeps 31 days, Smart a year, Pro five years. Měsíc is thirty bars of real daily totals instead of four figures over the last stored window, and Pro gains a Rok tab.
-- **"Search for sensors again"** in Settings. A wrongly mapped source could only be corrected one metric at a time by hand; manual choices are kept.
-- **The add-on version is visible** in Settings. The backend read it only for anonymous telemetry.
-- **The owner's private email is out of the product.** It was on the sign-in page, in the Profile, in an automation-request link and, worst, in the recovery instructions shown once at registration in both languages. The default is the product's own address and the add-on exposes `support_email`.
-- **Paid upgrades are an add-on option** (`paid_upgrades_enabled`) rather than a code change.
-- 1075 lines of page modules with no import anywhere are deleted; they were carrying stale prices and copy into every build.
+Vestavěný lokální agent se s Home Assistantem propojuje automaticky přes `homeassistant_api`. Pro lokální instalaci se negeneruje žádný párovací kód agenta a není potřeba přidávat další integraci.
 
-## What changed in 0.7.16
+## Čeština a angličtina
 
-- **"Systém v pořádku" meant only that the agent had reported recently.** A flat battery, a dead sensor or an array that had stopped producing all left it green. It now needs current data, every source the installation has reporting, and no open alert worse than informational.
-- **The availability panel on the Dashboard asked whether a value was present in the payload**, which stays true after the sensor behind it dies. It reads the same per-metric diagnostics as Devices and FVE Health, and says whether a source is unmapped or has stopped reporting.
-- **The battery is in the energy arithmetic.** "Where the production went" counted charging the battery as consumption at home, and "where the consumption came from" left out what the battery gave back. Both are computed from the stored battery power; where it is unknown the slices say so instead of guessing. Coverage was production over consumption, which reads 100 % on a day with a large export - it is now the share the house did not have to buy.
-- **A period is named by the window actually returned.** On Local, Týden gets 24 hours back, and the figures under it were still labelled "za týden".
-- **FVE Health**: no battery component on an installation without a battery, no warning for "not producing" at two in the morning (the sun's elevation decides), and one optional string sensor or lifetime counter no longer drags a whole device to "Partly" - the diagnostics carry a `required` flag the interface was ignoring.
-- **A custom from-to period on Graphs for Pro.** The plan policy promised it; nothing offered it, because /data/history took only a number of hours. The endpoint accepts `from` and `to`, clamped to what the plan retains and refused outside Pro.
-- **The wallbox card has something behind it.** It waited for evPower and evEnergyToday, which nothing produced. They are metrics now - `ev_power` and `ev_energy_today`, discovered from the usual wallbox names, with manual overrides `entity_ev_power` and `entity_ev_energy_today`. Neither is required, so the card stays hidden without a charger.
-- **Claims the code does not cover are gone**: Pro promised unlimited locations the add-on cannot create, the promo cards promised EV charging control and production forecasts, and the Alerts page promised to inform you although the add-on sends neither email nor push. Nothing a customer sees says FREE any more (the internal plan id stays `free`).
-- **English mode formats in English**: nine call sites used a hardcoded cs-CZ for numbers, dates and times.
-- **The settings backup carries the display preferences** (locality, time zone, units, value precision, default page, tips, animations); a restore used to leave every one of them at its default.
+Rozhraní Solario Home je dostupné v češtině i angličtině. Verze 0.6.33 rozšiřuje jazykové pokrytí i na diagnostiku, automatizace, profil, první spuštění, QR/passkey stavy, chybové odpovědi backendu a předvyplněné e-mailové odkazy. Produkční build obsahuje automatický i18n audit, který vydání zastaví, pokud se do uživatelského rozhraní dostane nový český text bez anglického pokrytí.
 
-## What changed in 0.7.15
+Názvy entit a zařízení převzaté přímo z Home Assistantu zůstávají uživatelskými názvy a Solario je svévolně nepřekládá.
 
-- **A day's battery charge read 5 388,8 kWh and the chart axis ran to 8000 "kW".** Instantaneous power has been stored in kW since 0.7.5, but no installation could update past 0.7.4 while the image build was broken, so the rows already in /data were watts. Read as kW they are a thousand times too large, and the battery integral over them a thousand times too large again. The stored history is converted when it loads.
-- **Power units are kW in automations too.** The editor asked for watts while the rule engine compared kilowatts, so a rule written as "production > 3000" could never fire; grid export was converted to watts in the same engine, leaving the two power metrics a thousand apart from each other. Thresholds already stored are converted once. The CSV export headers said W for values in kW, and GET /data/export was declared twice.
-- **Savings are visible at last**: today, this month and lifetime on the Dashboard, each with the energy it was computed from, and per period on Graphs. A period whose basis the backend does not trust reads "—".
-- **Today's balance says whether the house produced more than it used**, and what share of the day's consumption the roof covered.
-- **Měsíc and Celkem are no longer the same day relabelled.** The Local plan keeps 24 hours of history, so a month could not be drawn from it. Those tabs now read the cumulative counters the agent derives from Recorder, which really do cover the month and the installation.
-- **Devices and FVE Health say what the add-on actually knows.** Both pages derived everything from one flag, so four cards read Online together and "no critical errors" was printed with no condition behind it. They now read the per-metric diagnostics: "Show detail" lists the sources behind a card - entity name, id, current reading, diagnosed issue - an inverter card appears when Home Assistant reports one, and a check the add-on cannot answer says so instead of passing.
-- **Alerts have somewhere to live**: a month of history in /data, real counts by severity, and one entry per condition rather than one per reading. Two conditions are evaluated every minute beyond the four the webhooks already fire on: a source that stopped reporting, and the sun well up with the array producing nothing for half an hour.
-- **The backup and export cards are gone from Settings.** A backup is written automatically once a day and is now also copied to /share/solario/backups, which the File editor, Samba and the Terminal add-on can reach. Three notification switches remain, and they decide what is actually recorded; the add-on has never sent email or push.
-- Graphs gains energy by hour and two splits: where the production went and where the consumption came from.
-- Comparison badges no longer report percentages against a baseline too small to compare against, and the chart legend no longer paints outside its card.
+## Tarify Local, Smart a Pro
 
-## What changed in 0.7.14
+Tarify jsou vynucené na backendu a všechny obrazovky čtou stejnou capability matici. Předplatné jsou **Local 99 Kč/měsíc, Smart 249 Kč/měsíc a Pro 499 Kč/měsíc** (od 0.7.62). Bez předplatného se nic nezablokuje: add-on běží dál s funkcemi Localu, jen bez podpory a aktualizací.
 
-- The tariff cards under "Advanced management" on the Profile page were still hardcoded at 9.99 and 19.99 EUR - the last place that had not been converted. They now show what the billing API reports, like the rest of the app. The Smart card also claimed 7 days of history where the add-on actually serves 30.
+- **Local (99 Kč/měsíc)**: živý přehled a tok energie, graf dnešního dne, úspora v korunách za posledních 7 dní, aktuální Stav systému, pevná vestavěná upozornění, Kontrola domu (co Home Assistant má a které automatizace půjdou nastavit), osobní podpora a aktualizace. Automatizace z Home Assistantu jsou vidět bez ovládání; automatizace na míru jsou ve Smart a Pro.
+- **Smart**: vše z Local, týden a měsíc historie, detailní ekonomika, osobní podpora, 30denní historie Stavu systému, nastavitelné vestavěné prahy, vzdálený přístup a push přes propojený Solario Cloud, **1 automatizace v ceně**.
+- **Pro**: vše ze Smart, rok a vlastní období, dlouhodobá ekonomika a návratnost pouze z doloženého 365denního podkladu, vlastní pravidla upozornění, servisní report, **3 automatizace v ceně**, editor zařízení pro vlastní Home Assistant, roční kalendář energie se srovnáním měsíců proti loňsku, CSV/PDF a webhooky.
 
-## What changed in 0.7.13
+Historie se ukládá stejně na všech tarifech; tarif určuje jen, jak daleko zpět je vidět. Local proto od prvního dne ukazuje, kolik dní už add-on uložil a že je Smart nebo Pro zpřístupní hned po přechodu. Čtrnáctidenní zkušební doba Smart nebo Pro se nabízí jen tehdy, když jsou placené tarify zapnuté (`paid_upgrades_enabled`). Local zkušební dobu nemá, rovnou se předplatí; přechod ze Smart nebo Pro na Local platí od konce zaplaceného období.
 
-- **Plan prices are the real ones**: Local 99 CZK, Smart 249 CZK, Pro 499 CZK per month. The billing API served 0 / 9.99 / 19.99 EUR, and the Profile page displayed exactly that.
-- Every image is regenerated at twice its size with a resampling pass and a mild unsharp mask. There is no new detail to be had - the sources are the supplied designs - but on a large screen the browser is no longer the thing enlarging the image, which is what made it look soft.
-- **The layout now grows with the screen.** Page gutters and gaps derive from the window width, the maximum width goes from 1600 to 2400 px, and above 1700 and 2200 px the cards, icon tiles and type scale up instead of leaving a laptop-sized column in the middle of a large display. Charts hold an aspect ratio rather than a fixed pixel height, so at 2560 px the dashboard chart is 304 px tall where it used to stay at 161 px.
-- The "Live data" pill on the Dashboard is sized as a share of the hero image; at wider windows it stopped covering the pill printed into the artwork and the printed one showed from underneath.
+Downgrade placená nastavení nemaže. Funkce, na které nový tarif nemá nárok, se přestanou vykonávat nebo upravovat; při opětovném upgradu se uložené nastavení znovu zpřístupní.
 
-## What changed in 0.7.12
+Podrobná historie se fyzicky drží po pětiminutových bodech maximálně 30 dní a ukládá se po jednom souboru za den. Delší období používají hodinové a denní agregace, aby add-on nepřepisoval velký soubor na SD kartě při každém měření.
 
-- **Updating the add-on works again.** Home Assistant does not build the image, it pulls a prebuilt one from GHCR, and the build for 0.7.7 failed - so the tag it was told to pull never existed. Every update attempt reported "An unknown error occurred". The newest image that existed was 0.7.6. The build gate that stopped it (an English-coverage check over every Czech string) is satisfied again and 0.7.12 is published.
-- All eight pages rebuilt against the supplied designs, with every control wired to a real action.
-- A day's solar production could read in the hundreds of kWh, because auto-discovery preferred a lifetime counter for the "today" slot and a counter that never resets was published as-is. Both are fixed, and the add-on now checks what a sensor read just after midnight before trusting it.
-- Locality, time zone, units, value precision, default page and the tips/animation switches are stored and take real effect.
-- Tariffs, limits and prices on the Profile page come from the billing API instead of hardcoded amounts.
+Automatické zálohy se ukládají do `/data/backups` a kopie do `/share/solario/backups`, odkud je lze vytáhnout přes File editor, Sambu nebo Terminal.
 
-## What changed in 0.7.7
+## Senzory a automatické mapování
 
-- Dozens of buttons across the Home Local UI were purely decorative (no action at all). They now genuinely navigate, save, or download real data.
-- All notification and backup toggles in Settings now persist their state.
-- Electricity price can actually be edited in Settings and is saved to the server.
-- "Backup now" genuinely requests an immediate backup; data/report/diagnostics export buttons download real data.
-- The monthly/yearly pricing toggle now actually recalculates prices; support buttons open a real email link.
+Ruční pole entit v konfiguraci add-onu jsou volitelné přepisy. Pokud je necháte prázdná, Solario bezpečně hledá vhodné zdroje podle ID entity, názvu, jednotky, `device_class` a `state_class`.
 
-## What changed in 0.7.6
+Pro běžné Alpha ESS entity jsou navíc podporované přesné aliasy pro:
 
-- Fixed hero photos (Overview, Alerts, FVE Health) being stretched/distorted on desktop - CSS forced a fixed aspect-ratio stretch there, while the correct proportion-preserving "cover" sizing accidentally only existed in the mobile stylesheet.
-- Dashboard metric cards (PV, Consumption, Battery, Grid) are now fully opaque so the background photo no longer shows through them.
-- Replaced the dashboard hero photo with a cleaner crop that fits the wide banner without needing heavy cropping.
+- aktuální výkon FVE,
+- celkovou výrobu FVE,
+- celkový odběr ze sítě,
+- celkové přetoky do sítě,
+- spotřebu domu,
+- stav baterie,
+- napětí baterie.
 
-## What changed in 0.7.5
+Kumulativní energetické čítače se pomocí Home Assistant Recorderu převádějí na hodnoty za dnešek a aktuální měsíc. Pokud přesný výpočet není možný, Solario hodnotu raději označí jako nedostupnou nebo nespolehlivou, než aby ji odhadovalo jako přesnou.
 
-- Power-type entities reported in Watts by Home Assistant are now correctly converted to kW (previously shown 1000x too large, e.g. "11 064,0 kW" instead of "11,1 kW").
-- Fixed a false "offline" status caused by strict clock comparison: a container clock running slightly ahead of the browser's clock could make fresh data look stale.
+## Úspora FVE
 
-## What changed in 0.7.4
+Úspora vychází z ceny elektřiny a z energie FVE skutečně spotřebované doma. Pokud jsou k dispozici výroba a přetoky, vlastní spotřeba se počítá přesně jako výroba minus přetoky. Měsíční a celková úspora se zobrazují pouze z odpovídajících měsíčních/celkových energetických podkladů; diagnostika pomůže odhalit chybějící zdroj.
 
-Version 0.7.4 adds real-time grid and battery power to the data pipeline:
+Aktuální ozáření je při záporné nebo nulové výšce Slunce vždy 0 W/m², i pokud Home Assistant senzor po západu krátce drží starou kladnou hodnotu.
 
-- new optional entity overrides `entity_grid_power` and `entity_battery_power` (instantaneous W), plus automatic discovery for both - these values were previously always zero because nothing collected them, even though the dashboard and energy-flow widget already displayed them,
-- the 24-hour history now stores instantaneous grid/battery power per point, so the "Consumption" and "Grid" lines in the energy chart are computed from real data instead of the cumulative energy (kWh) counter,
-- the battery state-of-charge (%) line in the chart now uses its own right-hand axis instead of sharing (and distorting) the kW-scaled axis.
+## Bezpečnost a síť
 
-## What changed in 0.7.3
+- backend běží pouze na `127.0.0.1:5000`,
+- PostgreSQL není publikovaný do sítě,
+- Home Assistant Ingress je výchozí způsob přístupu,
+- volitelný LAN port 3000 přijímá pouze privátní/lokální adresy,
+- Supervisor token dostává pouze sběrný agent a nezapisuje se do `/data/agent-config.json`,
+- webový backend a agent běží pod oddělenými neprivilegovanými účty,
+- aplikační tajné klíče se generují lokálně a ukládají s omezenými právy,
+- kritický výpadek interní služby ukončí add-on, aby jej Home Assistant mohl znovu spustit místo ponechání částečně funkčního stavu.
 
-Version 0.7.3 fixes several display bugs in the redesigned "Home Local" light UI introduced in 0.7.0-0.7.2:
+## Přístup, restart a zálohy
 
-- fixed a duplicated "LOCAL" word in the sidebar logo,
-- the "Online"/"Připojeno" connection badges on the Devices and Settings pages now reflect the real Home Assistant/agent connection state instead of always showing connected,
-- the real-time "Home consumption" figure on the Dashboard and Graphs pages is now derived from live power readings (PV, grid, battery) instead of an energy (kWh) counter, which previously produced implausible values and distorted chart scaling,
-- added the previously missing background images for the Alerts and FVE Health pages.
+Přístupový a obnovovací kód se při první registraci zobrazí pouze jednou a lze je stáhnout do lokálního textového souboru. Obnovovací kód při použití vytvoří novou dvojici a zneplatní starý přístup. Přístupové údaje i nastavení zůstávají v persistentním `/data` a běžný restart add-onu nevyžaduje novou registraci.
 
-Versions 0.6.44 through 0.7.2 introduced the redesigned light "Home Local" experience; see `CHANGELOG.md` for the full history.
+Add-on vytváří automatické lokální zálohy persistentních dat. Při aktualizaci nebo restartu se zachovávají mapování entit, identita vestavěného agenta, nastavení i energetické trackery.
 
-## What changed in 0.6.43
+## Podporované platformy
 
-Version 0.6.43 is a maintenance update focused on internal technical reliability:
-
-- improved consistency of background Local ↔ Cloud communication,
-- refined behavior during restart, reconnect and temporary Cloud unavailability,
-- improved internal synchronization and state handling,
-- no intentional changes to the normal UI, installation flow or day-to-day operation.
-
-The battery SOC improvements from 0.6.42 and the savings currency/free-form price-per-kWh improvements introduced in 0.6.41 remain included. Solario does **not** perform foreign-exchange conversion: enter the electricity price in the selected currency per kWh.
-
-## Sensors and automatic mapping
-
-Manual entity fields in the add-on configuration are optional overrides. If left empty, Solario searches for suitable sources using entity ID, friendly name, unit, `device_class` and `state_class`.
-
-Version 0.6.40 expanded Deye / Solarman support for real-world `sensor.inverter_*` naming and added the searchable manual entity picker. If automatic discovery misses a source or chooses a technically compatible but semantically wrong sensor, open **Change sensor**, search by friendly name or entity ID and save the correct compatible source. Manual choices persist across restarts and can be reset back to automatic discovery.
-
-Supported energy mappings include current PV power, today's energy, battery SOC/voltage, grid import/export, home consumption, total solar production, inverter power, string 1–4 power and 10-minute production maximum/average.
-
-## Energy calculations and savings
-
-Cumulative energy counters are converted into today's and current month's values using Home Assistant Recorder data. Recorder statistics may be used when raw history around the beginning of a period is unavailable.
-
-Savings are calculated as:
-
-**self-consumed PV energy in kWh × configured electricity price per kWh**
-
-If a trustworthy period baseline is not available, Solario leaves that period temporarily unavailable rather than presenting an unverified estimate as an exact value.
-
-## Local plan (free)
-
-Local is free for good, with no payment, card or trial. Its internal id is `free`.
-
-- live overview of production, consumption, battery and grid, and the energy flow,
-- today's chart,
-- savings in CZK over the last 7 days,
-- current system status, local diagnostics of source entities and built-in alerts in the app,
-- weather and current solar conditions,
-- Home Assistant automations are shown; controlling them comes with Smart and Pro,
-- automatic entity discovery with searchable manual overrides, Czech and English UI,
-- updates; everything runs at home and no measurements leave the house.
-
-The week and month of history, detailed economics, controls, Solario Cloud, phone alerts, commissioned automations and personal support come with **Smart (249 CZK a month)** and **Pro (499 CZK a month)**, both with a 14-day free trial. History is stored the same on every plan, so the older days show as soon as a household upgrades.
-
-## Anonymous version statistics
-
-Anonymous usage statistics are **disabled by default**. When explicitly enabled, Solario reports only a random installation identifier, the Solario Local version and architecture (`amd64` or `aarch64`). The cloud stores a one-way hash of the random installation identifier. Home Assistant entity names, energy values, access codes and credentials are not included.
-
-## Security and restart behavior
-
-The backend runs locally inside the add-on, PostgreSQL is not exposed to the network, and Home Assistant Ingress is the default access method. The Supervisor token is provided only to the collection agent and is not written to the agent's persistent configuration.
-
-Access credentials, settings, entity mappings, built-in agent identity, automations and energy trackers are persisted in `/data`. A normal add-on restart therefore does not require a new registration.
-
-## Supported platforms
+Předpřipravený image je publikovaný pro:
 
 - `amd64`
 - `aarch64`
 
-For detailed configuration and technical behavior, see [`DOCS.md`](DOCS.md).
+Další informace a placené tarify jsou dostupné na `https://solario.cloud`.
 
-More information and paid plans: `https://solario.cloud`

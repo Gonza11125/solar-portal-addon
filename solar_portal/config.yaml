@@ -1,6 +1,6 @@
-# Solario Home 0.7.61 Today chart reads the house from power when its consumption counter resets
+# Solario Home 0.7.62 Local is a 99 Kč subscription with support and updates; nothing is blocked without one
 name: Solario Home
-version: "0.7.61"
+version: "0.7.62"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud

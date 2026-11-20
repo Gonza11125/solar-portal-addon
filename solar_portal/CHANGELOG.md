@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.62] - 2026-11-20
+
+- **Tarif Local stojí 99 Kč měsíčně, s podporou a aktualizacemi.** Smart (249 Kč) a Pro (499 Kč) zůstávají a jde je pořád 14 dní zkoušet zdarma. Local zkušební dobu nemá, rovnou se předplatí v Profilu nebo hned při prvním spuštění.
+- **Bez předplatného se nic nezablokuje.** Solario běží dál s funkcemi Localu: živý přehled, dnešní graf, úspora za 7 dní a už nastavené automatizace fungují a žádná data se nemažou. Chybí jen osobní podpora a aktualizace (a u Smart a Pro Solario Cloud a jejich funkce).
+- **Automatické aktualizace podle předplatného.** Když předplatné začne, doplněk je v Home Assistantu jednou zapne, když skončí, jednou je vypne. Mezi tím nastavení nechává na vás. Dokud Solario předplatné neprodává, nic se nemění.
+- **Přechod ze Smart nebo Pro na Local** je teď nižší tarif od konce zaplaceného období, ne zrušení předplatného.
+- **Přehlednější Přehled, Grafy a Automatizace.** Přehled se jmenuje „Váš dům právě teď“ a zdroje dat ukáže, jen když některý chybí. V Grafech je nahoře velký graf a podrobnosti (souhrn, tok energie, porovnání) jsou pod tlačítkem. V Automatizacích každá karta ukáže to hlavní a „Tento měsíc N× · ušetřeno X Kč“; měřiče, statistiky a nastavení jsou pod „Zobrazit více“. Seznam zařízení a deník ukáží prvních pár položek a zbytek na klepnutí.
+- **Jednodušší Ekonomika.** Nahoře je méně čísel, souhrn období a porovnání jsou pod tlačítkem „Zobrazit podrobnosti“ a soběstačnost je vysvětlená stejně jako na Přehledu.
+
 ## [0.7.61] - 2026-10-13
 
 - **Graf „Dnešní den“ ukazuje spotřebu domu i u počítadla, které se během dne nuluje.** Některé senzory spotřeby se nulují třeba každou hodinu. Modrá čára pak měla díry, kopírovala výrobu a souhrn ukazoval nesmyslně malou spotřebu (0,2 kWh za celý den). Doplněk teď takové počítadlo pozná a spočítá spotřebu z okamžitých výkonů: výroba + síť − nabíjení baterie. Stejně to dělá Solario Cloud. Totéž platí pro přetok do sítě. Půlhodinu, kterou počítadlo nepokrylo, doplní ze stejných výkonů. Bez měřeného výkonu sítě se spotřeba nevykreslí, aby graf neukazoval nic vymyšleného.
@@ -255,7 +264,7 @@ Obsahuje i vše z 0.7.39 (příprava na platební bránu), která do Home Assist
 ## [0.7.34] - 2026-09-24
 
 - Opraven vizuální přetok textu v kruhovém ukazateli **Senzory z Home Assistantu**. Uvnitř zůstává jen počet zdrojů a krátké „zdrojů online“, text je vystředěný a nemůže přetéct přes zelený prstenec.
-- Náhled domácnosti v levém sidebaru je nově čtvercový, lehce přiblížený a vycentrovaný na samotný dům, takže nepůsobí jako široký výřez s velkým množstvím prázdné oblohy.
+- Náhled domácnosti v levém sidebaru je nově čtvercový, lehce přiblížený a vycentrovaný na samotný dům, takže nepůsobí jako náhodný široký výřez s velkým množstvím prázdné oblohy.
 - Žádná změna tarifů, logiky měření ani API.
 
 ## [0.7.33] - 2026-09-24
@@ -266,9 +275,9 @@ Obsahuje i vše z 0.7.39 (příprava na platební bránu), která do Home Assist
 - **Pro**: rok + vlastní období, dlouhodobá ekonomika, návratnost pouze z 365 úplných doložených dní, vlastní pravidla upozornění, servisní report, 3 automatizace v ceně, editor zařízení, CSV/PDF, API a webhooky.
 - Alertové prahy se mezi Localem a Cloudem synchronizují v jednotkách, které opravdu používají. Okamžitá spotřeba domu se vyhodnocuje jen z přesného `home_power` senzoru; denní kWh se za okamžitý kW nevydávají.
 - Downgrade nastavení nemaže: Local použije bezpečné výchozí prahy a Smart nevyhodnocuje Pro custom rules, uložená data ale zůstanou pro případný návrat k vyššímu tarifu.
-- Automatizační požadavky se přes ověřený device token ukládají do Cloud databáze; bez Cloud linku drží Local požadavek v persistentní frontě a po propojení jej zkusí doručit.
-- Zachována ochrana SD karty z 0.7.31: detailní historie je po denních shardech, hodinové/denní agregace mají omezenou frekvenci zápisu a při plánovaném vypnutí se telemetrie flushne.
-- Zachováno chování 0.7.28–0.7.32: chybějící volitelný senzor je neutrální, nová instalace dostane jasný krok přiřazení senzorů, produkt se jmenuje Solario Home a `sun.sun` se nevydává za meteostanici.
+- Automatizační požadavky Smart/Pro se přes device token ukládají do Cloud databáze. Local bez ověřeného linku drží požadavek v persistentní frontě a po propojení jej zkusí doručit.
+- Obnovena ochrana SD karty z 0.7.31: detailní historie je po denních shardech, hodinové/denní agregace mají omezenou frekvenci zápisu a při plánovaném vypnutí se telemetrie flushne.
+- Obnoveno chování 0.7.28–0.7.32: chybějící volitelný senzor je neutrální, nová instalace dostane jasný krok přiřazení senzorů, produkt se jmenuje Solario Home a `sun.sun` se nevydává za meteostanici.
 - Přístupové kódy lze stáhnout při první registraci i po obnově. Text výslovně říká, že ztrátu obou kódů nelze vyřešit vzdáleným „dohledáním“.
 - Smart cloudová stránka upozornění zobrazuje vestavěná pravidla a push; editor vlastních pravidel se zobrazí jen v Pro.
 
@@ -326,9 +335,18 @@ Návrat k aktuálnímu designu. Obsah je přesně ten, který vyšel jako 0.7.21
 - Pokročilé mapování, export a webhooky jsou oddělené od základního nastavení. V rozhraní se používá značka Solario.
 - Ověřeno sestavením frontend/backend, integračními testy spravovaných automatizací a kontrolou devíti obrazovek na čtyřech šířkách.
 
-## [0.7.26] - 2026-09-21
+## [0.7.20] - 2026-09-20
 
-Návrat k vzhledu a funkcím verze 0.7.19. Obsah je přesně ten, který vyšel jako 0.7.19; vyšší číslo má jen proto, aby ho Home Assistant nabídl jako aktualizaci instalacím, které mezitím dostaly návrat na 0.6.47 (0.7.22 až 0.7.25). Změny z verzí 0.7.20 a 0.7.21 v této verzi nejsou.
+- Ekonomika v Přehledu: oddělený odhad úspory a výkupu, vysvětlení výpočtu a omezení baterií, označení historických přepočtů aktuální cenou. Chybějící finanční hodnoty nejsou nuly.
+- Přehlednější rozložení grafů a Zdraví FVE bez prázdných reklamních sloupců a opakovaných karet aktivního Pro. Responzivní horní stavový panel.
+- Nabídky používají ilustraci domu bez vloženého tlačítka; každá má jedno skutečné tlačítko. Smart vidí jednu nabídku Pro.
+- Diagnostické entity agenta mají jednotku odpovídající normalizovanému číslu (kW/kWh). Diagnostika rozlišuje převoditelné jednotky a nesprávný fyzikální rozměr.
+- Nenalezené volitelné senzory se v přehledu neoznačují za poruchu. Skutečně nakonfigurované zdroje s výpadkem zůstávají viditelné. Všechna doporučení lze rozbalit.
+- Rychlý test volá existující API aktuálních dat. Text u baterie netvrdí bez podkladu, že nabíjí pouze ze slunce.
+- Graf dne používá dnešní měření v nastaveném časovém pásmu. Historie se při otevřené stránce obnovuje.
+- Kombinovaný graf správně kreslí také baterii a síť; baterie má vlastní procentní osu.
+- Grafy nerozlišují přímou spotřebu a baterii bez podkladů pro přesné určení původu energie.
+- Aktualizované české i anglické texty; cloudová nabídka neslibuje nativní mobilní aplikaci ani garantovanou zálohu.
 
 
 ## [0.7.19] - 2026-09-19
@@ -641,3 +659,4 @@ Návrat k vzhledu a funkcím verze 0.7.19. Obsah je přesně ten, který vyšel 
 - typ instalace se trvale ukládá pro danou lokalitu v add-onu a je viditelný v profilu; vzhled i funkce obou variant zůstávají stejné
 - opraven závod při obnově relace, který mohl při přímém otevření přes Home Assistant předčasně zobrazit přihlášení
 - doplněny anglické překlady průvodce, profilu, cookies, dashboardu a stránky Home Assistant automatizací včetně dynamických časů
+
