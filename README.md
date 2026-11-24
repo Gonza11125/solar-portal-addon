@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.62** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.63** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.62
+## Co přináší 0.7.43 až 0.7.63
 
+- **„Systém vyžaduje pozornost“ jen při skutečné poruše a nový Stav systému**: žádná upozornění na údaje, které dům nemá, krátké výpadky střídače se nehlásí, v noci spící střídač není porucha; Stav systému ukáže, co se kontroluje a co dělat, u každého údaje jde vybrat jiný senzor a souhrn jde poslat technikovi; večer a ráno přehled ukáže včerejšek, ve Smart a Pro karta „Zítra“ s předpovědí výroby, návratnost a měsíční souhrn e-mailem,
 - **tarif Local za 99 Kč měsíčně, s podporou a aktualizacemi**: Smart (249 Kč) a Pro (499 Kč) zůstávají a jde je 14 dní zkoušet zdarma; bez předplatného se nic nezablokuje, doplněk běží dál s funkcemi Localu, jen bez podpory a automatických aktualizací (platí až po spuštění plateb v Solario Cloud),
 - **přehlednější Přehled, Grafy, Automatizace a Ekonomika**: to hlavní nahoře, podrobnosti na jedno klepnutí,
 - **graf „Dnešní den“ už neztrácí spotřebu domu**: modrá čára spotřeby už nemá díry, když denní počítadlo po zaokrouhlení poskočí zpět, a u senzoru spotřeby, který se během dne nuluje, se spotřeba spočítá z okamžitých výkonů (výroba + síť − nabíjení baterie) stejně jako v Solario Cloud; Kontrola domu je ve Smart a Pro i na webu Solario Cloud,

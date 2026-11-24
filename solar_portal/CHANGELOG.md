@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.63] - 2026-11-24
+
+- **„Systém vyžaduje pozornost“ jen při skutečné poruše.** Solario už nehlídá údaje, které dům nemá (wallbox, třetí string, vlhkost), krátký výpadek integrace střídače nehlásí a upozornění vytvoří až po 10 minutách. Když se odmlčí celý střídač, přijde jedno upozornění „Střídač nekomunikuje“ místo jednoho za každý údaj, a v noci, kdy střídač bez baterie spí, nepřijde žádné. Vybitá baterie, přetok nebo vysoká spotřeba nejsou porucha, ale zpráva o energii.
+- **Odpojený senzor si Solario v noci nepřemapuje.** Entita, která na chvíli nehlásí, zůstane přiřazená a ukáže se jako „nehlásí hodnotu“, ne „Není v instalaci“.
+- **Nový Stav systému.** Jasný verdikt, co Solario kontroluje (spojení, hodiny, výroba, zdroje dat, baterie) a co dělat, když něco nesedí. Tabulka ukazuje skutečné entity z Home Assistantu a jejich hodnoty.
+- **Ruční oprava senzoru ve všech tarifech.** U každého údaje na Stavu systému je tlačítko Změnit a výběr jiné entity.
+- **Poslat stav technikovi.** Souhrn stavu jde poslat e-mailem nebo zkopírovat, celý report stáhnout. Ve všech tarifech.
+- **Včerejšek na přehledu.** Večer a ráno přehled ukáže, jak dopadl včerejší den, místo nul za dnešek.
+- **Karta „Zítra“ ve Smart a Pro.** Odhad výroby z předpovědi v Home Assistantu (Forecast.Solar, Solcast nebo počasí) a rada, kdy pustit pračku a ohřev vody.
+- **Návratnost ve Smart.** Ušetřeno od instalace a za kolik let se elektrárna vrátí. Export a PDF zůstávají v Pro.
+- **Měsíční souhrn e-mailem ve Smart a Pro** (posílá Solario Cloud): kolik elektrárna vyrobila a ušetřila a jestli vše fungovalo.
+- **Hodiny.** Když se hodiny Home Assistantu a vašeho zařízení rozcházejí, Solario už neukazuje dům jako offline a Stav systému na to upozorní.
+- **Lepší rozpoznání střídačů Deye (Solarman):** stav baterie, výkon baterie a výkon sítě.
+- Upozornění říkají, co se děje a co dělat; vyřešená ukazují, jak dlouho trvala. Stránka Upozornění odděluje poruchy od zpráv o energii.
+
 ## [0.7.62] - 2026-11-20
 
 - **Tarif Local stojí 99 Kč měsíčně, s podporou a aktualizacemi.** Smart (249 Kč) a Pro (499 Kč) zůstávají a jde je pořád 14 dní zkoušet zdarma. Local zkušební dobu nemá, rovnou se předplatí v Profilu nebo hned při prvním spuštění.

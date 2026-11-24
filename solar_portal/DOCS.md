@@ -85,9 +85,9 @@ nečte uloženou historii, ale celkové čítače z Home Assistantu.
 
 Serverově vynucené funkce mají jeden zdroj pravdy v `localPlanPolicy.ts`:
 
-- **Local (`free`, 99 Kč měsíčně)**: detailní historie dnešního dne, záložka Den, úspora za posledních 7 dní, aktuální Stav systému, pevné vestavěné alerty, katalog automatizací, 0 automatizací v ceně, osobní podpora a aktualizace. Stejné funkce má instalace bez předplatného, jen bez podpory a aktualizací.
-- **Smart**: detail 30 dní, záložky Týden a Měsíc, osobní podpora, detailní ekonomika, 30denní historie Stavu systému, editace vestavěných alertových hranic, Cloud/remote push, 1 automatizace v ceně.
-- **Pro**: detail 30 dní + hodinová historie 366 dní + denní historie 5 let, Rok a Vlastní období, dlouhodobá ekonomika, ROI z úplných doložených 365 dní, vlastní alerty, servisní report, 3 automatizace v ceně, editor zařízení, roční kalendář energie se srovnáním měsíců proti loňsku, export, PDF a webhooky.
+- **Local (`free`, 99 Kč měsíčně)**: detailní historie dnešního dne, záložka Den, úspora za posledních 7 dní, včerejšek na přehledu večer a ráno, aktuální Stav systému s ruční opravou senzoru a tlačítkem „Poslat stav technikovi“, pevné vestavěné alerty, katalog automatizací, 0 automatizací v ceně, osobní podpora a aktualizace. Stejné funkce má instalace bez předplatného, jen bez podpory a aktualizací.
+- **Smart**: detail 30 dní, záložky Týden a Měsíc, osobní podpora, detailní ekonomika a návratnost z doložených 365 dní, karta „Zítra“ s předpovědí výroby, měsíční souhrn e-mailem, 30denní historie Stavu systému, editace vestavěných alertových hranic, Cloud/remote push, 1 automatizace v ceně.
+- **Pro**: detail 30 dní + hodinová historie 366 dní + denní historie 5 let, Rok a Vlastní období, dlouhodobá ekonomika, vlastní alerty, celý servisní report na stránce, 3 automatizace v ceně, editor zařízení, roční kalendář energie se srovnáním měsíců proti loňsku, export, PDF a webhooky.
 
 Počet spravovaných pravidel, která už tým Solario vytvořil, není technický runtime limit. Hodnota „automatizace v ceně“ je obchodní rozsah nové dodávky. Existující spravované automatizace se při downgrade nemažou ani nevypínají.
 
