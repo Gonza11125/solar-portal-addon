@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.64] - 2026-11-24
+
+- **Automatizace podle zařízení.** Každé zařízení má jednu kartu, i když ho řídí víc pravidel. Bojler s ohřevem z přebytků, ohřevem v nízkém tarifu a ranním dohřátím je jedna karta „Bojler · 3 pravidla“, ne tři. Rolety, které spolu ovládá několik automatizací, jsou jedna karta „Rolety“.
+- **Na kartě je hned vidět to hlavní:** co zařízení právě dělá, kdy poběží příště nebo kolik ještě chybí do spuštění, kolik tento měsíc ušetřilo a tlačítka Spustit, Dnes vynechat a Obnovit pro celé zařízení. U rolet Vytáhnout vše a Zatáhnout vše.
+- **Po rozkliknutí** jsou všechna pravidla zařízení pod sebou: odkud jsou (Solario nebo Home Assistant), kdy se spouštějí a každá podmínka s aktuální hodnotou a nápisem „splněno“ nebo „brání“. Pod nimi nastavení a ruční ovládání zařízení. Pravidla z Home Assistantu jde jednotlivě vypnout a zapnout.
+- **Méně opakování.** Samostatné bloky Ovládání, Právě teď a Všechny automatizace nahradil jeden seznam zařízení, rozdělený na Úsporu energie a Dům. Graf „Dnešní den“ má jednu řadu za zařízení se všemi jeho běhy.
+- V Local se už neukazují přepínače, které by nešly použít; ruční ovládání je u karty s odkazem na Smart.
+- Čitelnější texty a větší tlačítka na telefonu.
+
 ## [0.7.63] - 2026-11-24
 
 - **„Systém vyžaduje pozornost“ jen při skutečné poruše.** Solario už nehlídá údaje, které dům nemá (wallbox, třetí string, vlhkost), krátký výpadek integrace střídače nehlásí a upozornění vytvoří až po 10 minutách. Když se odmlčí celý střídač, přijde jedno upozornění „Střídač nekomunikuje“ místo jednoho za každý údaj, a v noci, kdy střídač bez baterie spí, nepřijde žádné. Vybitá baterie, přetok nebo vysoká spotřeba nejsou porucha, ale zpráva o energii.

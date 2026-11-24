@@ -135,7 +135,7 @@ Návrh pro web je v repozitáři v `docs/solario-cloud-platby-navrh.md`.
 
 ## Automatizace: přehled a ovládání domácností
 
-Záložka Automatizace ukazuje všechny automatizace domu, panel Ovládání s roletami a zařízeními, co dům právě dělá sám, kolik automatizace tento měsíc ušetřily, dnešní běhy nad dnešní výrobou a deník všech běhů. Všechno je z toho, co add-on naměřil:
+Záložka Automatizace ukazuje zařízení domu, každé na jedné kartě se všemi pravidly, která ho řídí (od 0.7.64). Bojler se třemi pravidly je jedna karta; po rozkliknutí jsou vidět všechna pravidla, jejich spouštěče a podmínky s aktuální hodnotou („splněno“ nebo „brání“), nastavení a ruční ovládání. Pravidla se do jedné karty spojí, když spínají stejné zařízení; automatizace, která ovládá víc než čtyři zařízení nebo zařízení různého druhu, má kartu vlastní. Dál stránka ukazuje, kolik automatizace tento měsíc ušetřily, dnešní běhy nad dnešní výrobou a deník všech běhů. Všechno je z toho, co add-on naměřil:
 
 - Každou půlminutu add-on sleduje spotřebič každé automatizace a ukládá běhy, které spustila automatizace nebo domácnost tlačítkem (`/data/automation-activity.json`, 400 dní). Ruční zapnutí mimo automatizaci se nepočítá.
 - Energie je z měřáku výkonu spotřebiče („měřeno“), jinak z výkonu na štítku („odhad“). Bez obojího je běh jen časově zaznamenaný a stránka úsporu neukazuje.
@@ -145,7 +145,7 @@ Záložka Automatizace ukazuje všechny automatizace domu, panel Ovládání s r
 Domácnost může bez žádosti na tým Solario:
 
 - **Spustit hned**: zapne spotřebič a na dobu běhu pozastaví jeho pravidlo, aby ho Home Assistant hned nevypnul. Výchozí délka: bojler 2 h, auto 3 h, bazén a tepelné čerpadlo 2 h, ostatní 1 h. Myčka a pračka se jen zapnou.
-- **Dnes vynechat** (u běžícího spotřebiče „Zastavit na dnes“): pravidlo platí znovu od půlnoci.
+- **Dnes vynechat** (u běžícího spotřebiče „Zastavit na dnes“): pravidlo platí znovu od půlnoci. Na kartě zařízení s víc pravidly se vynechají všechna jeho pravidla, a tlačítko se ukáže, jen když to jde u každého z nich.
 - **Pozastavit na dnes** a **Dovolená** (až 60 dní): pozastaví automatizace, které spotřebovávají energii (všechny od Solaria a ty vlastní, které spínají spotřebič). Automatizace Home Assistantu se vypnou a po skončení znovu zapnou, ale jen ty, které byly zapnuté. Rolety a světla běží dál.
 - **Nastavení**, která tým Solario u automatizace zpřístupnil, a to jen v povoleném rozsahu.
 
