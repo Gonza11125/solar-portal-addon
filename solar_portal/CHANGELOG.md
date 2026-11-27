@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.65] - 2026-11-27
+
+- Přehled zobrazuje stav bojleru a datum a čas poslední změny. Podporuje denní ohřev, čekání na HDO, ohřev při HDO, dokončení a vypnutí.
+- Po připojení hotové stavové entity se karta přidá automaticky. V Automatizacích ji lze skrýt a tlačítkem přidat zpět.
+- Propojený Solario Cloud přebírá stav, čas a umístění karty. Při výpadku spojení je poslední údaj označen jako historický.
+- Správné přiřazení času i při postupném zápisu stavového pomocníku a pomocníku data a času.
+
 ## [0.7.64] - 2026-11-24
 
 - **Automatizace podle zařízení.** Každé zařízení má jednu kartu, i když ho řídí víc pravidel. Bojler s ohřevem z přebytků, ohřevem v nízkém tarifu a ranním dohřátím je jedna karta „Bojler · 3 pravidla“, ne tři. Rolety, které spolu ovládá několik automatizací, jsou jedna karta „Rolety“.

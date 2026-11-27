@@ -1,13 +1,14 @@
 # Solario Home pro Home Assistant
 
-Aktuální stabilní verze: **0.7.64** · podporované architektury: **amd64** a **aarch64**
+Aktuální stabilní verze: **0.7.65** · podporované architektury: **amd64** a **aarch64**
 
 [![Přidat repozitář Solario Home do Home Assistantu](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FGonza11125%2Fsolar-portal-addon)
 
 Solario Home je lokální Home Assistant aplikace pro přehled fotovoltaiky, energetickou bilanci, diagnostiku a bezpečné automatizace. Výchozí přístup běží přes zabezpečený Home Assistant Ingress; přímý LAN port 3000 je volitelný a ve výchozím stavu není publikovaný.
 
-## Co přináší 0.7.43 až 0.7.64
+## Co přináší 0.7.43 až 0.7.65
 
+- **stav bojleru na přehledu** s datem a časem změny, automatickým přidáním po připojení zdroje a tlačítkem pro opětovné zobrazení skryté karty
 - **automatizace podle zařízení**: každé zařízení má jednu kartu se všemi pravidly, která ho řídí (bojler se třemi pravidly je jedna karta); po rozkliknutí jsou vidět spouštěče a podmínky s nápisem „splněno“ nebo „brání“, nastavení a ruční ovládání,
 - **„Systém vyžaduje pozornost“ jen při skutečné poruše a nový Stav systému**: žádná upozornění na údaje, které dům nemá, krátké výpadky střídače se nehlásí, v noci spící střídač není porucha; Stav systému ukáže, co se kontroluje a co dělat, u každého údaje jde vybrat jiný senzor a souhrn jde poslat technikovi; večer a ráno přehled ukáže včerejšek, ve Smart a Pro karta „Zítra“ s předpovědí výroby, návratnost a měsíční souhrn e-mailem,
 - **tarif Local za 99 Kč měsíčně, s podporou a aktualizacemi**: Smart (249 Kč) a Pro (499 Kč) zůstávají a jde je 14 dní zkoušet zdarma; bez předplatného se nic nezablokuje, doplněk běží dál s funkcemi Localu, jen bez podpory a automatických aktualizací (platí až po spuštění plateb v Solario Cloud),
