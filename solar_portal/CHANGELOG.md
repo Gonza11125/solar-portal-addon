@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.66] - 2026-11-27
+
+- **Karta bojleru funguje i bez pomocníka v Home Assistantu.** U bojleru, který řídí pravidla Solaria, si Solario stav spočítá samo: z pravidel bojleru, signálu HDO, teploměru a měřáku výkonu. Ukáže, jestli bojler čeká na denní ohřev, hřeje ze slunce, čeká na HDO, hřeje při HDO, nebo je pro dnešek hotový, a odkdy.
+- Dnešní ohřev je ukončený, když voda dosáhne cílové teploty, nebo když termostat vypne topení (bojler je sepnutý, ale už nebere proud). Bez teploměru a měřáku platí „ukončen“ po dnešním doběhnutí.
+- Čas změny si doplněk pamatuje sám, takže ho restart Home Assistantu nepřepíše.
+- Dům s vlastním označeným stavovým pomocníkem (solario_boiler_id) ho dál používá. Výpočet Solaria nastoupí jen tam, kde pomocník není, takže se bojler nikdy neukáže dvakrát.
+
 ## [0.7.65] - 2026-11-27
 
 - Přehled zobrazuje stav bojleru a datum a čas poslední změny. Podporuje denní ohřev, čekání na HDO, ohřev při HDO, dokončení a vypnutí.
