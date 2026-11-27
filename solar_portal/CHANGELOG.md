@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.67] - 2026-11-27
+
+- **Skrývání automatizací.** Každé pravidlo v Automatizacích má tlačítko Skrýt. Skrytá automatizace dál běží, jen zmizí z přehledu, třeba upozornění nebo stará zkušební automatizace.
+- Skryté automatizace jsou vidět pod kartami zařízení v sekci „Skryté automatizace (N)“. Každou lze tlačítkem Zobrazit vrátit zpět.
+- Volba platí pro celý dům: doplněk i Solario Cloud ukazují totéž na všech zařízeních. Skrývat jde i v tarifu Local.
+
 ## [0.7.66] - 2026-11-27
 
 - **Karta bojleru funguje i bez pomocníka v Home Assistantu.** U bojleru, který řídí pravidla Solaria, si Solario stav spočítá samo: z pravidel bojleru, signálu HDO, teploměru a měřáku výkonu. Ukáže, jestli bojler čeká na denní ohřev, hřeje ze slunce, čeká na HDO, hřeje při HDO, nebo je pro dnešek hotový, a odkdy.

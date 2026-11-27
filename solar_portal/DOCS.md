@@ -147,6 +147,7 @@ Domácnost může bez žádosti na tým Solario:
 - **Spustit hned**: zapne spotřebič a na dobu běhu pozastaví jeho pravidlo, aby ho Home Assistant hned nevypnul. Výchozí délka: bojler 2 h, auto 3 h, bazén a tepelné čerpadlo 2 h, ostatní 1 h. Myčka a pračka se jen zapnou.
 - **Dnes vynechat** (u běžícího spotřebiče „Zastavit na dnes“): pravidlo platí znovu od půlnoci. Na kartě zařízení s víc pravidly se vynechají všechna jeho pravidla, a tlačítko se ukáže, jen když to jde u každého z nich.
 - **Pozastavit na dnes** a **Dovolená** (až 60 dní): pozastaví automatizace, které spotřebovávají energii (všechny od Solaria a ty vlastní, které spínají spotřebič). Automatizace Home Assistantu se vypnou a po skončení znovu zapnou, ale jen ty, které byly zapnuté. Rolety a světla běží dál.
+- **Skrýt** (od 0.7.67, i v tarifu Local): automatizace zmizí z přehledu, ale dál běží. Skryté jsou pod kartami zařízení v sekci „Skryté automatizace (N)“ a tlačítkem **Zobrazit** se vrátí. Volba platí pro celý dům, doplněk i Solario Cloud ukazují totéž; ukládá se v `/data/automation-hidden.json`.
 - **Nastavení**, která tým Solario u automatizace zpřístupnil, a to jen v povoleném rozsahu.
 
 Tým Solario to u automatizace v `/data/user-automations.json` určí takto (nic z toho není povinné):

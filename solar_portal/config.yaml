@@ -1,6 +1,6 @@
-# Solario Home 0.7.66 the boiler card works without a helper: Solario works out the state of heaters its rules drive
+# Solario Home 0.7.67 hide single automations from the Automations page and show them again
 name: Solario Home
-version: "0.7.66"
+version: "0.7.67"
 slug: solar_portal
 description: Solario Home – výroba, spotřeba, baterie a úspora vaší fotovoltaiky v Home Assistantu
 url: https://solario.cloud
